@@ -1,0 +1,109 @@
+apply plugin: 'com.android.library'
+apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
+
+apply plugin: 'maven'
+ext {
+    //记住一下规则,等会导入时注意, 举例compile 'com.dz.bleota:bleota:1.0.0'
+
+    GITHUB_REPO_PATH = "AAR"
+    PUBLISH_GROUP_ID = 'com.wwxframe'
+    PUBLISH_ARTIFACT_ID = 'widget_aar'
+    PUBLISH_VERSION = '0.0.3'
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //本地maven仓库地址,也可以使用远程maven仓库
+            def deployPath = file(project.GITHUB_REPO_PATH)
+            repository(url: "file://${deployPath.absolutePath}")
+            pom.project {
+                groupId project.PUBLISH_GROUP_ID
+                artifactId project.PUBLISH_ARTIFACT_ID
+                version project.PUBLISH_VERSION
+            }
+        }
+    }
+}
+
+// 源代码一起打包
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.sourceFiles
+}
+
+artifacts {
+    archives androidSourcesJar
+}
+
+android {
+    compileSdkVersion 28
+
+    //忽略图片警告
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+
+    dexOptions {
+        dexInProcess true
+        preDexLibraries true
+
+        jumboMode = true
+        preDexLibraries = true //线程数
+        threadCount = 8
+    }
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+
+        multiDexEnabled true
+
+        javaCompileOptions {
+
+        }
+
+        //新版本Gradle使用注解需加入
+        javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
+
+    }
+
+    buildTypes {
+        /* 线下审查环境 */
+        check {
+            debuggable true
+            minifyEnabled true //是否混淆
+            //是否设置zip对齐优化
+            zipAlignEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    compileOptions {//使用JAVA8语法解析
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    //noinspection GradleCompatible,GradleCompatible
+    api 'com.android.support:support-v4:27.1.0'
+
+    //    api 'com.android.support:support-media-compat:26.+'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+    //noinspection Gracom.android.support:appcompat-v7:26.+dleCompatible
+    api 'com.android.support:design:28.0.0'
+
+
+}
