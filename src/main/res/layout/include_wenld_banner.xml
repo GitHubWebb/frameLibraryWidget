@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_viewpager_gallery"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_7"
+    android:layout_marginBottom="@dimen/dp_7"
+    android:background="@android:color/white"
+    android:clipChildren="false"
+    android:visibility="visible">
+
+    <ImageView
+        android:id="@+id/iv_autoTurnViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:visibility="gone" />
+
+    <com.wenld.wenldbanner.AutoTurnViewPager
+        android:id="@+id/autoTurnViewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:visibility="gone"
+        app:canLoop="false"
+        app:canTurn="false" />
+
+</RelativeLayout>
