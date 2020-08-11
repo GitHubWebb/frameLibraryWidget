@@ -2,6 +2,11 @@ apply plugin: 'com.android.library'
 //apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
 
 apply plugin: 'maven'
+
+
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.GitHubWebb'
+
 ext {
     //记住一下规则,等会导入时注意, 举例compile 'com.dz.bleota:bleota:1.0.0'
 
