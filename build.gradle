@@ -124,7 +124,7 @@ android {
 
 dependencies {
     //noinspection GradleCompatible,GradleCompatible
-    api 'com.android.support:support-v4:27.1.0'
+    implementation 'com.android.support:support-v4:27.1.0'
 
     //    api 'com.android.support:support-media-compat:26.+'
     implementation "com.android.support:appcompat-v7:$SupportVersion"
