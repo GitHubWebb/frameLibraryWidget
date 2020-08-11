@@ -1,0 +1,139 @@
+apply plugin: 'com.android.library'
+//apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
+
+apply plugin: 'maven'
+
+
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.GitHubWebb'
+
+ext {
+    //记住一下规则,等会导入时注意, 举例compile 'com.dz.bleota:bleota:1.0.0'
+
+    GITHUB_REPO_PATH = "../GithubUserContent"
+    PUBLISH_GROUP_ID = 'com.wwxframe'
+    PUBLISH_ARTIFACT_ID = 'widget_aar'
+    PUBLISH_VERSION = '0.1.2'
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //本地maven仓库地址,也可以使用远程maven仓库
+            def deployPath = file(project.GITHUB_REPO_PATH)
+            repository(url: "file://${deployPath.absolutePath}")
+            pom.project {
+                groupId project.PUBLISH_GROUP_ID
+                artifactId project.PUBLISH_ARTIFACT_ID
+                version project.PUBLISH_VERSION
+            }
+        }
+    }
+}
+
+/*// 源代码一起打包
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.sourceFiles
+}
+
+artifacts {
+    archives androidSourcesJar
+}*/
+
+
+//生成文档注释
+task androidJavadocs(type: Javadoc) {
+    failOnError = false
+    source = android.sourceSets.main.java.srcDirs
+    ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+    classpath += files(ext.androidJar)
+    destinationDir = file("../GithubUserContent/com/wwxframe/widget_aar/javadoc/")
+
+}
+//将文档打包成jar
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    classifier = 'javadoc'
+    from androidJavadocs.destinationDir
+}
+//将源码打包
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+//包含文档和源码的aar
+artifacts {
+//    archives androidSourcesJar
+    archives androidJavadocsJar
+}
+
+def SupportVersion = '25.4.0'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion = '26.0.2'
+
+    //忽略图片警告
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+
+    dexOptions {
+        dexInProcess true
+
+        jumboMode = true
+        preDexLibraries = true //线程数
+        threadCount = 8
+    }
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 26
+
+        multiDexEnabled true
+
+        javaCompileOptions {
+
+        }
+
+        //新版本Gradle使用注解需加入
+//        javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
+
+    }
+
+    buildTypes {
+        /* 线下审查环境 */
+        check {
+            debuggable true
+            minifyEnabled true //是否混淆
+            //是否设置zip对齐优化
+            zipAlignEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    compileOptions {//使用JAVA8语法解析
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    //noinspection GradleCompatible,GradleCompatible
+    compile 'com.android.support:support-v4:27.1.0'
+
+    //    api 'com.android.support:support-media-compat:26.+'
+    compile "com.android.support:appcompat-v7:$SupportVersion"
+    compile "com.android.support:support-v13:$SupportVersion"
+    compile "com.android.support:design:$SupportVersion"
+
+}
