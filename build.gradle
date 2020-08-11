@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
-apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
+//apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
 
 apply plugin: 'maven'
 ext {
     //记住一下规则,等会导入时注意, 举例compile 'com.dz.bleota:bleota:1.0.0'
 
-    GITHUB_REPO_PATH = "AAR"
+    GITHUB_REPO_PATH = "../GithubUserContent"
     PUBLISH_GROUP_ID = 'com.wwxframe'
     PUBLISH_ARTIFACT_ID = 'widget_aar'
-    PUBLISH_VERSION = '0.0.5'
+    PUBLISH_VERSION = '0.1.2'
 }
 
 uploadArchives {
@@ -26,7 +26,7 @@ uploadArchives {
     }
 }
 
-// 源代码一起打包
+/*// 源代码一起打包
 task androidSourcesJar(type: Jar) {
     classifier = 'sources'
     from android.sourceSets.main.java.sourceFiles
@@ -34,10 +34,39 @@ task androidSourcesJar(type: Jar) {
 
 artifacts {
     archives androidSourcesJar
+}*/
+
+
+//生成文档注释
+task androidJavadocs(type: Javadoc) {
+    failOnError = false
+    source = android.sourceSets.main.java.srcDirs
+    ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+    classpath += files(ext.androidJar)
+    destinationDir = file("../GithubUserContent/com/wwxframe/widget_aar/javadoc/")
+
+}
+//将文档打包成jar
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    classifier = 'javadoc'
+    from androidJavadocs.destinationDir
+}
+//将源码打包
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+//包含文档和源码的aar
+artifacts {
+//    archives androidSourcesJar
+    archives androidJavadocsJar
 }
 
+def SupportVersion = '25.4.0'
+
 android {
-    compileSdkVersion 28
+    compileSdkVersion 25
+    buildToolsVersion = '26.0.2'
 
     //忽略图片警告
     aaptOptions.cruncherEnabled = false
@@ -45,7 +74,6 @@ android {
 
     dexOptions {
         dexInProcess true
-        preDexLibraries true
 
         jumboMode = true
         preDexLibraries = true //线程数
@@ -54,7 +82,7 @@ android {
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 26
 
         multiDexEnabled true
 
@@ -63,7 +91,7 @@ android {
         }
 
         //新版本Gradle使用注解需加入
-        javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
+//        javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
 
     }
 
@@ -99,10 +127,8 @@ dependencies {
     api 'com.android.support:support-v4:27.1.0'
 
     //    api 'com.android.support:support-media-compat:26.+'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-
-    //noinspection Gracom.android.support:appcompat-v7:26.+dleCompatible
-    api 'com.android.support:design:28.0.0'
+    implementation "com.android.support:appcompat-v7:$SupportVersion"
+    implementation "com.android.support:support-v13:$SupportVersion"
+    implementation "com.android.support:design:$SupportVersion"
 
 }
