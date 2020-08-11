@@ -124,11 +124,11 @@ android {
 
 dependencies {
     //noinspection GradleCompatible,GradleCompatible
-    implementation 'com.android.support:support-v4:27.1.0'
+    compile 'com.android.support:support-v4:27.1.0'
 
     //    api 'com.android.support:support-media-compat:26.+'
-    implementation "com.android.support:appcompat-v7:$SupportVersion"
-    implementation "com.android.support:support-v13:$SupportVersion"
-    implementation "com.android.support:design:$SupportVersion"
+    compile "com.android.support:appcompat-v7:$SupportVersion"
+    compile "com.android.support:support-v13:$SupportVersion"
+    compile "com.android.support:design:$SupportVersion"
 
 }
