@@ -5,7 +5,7 @@ apply plugin: 'maven'
 
 
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.GitHubWebb'
+group = 'com.github.GitHubWebb'
 
 ext {
     //记住一下规则,等会导入时注意, 举例compile 'com.dz.bleota:bleota:1.0.0'
@@ -133,11 +133,13 @@ android {
 
 dependencies {
     //noinspection GradleCompatible,GradleCompatible
-    compile 'com.android.support:support-v4:27.1.0'
+    implementation 'com.android.support:support-v4:27.1.0'
 
     //    api 'com.android.support:support-media-compat:26.+'
-    compile "com.android.support:appcompat-v7:$SupportVersion"
-    compile "com.android.support:support-v13:$SupportVersion"
-    compile "com.android.support:design:$SupportVersion"
+    implementation "com.android.support:appcompat-v7:$SupportVersion"
+    implementation "com.android.support:support-v13:$SupportVersion"
+    implementation "com.android.support:design:$SupportVersion"
+
+    implementation 'com.google.code.gson:gson:2.8.0'
 
 }
