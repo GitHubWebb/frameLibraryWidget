@@ -413,10 +413,10 @@ public class DateUtils {
      */
     public static String format(Date date) {
         long delta = new Date().getTime() - date.getTime();
-        if (delta < 1L * ONE_MINUTE) {
+        /*if (delta < 1L * ONE_MINUTE) {
             long seconds = toSeconds(delta);
             return (seconds <= 0 ? 1 : seconds) + ONE_SECOND_AGO;
-        }
+        }*/
         if (delta < 45L * ONE_MINUTE) {
             long minutes = toMinutes(delta);
             return (minutes <= 0 ? 1 : minutes) + ONE_MINUTE_AGO;
