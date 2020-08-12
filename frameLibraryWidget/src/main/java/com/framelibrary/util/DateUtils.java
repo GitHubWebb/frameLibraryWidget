@@ -225,7 +225,7 @@ public class DateUtils {
 
     // 根据时间 str 判断 是否传入时间为过期时间
     public static boolean isExpireTime(String expireTimeStr) {
-        long expireTimeParse = parse(expireTimeStr);
+        long expireTimeParse = strParseLong(expireTimeStr);
         long currentTimeMillis = System.currentTimeMillis();
         if (expireTimeParse > currentTimeMillis) {
             return false;
@@ -413,10 +413,14 @@ public class DateUtils {
      */
     public static String format(Date date) {
         long delta = new Date().getTime() - date.getTime();
-        /*if (delta < 1L * ONE_MINUTE) {
+        if (delta < 0)
+            //超过一天显示具体日期时间
+            return getDate(date, simpleDateFormat);
+
+        if (delta < 1L * ONE_MINUTE) {
             long seconds = toSeconds(delta);
             return (seconds <= 0 ? 1 : seconds) + ONE_SECOND_AGO;
-        }*/
+        }
         if (delta < 45L * ONE_MINUTE) {
             long minutes = toMinutes(delta);
             return (minutes <= 0 ? 1 : minutes) + ONE_MINUTE_AGO;
@@ -582,11 +586,11 @@ public class DateUtils {
         }
     }
 
-    public static String format(long milliseconds) {
+    public static String longFormatStr(long milliseconds) {
         return formatDateByPattern(milliseconds, DEFAULT_PATTERN);
     }
 
-    public static long parse(String string) {
+    public static long strParseLong(String string) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_PATTERN, Locale.getDefault());
             return dateFormat.parse(string).getTime();
@@ -617,8 +621,8 @@ public class DateUtils {
     public static String formatDatePattern(long milliseconds) {
         return formatDateByPattern(milliseconds, DATE_PATTERN);
     }
-    //根据 指定时间转换格式 从时间戳转换String
 
+    //根据 指定时间转换格式 从时间戳转换String
     public static String formatDateByPattern(long milliseconds, String datePattern) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern, Locale.getDefault());
         return dateFormat.format(milliseconds);
