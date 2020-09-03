@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
+apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
 
 apply plugin: 'maven'
 
@@ -143,5 +143,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
 
+    //SingleClick单击防重
+    api 'com.github.jarryleo:SingleClick:v1.8.3'
 
 }
