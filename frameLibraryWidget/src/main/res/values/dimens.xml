@@ -89,7 +89,11 @@
     <dimen name="dp_90">90dp</dimen>
     <dimen name="dp_93">93dp</dimen>
     <dimen name="dp_94">94dp</dimen>
+    <dimen name="dp_95">95dp</dimen>
     <dimen name="dp_96">96dp</dimen>
+    <dimen name="dp_97">97dp</dimen>
+    <dimen name="dp_98">98dp</dimen>
+    <dimen name="dp_99">99dp</dimen>
     <dimen name="dp_100">100dp</dimen>
     <dimen name="dp_103">103dp</dimen>
     <dimen name="dp_105">105dp</dimen>
