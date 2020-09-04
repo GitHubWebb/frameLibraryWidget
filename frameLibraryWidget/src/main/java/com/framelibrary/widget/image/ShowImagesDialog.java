@@ -91,6 +91,7 @@ public class ShowImagesDialog extends Dialog {
     private void initData() {
         //当PhotoView被点击时，添加相应的点击事件
         PhotoViewAttacher.OnPhotoTapListener listener = new PhotoViewAttacher.OnPhotoTapListener() {
+
             @Override
             public void onPhotoTap(View view, float x, float y) {
                 dismiss();//点击图片后，返回到原来的界面
@@ -100,6 +101,7 @@ public class ShowImagesDialog extends Dialog {
             public void onOutsidePhotoTap() {
 
             }
+
         };
         for (int i = 0; i < mImgUrls.size(); i++) {
             final PhotoView photoView = new PhotoView(mContext);

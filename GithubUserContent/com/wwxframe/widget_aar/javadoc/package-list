@@ -1,6 +1,13 @@
+com.framelibrary.adapter.photoselect
+com.framelibrary.bean.select_photo
+com.framelibrary.ui.activity.select_photo
 com.framelibrary.util
+com.framelibrary.util.select.selectphoto
 com.framelibrary.widget
+com.framelibrary.widget.glide
 com.framelibrary.widget.gridview
+com.framelibrary.widget.image
+com.framelibrary.widget.viewpager
 com.wenld.wenldbanner
 com.wenld.wenldbanner.adapter
 com.wenld.wenldbanner.helper

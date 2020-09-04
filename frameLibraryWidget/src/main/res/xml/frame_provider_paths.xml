@@ -1,0 +1,26 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <paths xmlns:android="http://schemas.android.com/apk/res/android">
+        <external-path
+            name="download"
+            path="" />
+        <external-path
+            name="Pictures"
+            path="Pictures" />
+        <external-path
+            name="external_files"
+            path="." />
+        <!--代表app 外部存储区域根目录下的文件 Context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)目录下的Pictures目录-->
+        <!--/storage/emulated/0/Android/data/com.xx.xxxxxx/files/Pictures-->
+        <external-files-path name="external_files" path="Pictures" />
+
+        <files-path
+            name="root"
+            path="." />
+        <files-path
+            name="my_images"
+            path="images/" />
+        <files-path
+            name="my_audios"
+            path="audios/" />
+    </paths>
+</resources>
