@@ -32,6 +32,7 @@ import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -41,7 +42,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 设备工具类
@@ -395,6 +398,17 @@ public class DeviceUtils {
         return (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
     }
 
+    /**
+     * sp转px
+     *
+     * @param context
+     * @param spVal
+     * @return
+     */
+    public static int sp2px(Context context, float spVal) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+                spVal, context.getResources().getDisplayMetrics());
+    }
 
     /**
      * 获取设备宽度（px）
@@ -622,6 +636,29 @@ public class DeviceUtils {
             e.printStackTrace();
         }
         return value;
+    }
+
+    /**
+     * 设置AndroidManifest.xml里 meta的值
+     *
+     * @param context
+     * @return
+     */
+    public static void setMetaData(Context context, Map<String, Object> appMetaMap) {
+        ApplicationInfo appi;
+        try {
+            appi = context.getPackageManager().getApplicationInfo(
+                    context.getPackageName(), PackageManager.GET_META_DATA);
+
+            Iterator<Map.Entry<String, Object>> iterator = appMetaMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                appi.metaData.putString(String.valueOf(iterator.next()), appMetaMap.get(iterator.next()).toString());
+            }
+
+        } catch (PackageManager.NameNotFoundException e1) {
+            e1.printStackTrace();
+        }
+
     }
 
     /**
