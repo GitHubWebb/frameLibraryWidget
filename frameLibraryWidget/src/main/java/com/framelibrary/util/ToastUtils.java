@@ -12,7 +12,7 @@ import com.framelibrary.util.Constant;
  * @author wangwx
  */
 public class ToastUtils {
-    public static Application mInstance = null;
+    private static Application mInstance = null;
     private static Toast toast;
 
     public static void init(Application instance) {
@@ -88,7 +88,7 @@ public class ToastUtils {
 
     private static boolean isShowToast() {
         //是否开启日志
-        Constant.LOG_PRINT = BuildConfig.DEBUG;
+//        Constant.LOG_PRINT = BuildConfig.DEBUG;
 
         return Constant.LOG_PRINT;
     }
