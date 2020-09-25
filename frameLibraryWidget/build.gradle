@@ -134,6 +134,7 @@ android {
 dependencies {
     //noinspection GradleCompatible,GradleCompatible
     api files('libs/pldroid-shortvideo-1.10.0.jar')
+    implementation 'com.qiniu:qiniu-android-sdk:7.3.11'
 
     implementation 'com.android.support:support-v4:27.1.0'
 

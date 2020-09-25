@@ -527,6 +527,10 @@
 -dontwarn com.framelibrary.**
 -keep class com.framelibrary.** {*;}
 
+-dontwarn com.wenld.wenldbanner.**
+-keep class com.wenld.wenldbanner.** {*;}
+
+
 
 #dueeeke/dkplayer
 

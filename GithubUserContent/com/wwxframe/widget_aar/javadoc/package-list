@@ -1,7 +1,9 @@
 com.framelibrary.adapter.photoselect
 com.framelibrary.bean.select_photo
+com.framelibrary.config
 com.framelibrary.ui.activity.select_photo
 com.framelibrary.util
+com.framelibrary.util.eyes
 com.framelibrary.util.select.selectphoto
 com.framelibrary.widget
 com.framelibrary.widget.glide
