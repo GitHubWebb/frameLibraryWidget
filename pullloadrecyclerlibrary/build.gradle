@@ -1,5 +1,12 @@
 apply plugin: 'com.android.library'
 
+
+apply plugin: 'maven'
+
+
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.GitHubWebb'
+
 android {
     compileSdkVersion 25
     resourcePrefix "plmrview"    //这个随便填
