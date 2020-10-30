@@ -45,7 +45,7 @@ public class FileUtils {
         try {
             if (!outputFile.exists()) {
                 boolean isMkdirs = outputFile.getParentFile().mkdirs();
-                LogUtils.D(TAG,"compressImage() , isMkdirs="+isMkdirs+",parentFile="+outputFile.getParentFile());
+                LogUtils.D("compressImage() , isMkdirs=" + isMkdirs + ",parentFile=" + outputFile.getParentFile());
                 outputFile.getParentFile().createNewFile();
                 outputFile.createNewFile();
             } else {
@@ -147,8 +147,8 @@ public class FileUtils {
         PLShortVideoTranscoder mShortVideoTranscoder = new PLShortVideoTranscoder(activity, videoPath, "maiget" + "compress/transcoded.mp4");
         MediaMetadataRetriever retr = new MediaMetadataRetriever();
         retr.setDataSource(videoPath);
-      /*  String height = retr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);*/ // 视频高度
-       /* String width = retr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH); */// 视频宽度
+        /*  String height = retr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);*/ // 视频高度
+        /* String width = retr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH); */// 视频宽度
         int height = 360;
         int width = 480;
         mShortVideoTranscoder.transcode(width, height, ENCODING_BITRATE_LEVEL_ARRAY[3], false, plVideoSaveListener);
@@ -182,7 +182,7 @@ public class FileUtils {
         if (!file.exists()) {
             try {
                 boolean isCreateNewFile = file.createNewFile();
-                LogUtils.D(TAG, "bitmapConvertFile isCreateNewFile=" + isCreateNewFile);
+                LogUtils.D("bitmapConvertFile isCreateNewFile=" + isCreateNewFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }

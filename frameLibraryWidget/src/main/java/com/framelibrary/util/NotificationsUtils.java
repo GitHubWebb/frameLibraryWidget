@@ -2,6 +2,9 @@ package com.framelibrary.util;
 
 import android.annotation.SuppressLint;
 import android.app.AppOpsManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +12,17 @@ import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.service.notification.StatusBarNotification;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.framelibrary.BuildConfig;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * 通知权限工具类
@@ -179,6 +186,61 @@ public class NotificationsUtils {
             localIntent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
         }
         return localIntent;
+    }
+
+
+    /**
+     * 删除老的渠道通知
+     *
+     * @param nm
+     * @param newChannelId
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static void deleteNoNumberNotification(NotificationManager nm, String newChannelId) {
+        if (nm == null)
+            return;
+
+        List<NotificationChannel> notificationChannels = nm.getNotificationChannels();
+        if ((notificationChannels == null) || notificationChannels.size() == 0) {
+            return;
+        }
+        for (NotificationChannel channel : notificationChannels) {
+            if (channel.getId() == null || channel.getId().equals(newChannelId)) {
+                continue;
+            }
+
+            int notificationNumbers = getNotificationNumbers(nm, channel.getId());
+            LogUtils.D("notificationNumbers: " + notificationNumbers + " channelId:" + channel.getId());
+            if (notificationNumbers == 0) {
+                LogUtils.D("deleteNoNumberNotification: " + channel.getId());
+                nm.deleteNotificationChannel(channel.getId());
+            }
+        }
+    }
+
+    /**
+     * 获取某个渠道下状态栏上通知显示个数
+     *
+     * @param mNotificationManager NotificationManager
+     * @param channelId            String
+     * @return int
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static int getNotificationNumbers(NotificationManager mNotificationManager, String channelId) {
+        if (mNotificationManager == null || TextUtils.isEmpty(channelId)) {
+            return -1;
+        }
+        int numbers = 0;
+        StatusBarNotification[] activeNotifications = mNotificationManager.getActiveNotifications();
+        for (StatusBarNotification item : activeNotifications) {
+            Notification notification = item.getNotification();
+            if (notification != null) {
+                if (channelId.equals(notification.getChannelId())) {
+                    numbers++;
+                }
+            }
+        }
+        return numbers;
     }
 
 }

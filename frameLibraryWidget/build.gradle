@@ -151,9 +151,14 @@ dependencies {
     //SingleClick单击防重
     api 'com.github.jarryleo:SingleClick:v1.8.3'
 
+    //ParallaxBackLayout,目的仿苹果右划关闭页面
+    api 'com.github.anzewei:parallaxbacklayout:1.1.9'
+
     //https://github.com/chrisbanes/PhotoView/
     //维持该版本 避免使用AndroidX
     api 'com.github.chrisbanes:PhotoView:1.3.1'
+
+    api 'com.facebook.fresco:fresco:1.13.0'
 
     implementation 'com.hjq:toast:8.0'
 

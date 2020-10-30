@@ -261,7 +261,7 @@ public class Eyes {
     }
 
     public static int getColorByBitMap(View view, Bitmap bitmap) {
-        LogUtils.I(TAG, "getBitmapFromView(view)" + view.getWidth() + "" + view.getHeight() + "");
+        LogUtils.I("getBitmapFromView(view)" + view.getWidth() + "" + view.getHeight() + "");
         try {
             int pixel = bitmap.getPixel(100, 500);
            /* Button button = new Button(view.getContext());

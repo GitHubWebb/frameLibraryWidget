@@ -325,7 +325,7 @@ public class DeviceUtils {
      * @param number
      */
     public static int convertPercent(int totalNumber, int number) {
-        LogUtils.println(TAG, "totalNumber===" + totalNumber + ",number==" + number);
+        LogUtils.I("totalNumber===" + totalNumber + ",number==" + number);
         if (number == 0) {
             return 0;
         }

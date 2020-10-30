@@ -31,7 +31,7 @@ public class StringUtils {
 
     public static String getUUID32() {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
-        LogUtils.D(TAG, "getUUID32 , UUID=" + uuid);
+        LogUtils.D("getUUID32 , UUID=" + uuid);
         return uuid;
     }
 

@@ -41,7 +41,7 @@ public abstract class RequestParams {
             return "";
         }
         String params = stringBuffer.substring(1, stringBuffer.length());
-        LogUtils.D(TAG, "RequestParams======" + params);
+        LogUtils.D("RequestParams======" + params);
         return params;  // 忽略第1位字符&
     }
 
