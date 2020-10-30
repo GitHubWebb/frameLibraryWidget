@@ -569,4 +569,35 @@ public class StringUtils {
         return result;
     }
 
+    /**
+     * 参数串取字段值
+     * params 如：a=1&b=sdfsdf&c=&d=2234
+     *
+     * @param params 字符值来源
+     * @param key    根据key取值
+     * @return 得到的值, 不存在为null
+     * @author wangwx
+     */
+    public static String getParamsValue(String params, String key) {
+        if (StringUtils.isEmpty(params))
+            return null;
+
+        int paramspos = params.indexOf("?");
+        String params_string = paramspos >= 0 ? params.substring(paramspos + 1) : params;
+
+        for (String paramitem : params_string.split("&")) {
+            if (StringUtils.isEmpty(paramitem))
+                continue;
+
+            String[] kvp = paramitem.split("=");
+            if (kvp.length < 2)
+                continue;
+
+            if (key.equals(kvp[0]))
+                return kvp[1];
+        }
+
+        return null;
+    }
+
 }

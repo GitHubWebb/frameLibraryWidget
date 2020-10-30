@@ -141,5 +141,6 @@
     <orderEntry type="library" name="Gradle: com.facebook.fresco:fbcore:1.13.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.soloader:soloader:0.6.0@aar" level="project" />
     <orderEntry type="module" module-name="frameLibraryWidget-frameLibraryWidget" />
+    <orderEntry type="module" module-name="frameLibraryWidget-frameLibraryWidget" />
   </component>
 </module>

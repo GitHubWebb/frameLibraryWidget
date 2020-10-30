@@ -64,6 +64,17 @@ public class LogUtils {
         }
     }
 
+
+    /**
+     * 避免e.printStackTrace()堆栈过多造成锁死
+     *
+     * @param e          报错Exception
+     * @param methodName 报错方法名
+     */
+    public static void printStackToLog(Exception e, String methodName) {
+        printStackToLog(e, methodName, "execute fail!");
+    }
+
     /**
      * 避免e.printStackTrace()堆栈过多造成锁死
      *
@@ -79,7 +90,7 @@ public class LogUtils {
         String exception = baos.toString();
 
         String tag = generateTag();
-        
+
         print(E, tag, methodName + " , " + Arrays.toString(paramsDes) + " ,e=" + exception);
     }
 
