@@ -221,7 +221,6 @@ public class FileUtils {
             File tmpFile = new File(cacheDir, fileName + ".jpg");
             return tmpFile;
         }
-
     }
 
 }
