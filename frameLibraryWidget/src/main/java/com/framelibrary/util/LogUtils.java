@@ -7,6 +7,7 @@ import android.util.Log;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 
 public class LogUtils {
@@ -100,7 +101,17 @@ public class LogUtils {
      * @return
      */
     private static String generateTag() {
-        StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[0];
+
+        return generateTag(3);
+    }
+
+    /**
+     * 得到tag（所在类.方法（L:行））
+     *
+     * @return
+     */
+    private static String generateTag(int index) {
+        StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[index];
         String callerClazzName = stackTraceElement.getClassName();
         callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
         String tag = "%s.%s(L:%d)";
@@ -108,6 +119,62 @@ public class LogUtils {
         //给tag设置前缀
         tag = TextUtils.isEmpty(Constant.LOG_TAG_PREFIX) ? tag : Constant.LOG_TAG_PREFIX + ":" + tag;
         return tag;
+    }
+
+
+    /**
+     * 获取相关调用栈的信息，并且打印相关日志及代码行数；
+     * <p>
+     * <p>
+     * 相关调用栈的信息，按照:类名,方法名,行号等，这样的格式拼接，可以用来定位代码行，
+     * 如：
+     * at cn.xx.ui.MainActivity.onCreate(MainActivity.java:23) 定位代码行;
+     *
+     * @param isLinked 是否输出所有相关调用栈的信息；
+     */
+    private static String logTraceInfo(boolean isLinked) {
+        StackTraceElement[] stes = Thread.currentThread().getStackTrace();
+        if (stes == null) {
+            D("logTraceLinkInfo#return#stes == null");
+            return "";
+        }
+        StringBuilder result = null;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < stes.length; i++) {
+            StackTraceElement ste = stes[i];
+            if (ignorable(ste)) {
+                continue;
+            }
+            sb.append("").append("[Thread:")
+                    .append(Thread.currentThread().getName())
+                    .append(", at ").append(ste.getClassName())
+                    .append(".").append(ste.getMethodName())
+                    .append("(").append(ste.getFileName())
+                    .append(":").append(ste.getLineNumber())
+                    .append(")]");
+            String info = sb.toString();
+            if (isLinked) {
+                if (result == null) {
+                    result = new StringBuilder();
+                }
+                result.append(info).append("\n");
+                sb.delete(0, info.length());
+
+            } else {
+                return info;
+            }
+        }
+        return result.toString();
+    }
+
+
+    private static boolean ignorable(StackTraceElement ste) {
+        if (ste.isNativeMethod() ||
+                ste.getClassName().equals(Thread.class.getName()) ||
+                ste.getClassName().equals(Logger.class.getName())) {
+            return true;
+        }
+        return false;
     }
 
 }
