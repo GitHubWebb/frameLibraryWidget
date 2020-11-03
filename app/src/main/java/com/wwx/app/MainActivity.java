@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView tvTest = findViewById(R.id.tv_test);
-        tvTest.setText("Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!");
+        tvTest.setText("Hello");
 
-        UIUtils.makeTextViewResizable(tvTest,1,"...");
+        UIUtils.makeTextViewResizable(tvTest, 4, 1, "...");
 
         LogUtils.D("activity");
 

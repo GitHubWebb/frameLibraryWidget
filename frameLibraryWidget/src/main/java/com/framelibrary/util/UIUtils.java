@@ -216,11 +216,12 @@ public class UIUtils {
      * android:maxLines="3"
      *
      * @param tv
+     * @param maxSize  最大尺寸
      * @param maxLine
      * @param expandText
      * @see "http://www.voidcn.com/article/p-byeezlsw-bto.html"
      */
-    public static void makeTextViewResizable(final TextView tv, final int maxLine, final String expandText) {
+    public static void makeTextViewResizable(final TextView tv, final int maxSize, final int maxLine, final String expandText) {
 
         if (tv.getTag() == null) {
             tv.setTag(tv.getText());
@@ -236,11 +237,17 @@ public class UIUtils {
                 obs.removeGlobalOnLayoutListener(this);
                 if (maxLine <= 0) {
                     int lineEndIndex = tv.getLayout().getLineEnd(0);
-                    String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
+                    String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + "" + expandText;
                     tv.setText(text);
                 } else if (tv.getLineCount() >= maxLine) {
                     int lineEndIndex = tv.getLayout().getLineEnd(maxLine - 1);
-                    String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
+                    String tvText = tv.getText().toString();
+                    String text = "";
+                    if (lineEndIndex <= maxSize)
+                        text = tvText;
+                    else
+                        text = tv.getText().subSequence(0, tvText.length() > maxSize ? maxSize : tvText.length()) + "" + expandText;
+//                        text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
                     tv.setText(text);
                 }
             }
