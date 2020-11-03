@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.framelibrary.ui.activity.select_photo.MultiImageSelectorActivity;
+import com.framelibrary.util.LogUtils;
 import com.framelibrary.util.PermissionCheckUtils;
+import com.framelibrary.util.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        photoShow();
+        TextView tvTest = findViewById(R.id.tv_test);
+        tvTest.setText("Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!");
+
+        UIUtils.makeTextViewResizable(tvTest,1,"...");
+
+        LogUtils.D("activity");
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LogUtils.D("activity1");
+                    }
+                }).start();
+
+            }
+        });
+//        photoShow();
     }
 
     private void photoShow() {

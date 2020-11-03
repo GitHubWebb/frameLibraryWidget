@@ -102,7 +102,7 @@ public class LogUtils {
      */
     private static String generateTag() {
 
-        return generateTag(3);
+        return generateTag(5);
     }
 
     /**
@@ -111,7 +111,9 @@ public class LogUtils {
      * @return
      */
     private static String generateTag(int index) {
-        StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[index];
+        StackTraceElement[] stackTraceElementArr = Thread.currentThread().getStackTrace();
+        StackTraceElement stackTraceElement = stackTraceElementArr[index];
+
         String callerClazzName = stackTraceElement.getClassName();
         callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
         String tag = "%s.%s(L:%d)";
