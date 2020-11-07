@@ -3,6 +3,7 @@ package com.framelibrary.util;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -11,6 +12,9 @@ import android.support.design.widget.TabLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.framelibrary.R;
 import com.framelibrary.config.FrameLibBaseApplication;
 
 import java.lang.reflect.Field;
@@ -207,6 +212,56 @@ public class UIUtils {
         }
     }
 
+
+    /**
+     * 设置Span样式,常用于可带点击的,《用户协议》或《隐私政策》
+     *
+     * @param textView
+     * @param colorText 要设置的文本
+     * @author wangweixu
+     */
+    public static void setClickBlueSpan(TextView textView, String colorText, View.OnClickListener onClickListener) {
+        String text = textView.getText().toString();
+        if (StringUtils.isBlank(text) || text.indexOf(colorText) <= 0)
+            return;
+
+        SpannableString spannableString = new SpannableString(text);
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                onClickListener.onClick(view);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setColor(DeviceUtils.getColorRes("#0064FE"));//设置颜色
+                ds.setUnderlineText(false);//去掉下划线
+            }
+        };
+        spannableString.setSpan(clickableSpan, text.indexOf(colorText), text.indexOf(colorText) + colorText.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        /*ClickableSpan clickableSpan2 = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setColor(DisplayUtils.getColorRes(R.color.btn_IOS_dialog_color_tv));//设置颜色
+                ds.setUnderlineText(false);//去掉下划线
+            }
+        };
+        spannableString.setSpan(clickableSpan2, 10, 16, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+         */
+
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(DeviceUtils.getColorRes("#0064FE"));
+        spannableString.setSpan(colorSpan, text.indexOf(colorText), text.indexOf(colorText) + colorText.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        /*ForegroundColorSpan colorSpan2 = new ForegroundColorSpan(DisplayUtils.getColorRes(R.color.btn_IOS_dialog_color_tv));
+        spannableString.setSpan(colorSpan2, 10, 16, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);*/
+        textView.setText(spannableString);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());//为防止点击事件失效,加上这句
+    }
+
+
     /**
      * makeTextViewResizable(tv, 4, "SeeMore");
      * 这将在第4行末尾写入“SeeMore”而不是“……”
@@ -216,7 +271,7 @@ public class UIUtils {
      * android:maxLines="3"
      *
      * @param tv
-     * @param maxSize  最大尺寸
+     * @param maxSize    最大尺寸
      * @param maxLine
      * @param expandText
      * @see "http://www.voidcn.com/article/p-byeezlsw-bto.html"

@@ -10,10 +10,12 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
@@ -29,6 +31,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -37,6 +41,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
+import com.framelibrary.config.FrameLibBaseApplication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -55,6 +61,50 @@ import java.util.Map;
 public class DeviceUtils {
 
     private static final String fileAddressMac = "/sys/class/net/wlan0/address";
+
+    public static int getColorRes(String colorString) {
+        try {
+            return Color.parseColor(colorString);
+        } catch (IllegalArgumentException e) {
+            return Color.WHITE; // 如果获取的颜色值不对,则返回白色
+        }
+    }
+
+    public static int getColorRes(int color) {
+        return getColorRes(FrameLibBaseApplication.getInstance(), color);
+    }
+
+    public static int getColorRes(Context context, int color) {
+        return ContextCompat.getColor(context, color);
+    }
+
+    public static Drawable getDrawable(int drawable) {
+        return ContextCompat.getDrawable(FrameLibBaseApplication.getInstance(), drawable);
+    }
+
+    @NonNull
+    public static String getStringRes(int str) {
+        return FrameLibBaseApplication.getInstance().getResources().getString(str);
+    }
+
+    public static <T extends View> T findViewById(View v, int id) {
+        return (T) v.findViewById(id);
+    }
+
+
+    /**
+     * 判定是不是竖屏
+     *
+     * @return
+     */
+    public static boolean isPortrait() {
+        int mOrientation = FrameLibBaseApplication.getInstance().getResources().getConfiguration().orientation;
+        if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     //Drawable --> Bitmap
     public static Bitmap drawable2Bitmap(Drawable drawable) {
