@@ -1,5 +1,6 @@
 package com.framelibrary.config;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
@@ -27,9 +28,10 @@ import java.lang.reflect.Method;
 public class FrameLibBaseApplication extends MultiDexApplication {
 
     protected static FrameLibBaseApplication instance;
+    private Context context;
     private DisplayMetrics displayMetrics;
     private SharedPreferences sharedPreferences;
-    public static AppManager appManager;
+    private static AppManager appManager;
 
     @Override
     public void onCreate() {
@@ -43,6 +45,8 @@ public class FrameLibBaseApplication extends MultiDexApplication {
             SpiderMan.init(this);
 
         instance = this;
+
+        context = getApplicationContext();
 
         disableAPIDialog();
         initData();
@@ -102,5 +106,13 @@ public class FrameLibBaseApplication extends MultiDexApplication {
             sharedPreferences = getSharedPreferences(BuildConfig.APPLICATION_ID + "unlock_date", MODE_MULTI_PROCESS);
         }
         return sharedPreferences;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public static AppManager getAppManager() {
+        return appManager;
     }
 }
