@@ -2,6 +2,10 @@ package com.framelibrary.config;
 
 import android.app.Activity;
 
+import com.framelibrary.util.LogUtils;
+import com.framelibrary.util.ObjectUtils;
+import com.framelibrary.util.StringUtils;
+
 import java.util.Stack;
 
 /**
@@ -32,11 +36,28 @@ public class AppManager {
 
     /**
      * 获取指定的Activity 实例
+     *
+     * @param clsName 注意该值用于是在不能接受到Activity的Module使用
+     */
+    public static Activity getActivity(String clsName) {
+        Class clazz = null;
+        try {
+            clazz = Class.forName(clsName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            LogUtils.printStackToLog(e, "getActivity", clsName);
+            return null;
+        }
+        return getActivity(clazz);
+    }
+
+    /**
+     * 获取指定的Activity 实例
      */
     public static Activity getActivity(Class<?> cls) {
         if (activityStack != null)
             for (Activity activity : activityStack) {
-                if (activity.getClass().equals(cls)) {
+                if (ObjectUtils.isEquals(activity.getClass(), cls)) {
                     return activity;
                 }
             }
