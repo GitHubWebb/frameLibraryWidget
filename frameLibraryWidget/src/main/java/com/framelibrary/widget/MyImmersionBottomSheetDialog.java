@@ -17,6 +17,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.framelibrary.util.KeyBoardUtils;
 
@@ -84,7 +85,20 @@ public class MyImmersionBottomSheetDialog extends BottomSheetDialog {
     @Override
     public void dismiss() {
         //因为dismiss之后当前焦点的EditText无法获取，所以自定义一下
-        KeyBoardUtils.closeKeybord();
+        hideKeyBoard();
         super.dismiss();
     }
+
+    public void hideKeyBoard() {
+        View view = null;
+        InputMethodManager imm = null;
+        imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (getWindow() != null) {
+            view = getWindow().getCurrentFocus();
+        }
+        if (null != view && imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
 }
