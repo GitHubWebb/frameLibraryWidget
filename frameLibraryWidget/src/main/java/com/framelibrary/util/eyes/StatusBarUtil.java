@@ -43,13 +43,35 @@ public class StatusBarUtil {
     /**
      * 修改状态栏颜色，支持4.4以上版本
      *
+     * @param resId 颜色
+     */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public static void setStatusBarRes(Activity activity, int resId) {
+        if (activity == null || activity.isDestroyed())
+            return;
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.setBackgroundDrawableResource(resId);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //使用SystemBarTintManager,需要先将状态栏设置为透明
+            setTranslucentStatus(activity);
+            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(activity);
+            systemBarTintManager.setStatusBarTintEnabled(true);//显示状态栏
+            systemBarTintManager.setStatusBarTintResource(resId);//设置状态栏颜色
+        }
+    }
+
+    /**
+     * 修改状态栏颜色，支持4.4以上版本
+     *
      * @param colorId 颜色
      */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static void setStatusBarColor(Activity activity, int colorId) {
         if (activity == null || activity.isDestroyed())
             return;
-        
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
             window.setStatusBarColor(colorId);
