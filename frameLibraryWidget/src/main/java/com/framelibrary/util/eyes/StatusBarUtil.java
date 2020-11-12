@@ -6,15 +6,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.IntDef;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.RequiresApi;
+
 import com.framelibrary.util.OSUtils;
-import com.framelibrary.util.eyes.SystemBarTintManager;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

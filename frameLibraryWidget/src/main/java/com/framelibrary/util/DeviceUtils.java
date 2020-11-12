@@ -2,9 +2,7 @@ package com.framelibrary.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Application;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -31,8 +29,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -41,6 +37,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.framelibrary.config.FrameLibBaseApplication;
 
@@ -71,7 +70,7 @@ public class DeviceUtils {
     }
 
     public static int getColorRes(int color) {
-        return getColorRes(FrameLibBaseApplication.getInstance(), color);
+        return getColorRes(FrameLibBaseApplication.getInstance().getContext(), color);
     }
 
     public static int getColorRes(Context context, int color) {
@@ -79,12 +78,12 @@ public class DeviceUtils {
     }
 
     public static Drawable getDrawable(int drawable) {
-        return ContextCompat.getDrawable(FrameLibBaseApplication.getInstance(), drawable);
+        return ContextCompat.getDrawable(FrameLibBaseApplication.getInstance().getContext(), drawable);
     }
 
     @NonNull
     public static String getStringRes(int str) {
-        return FrameLibBaseApplication.getInstance().getResources().getString(str);
+        return FrameLibBaseApplication.getInstance().getContext().getResources().getString(str);
     }
 
     public static <T extends View> T findViewById(View v, int id) {
@@ -98,7 +97,7 @@ public class DeviceUtils {
      * @return
      */
     public static boolean isPortrait() {
-        int mOrientation = FrameLibBaseApplication.getInstance().getResources().getConfiguration().orientation;
+        int mOrientation = FrameLibBaseApplication.getInstance().getContext().getResources().getConfiguration().orientation;
         if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             return false;
         } else {

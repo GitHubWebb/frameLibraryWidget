@@ -1,12 +1,14 @@
 package com.wwx.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.framelibrary.ui.activity.select_photo.MultiImageSelectorActivity;
 import com.framelibrary.util.LogUtils;
@@ -21,14 +23,16 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public final int SELECT_PHOTO_FROM_SDCARD = 1;
 
+    private Activity mActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mActivity = this;
         TextView tvTest = findViewById(R.id.tv_test);
         tvTest.setText("Hello");
 
+        mActivity = this;
         UIUtils.makeTextViewResizable(tvTest, 4, 1, "...");
 
         LogUtils.D("activity");
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-//        photoShow();
+        photoShow();
     }
 
     private void photoShow() {
@@ -58,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                openPictureChoose();
-                startSelectImage();
+                startActivity(new Intent(mActivity, SplitEditActivity.class));
+//                startSelectImage();
 //                new ShowImagesDialog(MainActivity.this, urls).show();
             }
         });

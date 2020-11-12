@@ -7,8 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.StringRes;
 import android.text.util.Linkify;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -20,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.StringRes;
 
 /**
  * Created by wenld on 2017/11/1.
@@ -45,7 +46,7 @@ public class ViewHolder {
     }
 
     public static ViewHolder createViewHolder(Context context,
-                                              ViewGroup parent, @LayoutRes int layoutId,int viewType) {
+                                              ViewGroup parent, @LayoutRes int layoutId, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent,
                 false);
         ViewHolder holder = new ViewHolder(context, itemView);

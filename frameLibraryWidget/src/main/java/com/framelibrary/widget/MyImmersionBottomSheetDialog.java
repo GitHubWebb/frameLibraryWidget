@@ -1,25 +1,20 @@
 package com.framelibrary.widget;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StyleRes;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.framelibrary.util.KeyBoardUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
+
+import com.framelibrary.R;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import static com.framelibrary.util.eyes.StatusBarUtil.getStatusBarHeight;
 
@@ -67,7 +62,7 @@ public class MyImmersionBottomSheetDialog extends BottomSheetDialog {
 
     // 屏蔽滚动事件
     public BottomSheetBehavior setSlide(boolean isSlide) {
-        View view1 = getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet);
+        View view1 = getDelegate().findViewById(R.id.design_bottom_sheet);
         final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(view1);
         bottomSheetBehavior.setHideable(isSlide);//fasle此处设置表示禁止BottomSheetBehavior的执行
         return bottomSheetBehavior;
@@ -75,7 +70,7 @@ public class MyImmersionBottomSheetDialog extends BottomSheetDialog {
 
     // 为true默认不折叠
     public BottomSheetBehavior setSkipCollapsed(boolean isSkipCollapsed) {
-        View view1 = getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet);
+        View view1 = getDelegate().findViewById(R.id.design_bottom_sheet);
         final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(view1);
         bottomSheetBehavior.setSkipCollapsed(isSkipCollapsed);//true此处设置表示可以通过这个方法来控制默认不折叠：
 

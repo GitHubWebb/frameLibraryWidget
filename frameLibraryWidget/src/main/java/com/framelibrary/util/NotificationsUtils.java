@@ -11,11 +11,10 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
-import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
-import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.framelibrary.BuildConfig;
 

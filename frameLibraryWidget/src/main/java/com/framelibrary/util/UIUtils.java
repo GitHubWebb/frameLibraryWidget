@@ -3,12 +3,10 @@ package com.framelibrary.util;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.design.widget.TabLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
@@ -16,7 +14,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
@@ -24,8 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.framelibrary.R;
 import com.framelibrary.config.FrameLibBaseApplication;
+import com.google.android.material.tabs.TabLayout;
 
 import java.lang.reflect.Field;
 
@@ -147,7 +144,7 @@ public class UIUtils {
             textView.setText(content);
         else {
             textView.setMaxLines(maxLines);// 设置最大行数
-            final Drawable drawable = FrameLibBaseApplication.getInstance().getBaseContext().getResources().getDrawable(res);// 获取图片
+            final Drawable drawable = FrameLibBaseApplication.getInstance().getContext().getResources().getDrawable(res);// 获取图片
             TextPaint paint = textView.getPaint();// 获取文本控件字体样式
             Paint.FontMetrics fm = paint.getFontMetrics();
             int textFontHeight = (int) Math.ceil(fm.descent - fm.top) + 2;// 计算字体高度座位图片高度

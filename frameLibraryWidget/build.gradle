@@ -90,7 +90,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
 
         multiDexEnabled true
@@ -136,12 +136,12 @@ dependencies {
     api files('libs/pldroid-shortvideo-1.10.0.jar')
     implementation 'com.qiniu:qiniu-android-sdk:7.3.11'
 
-    implementation 'com.android.support:support-v4:27.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //    api 'com.android.support:support-media-compat:26.+'
-    implementation "com.android.support:appcompat-v7:$SupportVersion"
-    implementation "com.android.support:support-v13:$SupportVersion"
-    implementation "com.android.support:design:$SupportVersion"
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
 
     api 'com.squareup.okhttp3:okhttp:3.9.1'
 

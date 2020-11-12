@@ -2,15 +2,14 @@ package com.framelibrary.config;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
+
+import androidx.multidex.MultiDexApplication;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.framelibrary.BuildConfig;
-import com.framelibrary.R;
 import com.framelibrary.util.Constant;
 import com.framelibrary.util.DateUtils;
-import com.framelibrary.widget.glide.GlideRadiusCornerTransform;
 import com.github.anzewei.parallaxbacklayout.ParallaxHelper;
 import com.hjq.toast.ToastUtils;
 import com.simple.spiderman.SpiderMan;
