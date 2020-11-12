@@ -35,5 +35,5 @@ dependencies {
     implementation project(path: ':frameLibraryWidget')
 
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation project(path: ':SplitEditTextView')
+    implementation project(path: ':splitedittextview')
 }
