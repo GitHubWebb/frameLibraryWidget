@@ -90,7 +90,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 26
 
         multiDexEnabled true
@@ -136,6 +136,8 @@ dependencies {
     api files('libs/pldroid-shortvideo-1.10.0.jar')
     implementation 'com.qiniu:qiniu-android-sdk:7.3.11'
 
+    implementation 'androidx.multidex:multidex:2.0.0'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //    api 'com.android.support:support-media-compat:26.+'
@@ -161,6 +163,12 @@ dependencies {
     api 'com.facebook.fresco:fresco:1.13.0'
 
     implementation 'com.hjq:toast:8.0'
+
+    /**
+     * 高效的弹窗
+     * @link "https://github.com/li-xiaojun/XPopup"
+     */
+    api 'com.lxj:xpopup:1.7.11'
 
     // http://p.codekk.com/detail/Android/simplepeng/SpiderMan debug 模式崩溃日志抓取
     api 'com.simple:spiderman:1.1.0'

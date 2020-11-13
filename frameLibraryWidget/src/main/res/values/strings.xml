@@ -20,4 +20,11 @@
     <string name="connect_server_fail">服务器系统异常！</string>
     <string name="connect_server_timeout">连接服务器超时！</string>
     <string name="connect_network_bad">网络连接故障！</string>
+
+    <!--Xpopup string start -->
+    <string name="xpopup_cancel">cancel</string>
+    <string name="xpopup_ok">ok</string>
+    <string name="xpopup_save">save</string>
+    <!--Xpopup string end -->
+
 </resources>

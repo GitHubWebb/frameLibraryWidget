@@ -14,9 +14,12 @@ import com.framelibrary.ui.activity.select_photo.MultiImageSelectorActivity;
 import com.framelibrary.util.LogUtils;
 import com.framelibrary.util.PermissionCheckUtils;
 import com.framelibrary.util.UIUtils;
+import com.framelibrary.util.dialog.DialogDoNet;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.framelibrary.config.FrameLibBaseApplication.getInstance;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public final int SELECT_PHOTO_FROM_SDCARD = 1;
 
     private Activity mActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +66,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                openPictureChoose();
-                startActivity(new Intent(mActivity, SplitEditActivity.class));
+                /*popupView = new XPopup.Builder(mActivity)
+                        .asLoading("正在加载中")
+                        .show();*/
+                DialogDoNet.startLoad(mActivity,"正在加载中");
+                startActivity(new Intent(getInstance().getContext(), SplitEditActivity.class));
 //                startSelectImage();
 //                new ShowImagesDialog(MainActivity.this, urls).show();
             }

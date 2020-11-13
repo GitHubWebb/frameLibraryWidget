@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.al.open.OnInputListener;
 import com.al.open.SplitEditTextView;
 import com.framelibrary.util.TextChangedListener;
+import com.framelibrary.util.dialog.DialogDoNet;
 
 public class SplitEditActivity extends AppCompatActivity {
 
@@ -16,6 +17,8 @@ public class SplitEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_split_edit);
         SplitEditTextView splitEditTextView = findViewById(R.id.splitEdit2);
         TextChangedListener.inputLimitSpaceWrap(20, splitEditTextView);
+
+        DialogDoNet.UpdateMsg("更新了");
 
         splitEditTextView.setOnInputListener(new OnInputListener() {
             @Override
