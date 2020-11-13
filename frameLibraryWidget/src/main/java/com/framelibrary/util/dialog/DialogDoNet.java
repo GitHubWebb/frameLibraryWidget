@@ -42,8 +42,8 @@ public class DialogDoNet {
                 case STOP_DIALOG:// 停止加载框
                     if (loadingPopupView != null) {
                         loadingPopupView.dismiss();
-                        loadingPopupView = null;
-                        System.gc();
+                        /*loadingPopupView = null;
+                        System.gc();*/
                     }
                     context = null;
                     break;
