@@ -1,0 +1,50 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--全屏背景半透明 dialog-->
+    <style name="transparentBgDialog" parent="@android:style/Theme.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:popupBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <!--模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+
+    <!-- 分享 dialog默认的style -->
+    <style name="common_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <!-- 弹窗style -->
+    <style name="DialogCicleStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/bg_white</item>
+    </style>
+
+    <!-- 自定义loading dialog -->
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- Xpopup style start -->
+    <style name="_XPopup_TransparentDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
+        <item name="android:colorBackground">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+    <!-- Xpopup style end -->
+</resources>

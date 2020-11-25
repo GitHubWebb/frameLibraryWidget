@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.al.open.SplitEditTextView
+        android:id="@+id/splitEdit2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSelectHandleLeft="@android:color/transparent"
+        android:textSelectHandleRight="@android:color/transparent"
+        app:borderColor="@color/colorPrimary"
+        app:borderSize="2dp"
+        app:contentNumber="5"
+        app:contentShowMode="text"
+        app:cursorDuration="1000"
+        app:inputBoxStyle="underline"
+        app:spaceSize="20dp" />
+
+</LinearLayout>
