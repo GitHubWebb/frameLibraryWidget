@@ -16,10 +16,11 @@
 
 package com.youth.banner.transformer;
 
-import android.support.v4.view.ViewPager.PageTransformer;
 import android.view.View;
 
-public abstract class ABaseTransformer implements PageTransformer {
+import androidx.viewpager.widget.ViewPager;
+
+public abstract class ABaseTransformer implements ViewPager.PageTransformer {
 
 	/**
 	 * Called each {@link #transformPage(View, float)}.
@@ -72,7 +73,7 @@ public abstract class ABaseTransformer implements PageTransformer {
 	 * Called each {@link #transformPage(View, float)} before {{@link #onTransform(View, float)}.
 	 * <p>
 	 * The default implementation attempts to reset all view properties. This is useful when toggling transforms that do
-	 * not modify the same page properties. For instance changing from a transformation that applies rotation to a
+	 * not modify the same page properties. For mInstance changing from a transformation that applies rotation to a
 	 * transformation that fades can inadvertently leave a fragment stuck with a rotation or with some degree of applied
 	 * alpha.
 	 *

@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">WenldBanner</string>
+
+    <string name="permission_open_tip_title">权限开启提示</string>
+    <string name="permission_open_write_tip_msg">请进入系统设置开启追追的存储权限</string>
+    <string name="text_know">知道了</string>
+    <string name="text_submit">提交</string>
+    <string name="folder_all">所有照片</string>
+    <string name="preview">预览</string>
+
+    <string name="msg_no_camera">没有系统相机</string>
+    <string name="msg_amount_limit">已经达到最高选择数量</string>
+    <string name="text_cancel">取消</string>
+    <string name="text_finish">完成</string>
+    <string name="text_right">右上角</string>
+    <string name="text_title">标题</string>
+
+    <string name="action_settings">设置</string>
+    <string name="cancel_scanner">取消</string>
+    <string name="connect_server_fail">服务器系统异常！</string>
+    <string name="connect_server_timeout">连接服务器超时！</string>
+    <string name="connect_network_bad">网络连接故障！</string>
+
+    <!--Xpopup string start -->
+    <string name="xpopup_cancel">cancel</string>
+    <string name="xpopup_ok">ok</string>
+    <string name="xpopup_save">save</string>
+    <!--Xpopup string end -->
+
 </resources>

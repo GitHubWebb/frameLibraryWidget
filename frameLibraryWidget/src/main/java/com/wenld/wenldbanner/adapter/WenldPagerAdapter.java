@@ -2,10 +2,11 @@ package com.wenld.wenldbanner.adapter;
 
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.wenld.wenldbanner.OnPageClickListener;
 import com.wenld.wenldbanner.helper.Holder;
