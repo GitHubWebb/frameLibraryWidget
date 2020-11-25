@@ -2,6 +2,7 @@ package com.framelibrary.widget.image;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -15,12 +16,11 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.framelibrary.R;
 import com.framelibrary.util.DeviceUtils;
+import com.framelibrary.util.GlideUtils;
 import com.framelibrary.widget.viewpager.ShowImagesViewPager;
 
 import java.util.ArrayList;
@@ -47,21 +47,52 @@ public class ShowImagesDialog extends Dialog {
 
     private View mView;
     private Context mContext;
+    private int mCurrentPositionItem = 0; // 要定位到的图片位置
     private TextView mIndexText;
     private ShowImagesViewPager mViewPager;
     private List<String> mTitles, mImgUrls;
     private List<View> mViews;
     private ShowImagesAdapter mAdapter;
 
+    /**
+     * 显示图片弹窗
+     *
+     * @param context 当前承载上下文
+     * @param imgUrls 图片集合
+     */
     public ShowImagesDialog(@NonNull Context context, List<String> imgUrls) {
         super(context, R.style.transparentBgDialog);
+        if (context == null || imgUrls == null)
+            return;
+
+        onCreate(context, imgUrls);
+    }
+
+    /**
+     * 显示图片弹窗
+     *
+     * @param context             当前承载上下文
+     * @param imgUrls             图片集合
+     * @param currentPositionItem 当前第几页 很可能点击的图片不是第一个,所以要跳到当前图片位置
+     */
+    public ShowImagesDialog(@NonNull Context context, List<String> imgUrls, int currentPositionItem) {
+        super(context, R.style.transparentBgDialog);
+
+        this.mCurrentPositionItem = currentPositionItem;
+        onCreate(context, imgUrls);
+    }
+
+    // 初始化页面
+    private void onCreate(@NonNull Context context, List<String> imgUrls) {
         this.mContext = context;//传入上下文
-        this.mImgUrls = imgUrls;//传入图片String数组
-        initView();
+        this.mImgUrls = imgUrls == null ? new ArrayList<>() : imgUrls;//传入图片String数组
+
+        mCurrentPositionItem = mImgUrls.size() < mCurrentPositionItem + 1 ? 0 : mCurrentPositionItem;
+        initView(mCurrentPositionItem);
         initData();
     }
 
-    private void initView() {
+    private void initView(int currentPositionItem) {
         mView = View.inflate(mContext, R.layout.dialog_images_brower, null);//通过inflate()方法找到我们写好的包含ViewPager的布局文件
         mIndexText = (TextView) mView.findViewById(R.id.tv_image_index);
         mViewPager = (ShowImagesViewPager) mView.findViewById(R.id.vp_images);//找到ViewPager控件并且实例化
@@ -69,6 +100,12 @@ public class ShowImagesDialog extends Dialog {
         mViews = new ArrayList<>();//创建一个控件的数组，我们可以在ViewPager中加入很多图片，滑动改变图片
         mTitles = new ArrayList<>();
 
+        mViewPager.post(new Runnable() {
+            @Override
+            public void run() {
+                mViewPager.setCurrentItem(currentPositionItem, false);
+            }
+        });
     }
 
     @Override
@@ -110,25 +147,21 @@ public class ShowImagesDialog extends Dialog {
             photoView.setLayoutParams(layoutParams);
             //我们通过ViewGroup.LayoutParams来设置子控件PhotoView的大小
             photoView.setOnPhotoTapListener(listener);//给PhotoView添加点击事件
-            Glide.with(mContext)
-                    .load(mImgUrls.get(i))//导入图片
-                    .placeholder(R.mipmap.ic_page_indicator)//加载图片过程中显示的替代图片
-                    .error(R.mipmap.ic_page_indicator_focused)//图片加载失败时显示的图片
-                    .into(new SimpleTarget<GlideDrawable>() {
-                        //这是Glide的一个回调方法
-                        //我们首先定义了一个SimpleTarget，然后把它通过into方法传入。
-                        // 这样当Glide去服务器请求图片成功之后，
-                        // 它会把请求到的图片资源作为GlideDrawable传递回来，
-                        // 你可以使用这个GlideDrawable进行自己想要的操作,
-                        @Override
-                        public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                            photoView.setImageDrawable(resource);
-                            //我们把回调过来的图片资源加载到PhotoView中
-                            //大家有没有发现一个细节，我在布局文件中并没有创建PhotoView控件，而是创建的ViewPager
-                            //因为我们需要在ViewPager中加入多个PhotoView以达到图片翻页的功能
-                            //因此我们在加载图片时，想要把图片加载到任意的图片控件中，就需要Glide回调方法
-                        }
-                    });
+            GlideUtils.loadImageViewLodingRadius(mContext, mImgUrls.get(i), R.mipmap.ic_page_indicator, 0, new SimpleTarget<Bitmap>() {
+                //这是Glide的一个回调方法
+                //我们首先定义了一个SimpleTarget，然后把它通过into方法传入。
+                // 这样当Glide去服务器请求图片成功之后，
+                // 它会把请求到的图片资源作为GlideDrawable传递回来，
+                // 你可以使用这个GlideDrawable进行自己想要的操作,
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    photoView.setImageBitmap(resource);
+                    //我们把回调过来的图片资源加载到PhotoView中
+                    //大家有没有发现一个细节，我在布局文件中并没有创建PhotoView控件，而是创建的ViewPager
+                    //因为我们需要在ViewPager中加入多个PhotoView以达到图片翻页的功能
+                    //因此我们在加载图片时，想要把图片加载到任意的图片控件中，就需要Glide回调方法
+                }
+            });
             mViews.add(photoView);//最后把我们加载的所有PhotoView传给View数组
 
             mTitles.add(i + "");
@@ -201,5 +234,14 @@ public class ShowImagesDialog extends Dialog {
             ((ViewPager) container).addView(views.get(position));
             return views.get(position);
         }
+    }
+
+    // 重新定义展示方法,避免数据异常时候调用
+    @Override
+    public void show() {
+        if (mContext == null || (mImgUrls == null || mImgUrls.isEmpty()))
+            return;
+
+        super.show();
     }
 }

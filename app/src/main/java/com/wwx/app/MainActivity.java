@@ -15,6 +15,7 @@ import com.framelibrary.util.LogUtils;
 import com.framelibrary.util.PermissionCheckUtils;
 import com.framelibrary.util.UIUtils;
 import com.framelibrary.util.dialog.DialogDoNet;
+import com.framelibrary.widget.image.ShowImagesDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 import static com.framelibrary.config.FrameLibBaseApplication.getInstance;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     public final int SELECT_PHOTO_FROM_SDCARD = 1;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mActivity = this;
         TextView tvTest = findViewById(R.id.tv_test);
+        findViewById(R.id.btn_open_spliteditactivity).setOnClickListener(this);
         tvTest.setText("Hello");
 
         mActivity = this;
@@ -69,10 +71,9 @@ public class MainActivity extends AppCompatActivity {
                 /*popupView = new XPopup.Builder(mActivity)
                         .asLoading("正在加载中")
                         .show();*/
-                DialogDoNet.startLoad(mActivity,"正在加载中");
-                startActivity(new Intent(getInstance().getContext(), SplitEditActivity.class));
+
 //                startSelectImage();
-//                new ShowImagesDialog(MainActivity.this, urls).show();
+                new ShowImagesDialog(MainActivity.this, urls, 10).show();
             }
         });
     }
@@ -215,6 +216,16 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 startSelectImage();
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_open_spliteditactivity:
+                DialogDoNet.startLoad(mActivity, "正在加载中");
+                startActivity(new Intent(getInstance().getContext(), SplitEditActivity.class));
+                break;
         }
     }
 }

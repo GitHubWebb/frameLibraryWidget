@@ -20,4 +20,12 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_10"
         android:text="点击显示图片" />
+
+    <Button
+        android:id="@+id/btn_open_spliteditactivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="open SplitEditActivity" />
 </LinearLayout>
