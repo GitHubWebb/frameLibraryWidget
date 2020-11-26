@@ -2,11 +2,10 @@ package com.framelibrary.util;
 
 import android.text.TextUtils;
 
+import com.framelibrary.util.logutil.LoggerUtils;
 import com.google.gson.JsonParser;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -31,7 +30,7 @@ public class StringUtils {
 
     public static String getUUID32() {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
-        LogUtils.D("getUUID32 , UUID=" + uuid);
+        LoggerUtils.D("getUUID32 , UUID=" + uuid);
         return uuid;
     }
 

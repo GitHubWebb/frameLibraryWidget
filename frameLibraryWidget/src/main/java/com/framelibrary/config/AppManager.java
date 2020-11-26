@@ -2,9 +2,8 @@ package com.framelibrary.config;
 
 import android.app.Activity;
 
-import com.framelibrary.util.LogUtils;
+import com.framelibrary.util.logutil.LoggerUtils;
 import com.framelibrary.util.ObjectUtils;
-import com.framelibrary.util.StringUtils;
 
 import java.util.Stack;
 
@@ -45,7 +44,7 @@ public class AppManager {
             clazz = Class.forName(clsName);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            LogUtils.printStackToLog(e, "getActivity", clsName);
+            LoggerUtils.printStackToLog(e, "getActivity", clsName);
             return null;
         }
         return getActivity(clazz);

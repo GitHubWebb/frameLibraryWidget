@@ -24,7 +24,7 @@ import androidx.core.view.ViewCompat;
 
 import com.framelibrary.R;
 import com.framelibrary.util.DeviceUtils;
-import com.framelibrary.util.LogUtils;
+import com.framelibrary.util.logutil.LoggerUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -262,7 +262,7 @@ public class Eyes {
     }
 
     public static int getColorByBitMap(View view, Bitmap bitmap) {
-        LogUtils.I("getBitmapFromView(view)" + view.getWidth() + "" + view.getHeight() + "");
+        LoggerUtils.I("getBitmapFromView(view)" + view.getWidth() + "" + view.getHeight() + "");
         try {
             int pixel = bitmap.getPixel(100, 500);
            /* Button button = new Button(view.getContext());

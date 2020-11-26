@@ -11,7 +11,7 @@ import android.media.MediaMetadataRetriever;
 import android.os.Build;
 import android.os.Environment;
 
-import com.framelibrary.util.LogUtils;
+import com.framelibrary.util.logutil.LoggerUtils;
 import com.framelibrary.util.StringUtils;
 import com.qiniu.pili.droid.shortvideo.PLErrorCode;
 import com.qiniu.pili.droid.shortvideo.PLShortVideoTranscoder;
@@ -21,6 +21,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.FileNameMap;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -45,7 +47,7 @@ public class FileUtils {
         try {
             if (!outputFile.exists()) {
                 boolean isMkdirs = outputFile.getParentFile().mkdirs();
-                LogUtils.D("compressImage() , isMkdirs=" + isMkdirs + ",parentFile=" + outputFile.getParentFile());
+                LoggerUtils.D("compressImage() , isMkdirs=" + isMkdirs + ",parentFile=" + outputFile.getParentFile());
                 outputFile.getParentFile().createNewFile();
                 outputFile.createNewFile();
             } else {
@@ -182,7 +184,7 @@ public class FileUtils {
         if (!file.exists()) {
             try {
                 boolean isCreateNewFile = file.createNewFile();
-                LogUtils.D("bitmapConvertFile isCreateNewFile=" + isCreateNewFile);
+                LoggerUtils.D("bitmapConvertFile isCreateNewFile=" + isCreateNewFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -221,6 +223,24 @@ public class FileUtils {
             File tmpFile = new File(cacheDir, fileName + ".jpg");
             return tmpFile;
         }
+    }
+
+    /**
+     * 获取文件mimeType
+     *
+     * @param file
+     * @return
+     */
+    public static String getMimeType(File file) {
+        String mimeType = "file/*";
+        FileNameMap fileNameMap = URLConnection.getFileNameMap();
+        String type = fileNameMap.getContentTypeFor(file.getName());
+        if (StringUtils.isBlank(type))
+            type = mimeType;
+        // java.net: null
+
+        LoggerUtils.D("file:" + file + "\n" + "mimeType:" + type);
+        return type;
     }
 
 }

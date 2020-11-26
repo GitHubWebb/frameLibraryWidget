@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.framelibrary.config.FrameLibBaseApplication;
+import com.framelibrary.util.logutil.LoggerUtils;
 import com.google.android.material.tabs.TabLayout;
 
 import java.lang.reflect.Field;
@@ -371,7 +372,7 @@ public class UIUtils {
 
         if (backBitmap == null || backBitmap.isRecycled()
                 || frontBitmap == null || frontBitmap.isRecycled()) {
-            LogUtils.D("backBitmap=" + backBitmap + ";frontBitmap=" + frontBitmap);
+            LoggerUtils.D("backBitmap=" + backBitmap + ";frontBitmap=" + frontBitmap);
             return null;
         }
         Bitmap bitmap = backBitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -394,7 +395,7 @@ public class UIUtils {
 
         if (leftBitmap == null || leftBitmap.isRecycled()
                 || rightBitmap == null || rightBitmap.isRecycled()) {
-            LogUtils.D("leftBitmap=" + leftBitmap + ";rightBitmap=" + rightBitmap);
+            LoggerUtils.D("leftBitmap=" + leftBitmap + ";rightBitmap=" + rightBitmap);
             return null;
         }
         int height = 0; // 拼接后的高度，按照参数取大或取小
@@ -454,7 +455,7 @@ public class UIUtils {
 
         if (topBitmap == null || topBitmap.isRecycled()
                 || bottomBitmap == null || bottomBitmap.isRecycled()) {
-            LogUtils.D("topBitmap=" + topBitmap + ";bottomBitmap=" + bottomBitmap);
+            LoggerUtils.D("topBitmap=" + topBitmap + ";bottomBitmap=" + bottomBitmap);
             return null;
         }
         int width = 0;

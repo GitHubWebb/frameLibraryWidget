@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import androidx.annotation.RequiresApi;
 
 import com.framelibrary.BuildConfig;
+import com.framelibrary.util.logutil.LoggerUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -209,9 +210,9 @@ public class NotificationsUtils {
             }
 
             int notificationNumbers = getNotificationNumbers(nm, channel.getId());
-            LogUtils.D("notificationNumbers: " + notificationNumbers + " channelId:" + channel.getId());
+            LoggerUtils.D("notificationNumbers: " + notificationNumbers + " channelId:" + channel.getId());
             if (notificationNumbers == 0) {
-                LogUtils.D("deleteNoNumberNotification: " + channel.getId());
+                LoggerUtils.D("deleteNoNumberNotification: " + channel.getId());
                 nm.deleteNotificationChannel(channel.getId());
             }
         }

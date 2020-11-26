@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 import com.framelibrary.config.FrameLibBaseApplication;
+import com.framelibrary.util.logutil.LoggerUtils;
 
 import java.lang.reflect.Field;
 
@@ -65,7 +65,7 @@ public class ScreenUtils {
         ydpi = dm.ydpi;
         densityDpi = dm.densityDpi;
 
-        LogUtils.D("screenWidth=" + screenWidth + " screenHeight=" + screenHeight + " density=" + density);
+        LoggerUtils.D("screenWidth=" + screenWidth + " screenHeight=" + screenHeight + " density=" + density);
     }
 
     public static int getDisplayWidth() {
@@ -98,7 +98,7 @@ public class ScreenUtils {
         densityDpi = dm.densityDpi;
         statusbarheight = getStatusBarHeight(context);
         navbarheight = getNavBarHeight(context);
-        LogUtils.D("screenWidth=" + screenWidth + " screenHeight=" + screenHeight + " density=" + density);
+        LoggerUtils.D("screenWidth=" + screenWidth + " screenHeight=" + screenHeight + " density=" + density);
     }
 
     public static int getStatusBarHeight(Context context) {

@@ -1,6 +1,6 @@
 package com.framelibrary.util.request;
 
-import com.framelibrary.util.LogUtils;
+import com.framelibrary.util.logutil.LoggerUtils;
 import com.framelibrary.util.StringUtils;
 
 /**
@@ -41,7 +41,7 @@ public abstract class RequestParams {
             return "";
         }
         String params = stringBuffer.substring(1, stringBuffer.length());
-        LogUtils.D("RequestParams======" + params);
+        LoggerUtils.D("RequestParams======" + params);
         return params;  // 忽略第1位字符&
     }
 

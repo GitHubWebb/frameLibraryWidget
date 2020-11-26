@@ -14,6 +14,14 @@
         android:text="Hello World!" />
 
     <Button
+        android:id="@+id/btn_get_img_mime_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="获取文件mimeType" />
+
+    <Button
         android:id="@+id/btn_show_imgs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

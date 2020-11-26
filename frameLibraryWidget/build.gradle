@@ -171,9 +171,11 @@ dependencies {
     api 'com.lxj:xpopup:1.7.11'
 
     // http://p.codekk.com/detail/Android/simplepeng/SpiderMan debug 模式崩溃日志抓取
-    api 'com.simple:spiderman:1.1.0'
-    debugImplementation('com.simple:spiderman:1.1.0') {
+    api 'com.simple:spiderman:1.1.6'
+    debugImplementation('com.simple:spiderman:1.1.6') {
         exclude group: "com.android.support"
     }
+
+    implementation 'com.orhanobut:logger:2.2.0'
 
 }

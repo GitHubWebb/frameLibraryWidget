@@ -42,6 +42,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.framelibrary.config.FrameLibBaseApplication;
+import com.framelibrary.util.logutil.LoggerUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -374,7 +375,7 @@ public class DeviceUtils {
      * @param number
      */
     public static int convertPercent(int totalNumber, int number) {
-        LogUtils.I("totalNumber===" + totalNumber + ",number==" + number);
+        LoggerUtils.I("totalNumber===" + totalNumber + ",number==" + number);
         if (number == 0) {
             return 0;
         }
@@ -754,7 +755,7 @@ public class DeviceUtils {
      * 保持CPU不睡眠
      *//*
     public static void keepCpuAlive(Context context,Class<?> clazz) {
-		LogUtils.E(TAG, "keepCpuAlive==="+clazz.getName());
+		LoggerUtils.E(TAG, "keepCpuAlive==="+clazz.getName());
 		pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 		wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,clazz.getName());
 		wakeLock.acquire();

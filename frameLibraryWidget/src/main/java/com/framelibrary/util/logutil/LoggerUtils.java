@@ -1,19 +1,27 @@
-package com.framelibrary.util;
+package com.framelibrary.util.logutil;
 
 
 import android.text.TextUtils;
-import android.util.Log;
+
+import com.framelibrary.util.Constant;
+import com.orhanobut.logger.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.logging.Logger;
 
-
-public class LogUtils {
+/**
+ * 由原本的使用底层log框架更改为Logger
+ *
+ * @author wangweixu
+ * @link "https://github.com/orhanobut/logger"
+ * @Date 2020年11月26日17:26:28
+ * @see "https://www.cnblogs.com/bdsdkrb/p/10038732.html"
+ */
+public class LoggerUtils {
     private static boolean isHideAllLog = false;
     private static boolean isRelease = false;
-    private final static int I = 1, D = 2, E = 3;
+    private final static int I = 1, D = 2, E = 3, JSON = 4, XML = 5;
 
     private static void print(int mod, String tag, String msg) {
         if (isHideAllLog) {
@@ -22,15 +30,27 @@ public class LogUtils {
         if (isRelease && mod < E) {
             return;
         }
+
+        StringBuffer msgSB = new StringBuffer(" \n");
+        msg = msgSB.append(msg).toString();
         switch (mod) {
             case I:
-                Log.i(tag, msg);
+                Logger.i(msg);
+//                Log.i(tag, msg);
                 break;
             case D:
-                Log.d(tag, msg);
+                Logger.d(msg);
+//                Log.d(tag, msg);
                 break;
             case E:
-                Log.e(tag, msg);
+                Logger.e(msg);
+//                Log.e(tag, msg);
+                break;
+            case JSON:
+                Logger.json(msg);
+                break;
+            case XML:
+                Logger.xml(msg);
                 break;
         }
     }
@@ -40,6 +60,7 @@ public class LogUtils {
             return;
 
         String tag = generateTag();
+        Logger.t(tag);
         if (message != null) {
             print(I, tag, message);
         }
@@ -50,6 +71,7 @@ public class LogUtils {
             return;
 
         String tag = generateTag();
+        Logger.t(tag);
         if (message != null) {
             print(D, tag, message);
         }
@@ -60,8 +82,31 @@ public class LogUtils {
             return;
 
         String tag = generateTag();
+        Logger.t(tag);
         if (message != null) {
             print(E, tag, message);
+        }
+    }
+
+    public static void JSON(String message) {
+        if (!Constant.LOG_PRINT)
+            return;
+
+        String tag = generateTag();
+        Logger.t(tag);
+        if (message != null) {
+            print(JSON, tag, message);
+        }
+    }
+
+    public static void XML(String message) {
+        if (!Constant.LOG_PRINT)
+            return;
+
+        String tag = generateTag();
+        Logger.t(tag);
+        if (message != null) {
+            print(XML, tag, message);
         }
     }
 
@@ -91,7 +136,7 @@ public class LogUtils {
         String exception = baos.toString();
 
         String tag = generateTag();
-
+        Logger.t(tag);
         print(E, tag, methodName + " , " + Arrays.toString(paramsDes) + " ,e=" + exception);
     }
 

@@ -1,5 +1,6 @@
 package com.framelibrary.util;
 
+import com.framelibrary.util.logutil.LoggerUtils;
 import com.google.gson.JsonObject;
 
 import java.net.HttpURLConnection;
@@ -85,10 +86,10 @@ public class UrlProtocolUtil {
             return jsonObject.has("connectStatus") ? jsonObject.get("connectStatus").getAsBoolean() : false;
         } catch (ExecutionException e) {
 //            e.printStackTrace();
-            LogUtils.printStackToLog(e, "startFutureCheckUrl");
+            LoggerUtils.printStackToLog(e, "startFutureCheckUrl");
         } catch (InterruptedException e) {
 //            e.printStackTrace();
-            LogUtils.printStackToLog(e, "startFutureCheckUrl");
+            LoggerUtils.printStackToLog(e, "startFutureCheckUrl");
         } finally {
             // 关闭线程池
             executorService.shutdown();
@@ -119,7 +120,7 @@ public class UrlProtocolUtil {
         }
 
         public JsonObject call() throws Exception {
-            LogUtils.D("->" + taskName + "任务开启");
+            LoggerUtils.D("->" + taskName + "任务开启");
             Long beginTime = System.currentTimeMillis();
 
             boolean connectStatus = exists(taskName);
@@ -127,12 +128,12 @@ public class UrlProtocolUtil {
             Long endTime = System.currentTimeMillis();
 
             long time = endTime - beginTime;
-            LogUtils.D("->" + taskName + "任务结束");
+            LoggerUtils.D("->" + taskName + "任务结束");
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("taskStatus", "任务已经结束,耗时：" + time + "毫秒");
             jsonObject.addProperty("connectStatus", connectStatus);
-            LogUtils.D("->" + jsonObject);
+            LoggerUtils.D("->" + jsonObject);
 
             return jsonObject;
         }

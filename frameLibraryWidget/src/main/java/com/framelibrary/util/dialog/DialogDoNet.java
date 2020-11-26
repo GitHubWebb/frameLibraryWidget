@@ -37,7 +37,10 @@ public class DialogDoNet {
                     break;
                 case UPDATE_DIALOG:// 更新加载框
                     message = (String) msg.obj;
-                    loadingPopupView.setTitle(message);
+                    if (loadingPopupView == null)
+                        init(message);
+                    else
+                        loadingPopupView.setTitle(message);
                     break;
                 case STOP_DIALOG:// 停止加载框
                     if (loadingPopupView != null) {
@@ -106,7 +109,7 @@ public class DialogDoNet {
 
     /**
      * @param msg
-     * @param openCancelable 配置是否加载框是否允许返回键关闭,默认true,允许关闭
+     * @param openCancelable 配置是否加载框是否允许返回键和点击关闭,默认true,允许关闭
      * @方法说明:启动对话框
      * @方法名称:startLoad
      * @返回值:void
@@ -122,6 +125,7 @@ public class DialogDoNet {
         mssage.obj = msg;
         handler.sendMessage(mssage);
         openCancelable(openCancelable);
+        isTouchDismiss(openCancelable);
     }
 
     /**
@@ -162,9 +166,14 @@ public class DialogDoNet {
      * @返回值:void
      */
     public static void isTouchDismiss(boolean isdimiss) {
-        if (loadingPopupView != null) {
-            loadingPopupView.popupInfo.isDismissOnTouchOutside = (isdimiss);
-        }
+        Timer timer = new Timer();// 实例化Timer类
+        timer.schedule(new TimerTask() {
+            public void run() {
+                if (loadingPopupView != null) {
+                    loadingPopupView.popupInfo.isDismissOnTouchOutside = (isdimiss);
+                }
+            }
+        }, 200);// 这里百毫秒
     }
 
     /**

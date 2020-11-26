@@ -2,18 +2,30 @@ package com.framelibrary.config;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.util.DisplayMetrics;
 
+import androidx.annotation.Nullable;
 import androidx.multidex.MultiDexApplication;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.framelibrary.BuildConfig;
 import com.framelibrary.util.Constant;
 import com.framelibrary.util.DateUtils;
+import com.framelibrary.util.logutil.AppDiskLogStrategy;
 import com.github.anzewei.parallaxbacklayout.ParallaxHelper;
 import com.hjq.toast.ToastUtils;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.CsvFormatStrategy;
+import com.orhanobut.logger.DiskLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.simple.spiderman.SpiderMan;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -36,16 +48,46 @@ public class FrameLibBaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
+        instance = this;
+
+        context = getApplicationContext();
+
         //是否开启日志
-        Constant.LOG_PRINT = BuildConfig.DEBUG;
+        // 方便引用方在onCreat之前修改值,则该值为true的情况下,不走库的赋值
+        if (!Constant.LOG_PRINT)
+            Constant.LOG_PRINT = BuildConfig.DEBUG;
 
         //放在其他库初始化前
         if (Constant.LOG_PRINT)
             SpiderMan.init(this);
 
-        instance = this;
 
-        context = getApplicationContext();
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)  // 是否显示线程，默认显示
+                .methodCount(3)         // 显示多少方法 默认 2
+                .methodOffset(7)        // 设置方法的偏移量. 默认是 5
+                .tag("")                // 已经采用自己的Tag设置方法
+                .build();
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy) {
+            @Override
+            public boolean isLoggable(int priority, @Nullable String tag) {
+                //返回true，打印日志，返回false ,不打印日志，可调试时返回true,发布时返回false
+                return Constant.LOG_PRINT;
+            }
+        });
+        //保存日志到文件中
+        String diskPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String folder = diskPath + File.separatorChar + "framelib" + File.separatorChar + "logger";
+
+        HandlerThread ht = new HandlerThread("AndroidFileLogger." + folder);
+        ht.start();
+        Handler handler = new AppDiskLogStrategy.WriteHandler(ht.getLooper(), folder, AppDiskLogStrategy.MAX_BYTES);
+        AppDiskLogStrategy logStrategy = new AppDiskLogStrategy(handler);
+
+
+        Logger.addLogAdapter(new DiskLogAdapter(CsvFormatStrategy.newBuilder()
+                .logStrategy(logStrategy)
+                .build()));
 
         disableAPIDialog();
         initData();

@@ -9,7 +9,7 @@ public class Constant {
     /**
      * 日志输出控制，上线时修改为false
      */
-    public static boolean LOG_PRINT = true;
+    public static boolean LOG_PRINT = false;
 
     /**
      * 日志输出Tag前缀

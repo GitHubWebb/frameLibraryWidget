@@ -24,4 +24,9 @@
  Banner控件 https://www.jianshu.com/p/b8fe093a9d4b
  implementation 'com.github.LidongWen:WenldBanner:2.0.2'
  
+ >引入的Logger
+ >>Logger日志 https://github.com/orhanobut/logger
+ >>>implementation  'com.orhanobut:logger:2.2.0'
+
+ 
  

@@ -11,16 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.framelibrary.ui.activity.select_photo.MultiImageSelectorActivity;
-import com.framelibrary.util.LogUtils;
+import com.framelibrary.util.logutil.LoggerUtils;
 import com.framelibrary.util.PermissionCheckUtils;
 import com.framelibrary.util.UIUtils;
 import com.framelibrary.util.dialog.DialogDoNet;
+import com.framelibrary.util.select.selectphoto.FileUtils;
 import com.framelibrary.widget.image.ShowImagesDialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.framelibrary.config.FrameLibBaseApplication.getInstance;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -35,13 +35,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         mActivity = this;
         TextView tvTest = findViewById(R.id.tv_test);
+        findViewById(R.id.btn_get_img_mime_type).setOnClickListener(this);
         findViewById(R.id.btn_open_spliteditactivity).setOnClickListener(this);
         tvTest.setText("Hello");
 
         mActivity = this;
         UIUtils.makeTextViewResizable(tvTest, 4, 1, "...");
 
-        LogUtils.D("activity");
+        LoggerUtils.D("activity");
 
         runOnUiThread(new Runnable() {
             @Override
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        LogUtils.D("activity1");
+                        LoggerUtils.D("activity1");
                     }
                 }).start();
 
@@ -159,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // 原图地址
                 path = media.getPath();
             }
-            LogUtils.D(TAG, "onSelectSuccess( resultList = )" + path);
+            LoggerUtils.D(TAG, "onSelectSuccess( resultList = )" + path);
             *//*if (selectMedia != null) {
                 adapter.setList(selectMedia);
                 adapter.notifyDataSetChanged();
@@ -169,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onSelectSuccess(LocalMedia media) {
             // 单选回调
-            LogUtils.D(TAG, "onSelectSuccess( media = )" + media);
+            LoggerUtils.D(TAG, "onSelectSuccess( media = )" + media);
             *//*selectMedia.add(media);
             if (selectMedia != null) {
                 adapter.setList(selectMedia);
@@ -222,9 +223,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_get_img_mime_type:
+                FileUtils.getMimeType(new File("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511198824138&di=cec97b6363a1bce28b8499a31b78df83&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F3e282f8762696b0bbb3ed16a5dc193c718e5aff9.jpg"));
+
+                break;
             case R.id.btn_open_spliteditactivity:
-                DialogDoNet.startLoad(mActivity, "正在加载中");
-                startActivity(new Intent(getInstance().getContext(), SplitEditActivity.class));
+                DialogDoNet.startLoadAndCancelable(mActivity, "正在加载中", false);
+//                startActivity(new Intent(getInstance().getContext(), SplitEditActivity.class));
                 break;
         }
     }
