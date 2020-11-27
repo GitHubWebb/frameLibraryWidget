@@ -1,16 +1,14 @@
 package com.framelibrary.util.dialog;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 
 import com.framelibrary.util.StringUtils;
 import com.framelibrary.widget.xpopup.XPopup;
 import com.framelibrary.widget.xpopup.impl.LoadingPopupView;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 网络加载Dialog,采用Xpopup
@@ -25,34 +23,12 @@ public class DialogDoNet {
     private static Context context = null;
     private static LoadingPopupView loadingPopupView = null;
 
-//    private static MaterialDialog sMaterialDialog;
-
-    private static Handler handler = new Handler(Looper.getMainLooper()) {
-        public void handleMessage(Message msg) {
-            String message = "";
-            switch (msg.what) {
-                case START_DIALOG:// 启动加载框
-                    message = (String) msg.obj;
-                    init(message);
-                    break;
-                case UPDATE_DIALOG:// 更新加载框
-                    message = (String) msg.obj;
-                    if (loadingPopupView == null)
-                        init(message);
-                    else
-                        loadingPopupView.setTitle(message).show();
-                    break;
-                case STOP_DIALOG:// 停止加载框
-                    if (loadingPopupView != null) {
-                        loadingPopupView.dismiss();
-                        loadingPopupView = null;
-                        System.gc();
-                    }
-                    context = null;
-                    break;
-            }
-        }
-    };
+    /**
+     * 多线程并行处理定时任务时，Timer运行多个TimeTask时，只要其中之一没有捕获抛出的异常，其它任务便会自动终止运行，使用ScheduledExecutorService则没有这个问题。
+     * <p>
+     * 通过静态方法创建ScheduledExecutorService的实例
+     */
+    private static ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4);
 
     /**
      * @方法说明:加载控件与布局
@@ -73,19 +49,6 @@ public class DialogDoNet {
                     .asLoading(StringUtils.isBlank(msg) ? "正在加载中" : msg)
                     .show();
         }
-    }
-
-    /**
-     * @param msg
-     * @方法说明:更新显示的内容
-     * @方法名称:UpdateMsg
-     * @返回值:void
-     */
-    public static void UpdateMsg(String msg) {
-        Message message = new Message();
-        message.what = UPDATE_DIALOG;
-        message.obj = msg;
-        handler.sendMessage(message);
     }
 
     /**
@@ -133,17 +96,29 @@ public class DialogDoNet {
         if (DialogDoNet.context == null) {
             return;
         }
-        if (loadingPopupView != null)
-            UpdateMsg(msg);
-        else {
-            Message mssage = new Message();
-            mssage.what = START_DIALOG;
-            mssage.obj = msg;
-            handler.sendMessage(mssage);
-        }
+        showDialog(msg);
 
         openCancelable(openCancelable);
         isTouchDismiss(openCancelable);
+    }
+
+    /**
+     * 去除Handler调用, 直接在该方法中进行判断显示
+     *
+     * @param message
+     * @author wangwx
+     * <p>
+     */
+    private static void showDialog(String message) {
+        if (loadingPopupView == null)
+            init(message);
+        else
+            loadingPopupView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadingPopupView.setTitle(message).show();
+                }
+            }, 1000);
     }
 
     /**
@@ -153,14 +128,15 @@ public class DialogDoNet {
      * @返回值:void
      */
     public static void openCancelable(boolean flag) {
-        Timer timer = new Timer();// 实例化Timer类
-        timer.schedule(new TimerTask() {
+        // 延时任务
+        mScheduledExecutorService.schedule(new Runnable() {
+            @Override
             public void run() {
                 if (loadingPopupView != null) {
                     loadingPopupView.popupInfo.isDismissOnBackPressed = (flag);
                 }
             }
-        }, 200);// 这里百毫秒
+        }, 200, TimeUnit.MILLISECONDS); // 这里2百毫秒
 
     }
 
@@ -171,14 +147,15 @@ public class DialogDoNet {
      * @返回值:void
      */
     public static void isTouchDismiss(boolean isdimiss) {
-        Timer timer = new Timer();// 实例化Timer类
-        timer.schedule(new TimerTask() {
+        // 延时任务
+        mScheduledExecutorService.schedule(new Runnable() {
+            @Override
             public void run() {
                 if (loadingPopupView != null) {
                     loadingPopupView.popupInfo.isDismissOnTouchOutside = (isdimiss);
                 }
             }
-        }, 200);// 这里百毫秒
+        }, 200, TimeUnit.MILLISECONDS); // 这里2百毫秒
     }
 
     /**
@@ -187,20 +164,27 @@ public class DialogDoNet {
      * @返回值:void
      */
     public static void dismiss() {
-        delayDismiss(0);
+        dismiss(0);
     }
 
 
     // 避免消失过快,闪动,所以延迟关闭
-    public static void delayDismiss(long delay) {
+    public static void dismiss(long delay) {
         if (delay < 0) delay = 0;
-        handler.postDelayed(new Runnable() {
+
+        // 延时任务
+        mScheduledExecutorService.schedule(new Runnable() {
             @Override
             public void run() {
-                handler.sendEmptyMessage(STOP_DIALOG);
-
+                if (loadingPopupView != null) {
+                    loadingPopupView.dismiss();
+                    loadingPopupView = null;
+                    System.gc();
+                }
+                context = null;
             }
-        }, delay);
+        }, delay, TimeUnit.MILLISECONDS); // 这里2百毫秒
+
     }
 
 

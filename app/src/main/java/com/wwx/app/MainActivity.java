@@ -22,13 +22,16 @@ import com.framelibrary.widget.image.ShowImagesDialog;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     public final int SELECT_PHOTO_FROM_SDCARD = 1;
+    private ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4);
+
 
     private Activity mActivity;
 
@@ -239,16 +242,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(FrameLibBaseApplication.getInstance().getContext(), SplitEditActivity.class));
                 break;
             case R.id.btn_open_dialog_message:
-                new Timer("正在加载中").schedule(new TimerTask() {
+
+                // 循环任务，以上一次任务的结束时间计算下一次任务的开始时间,也就是延迟时间加上任务执行时间就是下一个任务的开始时间
+                mScheduledExecutorService.scheduleWithFixedDelay(new Runnable() {
                     @Override
                     public void run() {
-
                         boolean isOpenCancelable = false;
                         if (openDialogMsgCount % 2 == 0) isOpenCancelable = true;
                         DialogDoNet.startLoadAndCancelable(mActivity, "正在加载中" + openDialogMsgCount++, isOpenCancelable);
 
                     }
-                }, 0,300);
+                }, 200, 300, TimeUnit.MILLISECONDS);
                 break;
         }
     }

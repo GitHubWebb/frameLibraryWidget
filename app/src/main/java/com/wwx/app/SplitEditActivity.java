@@ -18,7 +18,7 @@ public class SplitEditActivity extends AppCompatActivity {
         SplitEditTextView splitEditTextView = findViewById(R.id.splitEdit2);
         TextChangedListener.inputLimitSpaceWrap(20, splitEditTextView);
 
-        DialogDoNet.UpdateMsg("更新了");
+        DialogDoNet.startLoad(this, "更新了");
 
         splitEditTextView.setOnInputListener(new OnInputListener() {
             @Override
