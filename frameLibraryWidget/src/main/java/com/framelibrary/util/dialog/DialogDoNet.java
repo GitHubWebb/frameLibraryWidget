@@ -40,7 +40,7 @@ public class DialogDoNet {
                     if (loadingPopupView == null)
                         init(message);
                     else
-                        loadingPopupView.setTitle(message);
+                        loadingPopupView.setTitle(message).show();
                     break;
                 case STOP_DIALOG:// 停止加载框
                     if (loadingPopupView != null) {
@@ -77,6 +77,19 @@ public class DialogDoNet {
 
     /**
      * @param msg
+     * @方法说明:更新显示的内容
+     * @方法名称:UpdateMsg
+     * @返回值:void
+     */
+    public static void UpdateMsg(String msg) {
+        Message message = new Message();
+        message.what = UPDATE_DIALOG;
+        message.obj = msg;
+        handler.sendMessage(message);
+    }
+
+    /**
+     * @param msg
      * @方法说明:启动对话框
      * @方法名称:startLoad
      * @返回值:void
@@ -104,6 +117,7 @@ public class DialogDoNet {
      */
     public static void startLoadAndCancelable(Context context, int msg, boolean openCancelable) {
         String msgStr = context.getResources().getString(msg);
+
         startLoadAndCancelable(context, msgStr, openCancelable);
     }
 
@@ -119,26 +133,17 @@ public class DialogDoNet {
         if (DialogDoNet.context == null) {
             return;
         }
+        if (loadingPopupView != null)
+            UpdateMsg(msg);
+        else {
+            Message mssage = new Message();
+            mssage.what = START_DIALOG;
+            mssage.obj = msg;
+            handler.sendMessage(mssage);
+        }
 
-        Message mssage = new Message();
-        mssage.what = START_DIALOG;
-        mssage.obj = msg;
-        handler.sendMessage(mssage);
         openCancelable(openCancelable);
         isTouchDismiss(openCancelable);
-    }
-
-    /**
-     * @param msg
-     * @方法说明:更新显示的内容
-     * @方法名称:UpdateMsg
-     * @返回值:void
-     */
-    public static void UpdateMsg(String msg) {
-        Message message = new Message();
-        message.what = UPDATE_DIALOG;
-        message.obj = msg;
-        handler.sendMessage(message);
     }
 
     /**

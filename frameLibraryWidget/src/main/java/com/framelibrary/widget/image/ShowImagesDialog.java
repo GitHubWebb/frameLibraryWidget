@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,13 +22,15 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.framelibrary.R;
 import com.framelibrary.util.DeviceUtils;
 import com.framelibrary.util.GlideUtils;
+import com.framelibrary.util.StringUtils;
 import com.framelibrary.widget.viewpager.ShowImagesViewPager;
+import com.github.chrisbanes.photoview.OnPhotoTapListener;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * 参照CSDN 整理/封装出 适合快速使用的图片预览框架
@@ -85,7 +88,15 @@ public class ShowImagesDialog extends Dialog {
     // 初始化页面
     private void onCreate(@NonNull Context context, List<String> imgUrls) {
         this.mContext = context;//传入上下文
-        this.mImgUrls = imgUrls == null ? new ArrayList<>() : imgUrls;//传入图片String数组
+        this.mImgUrls = new CopyOnWriteArrayList<>();
+        if (imgUrls != null) {
+            mImgUrls.addAll(imgUrls);//传入图片String数组
+        }
+
+        for (String img : mImgUrls) {
+            if (StringUtils.isBlank(img))
+                mImgUrls.remove(img);
+        }
 
         mCurrentPositionItem = mImgUrls.size() < mCurrentPositionItem + 1 ? 0 : mCurrentPositionItem;
         initView(mCurrentPositionItem);
@@ -127,15 +138,11 @@ public class ShowImagesDialog extends Dialog {
 
     private void initData() {
         //当PhotoView被点击时，添加相应的点击事件
-        PhotoViewAttacher.OnPhotoTapListener listener = new PhotoViewAttacher.OnPhotoTapListener() {
+        OnPhotoTapListener listener = new OnPhotoTapListener() {
 
             @Override
-            public void onPhotoTap(View view, float x, float y) {
+            public void onPhotoTap(ImageView view, float x, float y) {
                 dismiss();//点击图片后，返回到原来的界面
-            }
-
-            @Override
-            public void onOutsidePhotoTap() {
 
             }
 

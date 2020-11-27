@@ -36,4 +36,12 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_10"
         android:text="open SplitEditActivity" />
+
+    <Button
+        android:id="@+id/btn_open_dialog_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="open dialog message" />
 </LinearLayout>

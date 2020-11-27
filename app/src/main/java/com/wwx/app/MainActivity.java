@@ -10,17 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.framelibrary.config.FrameLibBaseApplication;
 import com.framelibrary.ui.activity.select_photo.MultiImageSelectorActivity;
-import com.framelibrary.util.logutil.LoggerUtils;
 import com.framelibrary.util.PermissionCheckUtils;
 import com.framelibrary.util.UIUtils;
 import com.framelibrary.util.dialog.DialogDoNet;
+import com.framelibrary.util.logutil.LoggerUtils;
 import com.framelibrary.util.select.selectphoto.FileUtils;
 import com.framelibrary.widget.image.ShowImagesDialog;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public final int SELECT_PHOTO_FROM_SDCARD = 1;
 
     private Activity mActivity;
+
+    private int openDialogMsgCount = 0; // 点击打开信息dialog次数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView tvTest = findViewById(R.id.tv_test);
         findViewById(R.id.btn_get_img_mime_type).setOnClickListener(this);
         findViewById(R.id.btn_open_spliteditactivity).setOnClickListener(this);
+        findViewById(R.id.btn_open_dialog_message).setOnClickListener(this);
         tvTest.setText("Hello");
 
         mActivity = this;
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         urls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511198824138&di=cec97b6363a1bce28b8499a31b78df83&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F3e282f8762696b0bbb3ed16a5dc193c718e5aff9.jpg");
         urls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511793592&di=08b8de22336028a68c9a0bbbe7a9066d&imgtype=jpg&er=1&src=http%3A%2F%2Fi1.hdslb.com%2Fbfs%2Farchive%2F7ea7878cfbddb27bb8a23e2407bfa7a48655f317.jpg");
         urls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511198824136&di=f4dc71ffdbbb16d9e3d496cf8add5376&imgtype=0&src=http%3A%2F%2Foss.tan8.com%2Fresource%2Fattachment%2F2017%2F201707%2F962b7304d0adc7e2e1d374dc6786e302.jpg");
+        urls.add("");
         findViewById(R.id.btn_show_imgs).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,7 +236,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_open_spliteditactivity:
                 DialogDoNet.startLoadAndCancelable(mActivity, "正在加载中", false);
-//                startActivity(new Intent(getInstance().getContext(), SplitEditActivity.class));
+                startActivity(new Intent(FrameLibBaseApplication.getInstance().getContext(), SplitEditActivity.class));
+                break;
+            case R.id.btn_open_dialog_message:
+                new Timer("正在加载中").schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+
+                        boolean isOpenCancelable = false;
+                        if (openDialogMsgCount % 2 == 0) isOpenCancelable = true;
+                        DialogDoNet.startLoadAndCancelable(mActivity, "正在加载中" + openDialogMsgCount++, isOpenCancelable);
+
+                    }
+                }, 0,300);
                 break;
         }
     }
