@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.framelibrary.config.DaemonThreadFactory;
 import com.framelibrary.config.FrameLibBaseApplication;
 import com.framelibrary.ui.activity.select_photo.MultiImageSelectorActivity;
 import com.framelibrary.util.PermissionCheckUtils;
@@ -30,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     public final int SELECT_PHOTO_FROM_SDCARD = 1;
-    private ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4);
+    private ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4, new DaemonThreadFactory());
 
 
     private Activity mActivity;
@@ -249,10 +250,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         boolean isOpenCancelable = false;
                         if (openDialogMsgCount % 2 == 0) isOpenCancelable = true;
-                        DialogDoNet.startLoadAndCancelable(mActivity, "正在加载中" + openDialogMsgCount++, isOpenCancelable);
+
+                        if (openDialogMsgCount >= 30) {
+                            DialogDoNet.dismiss(300);
+                            return;
+                        } else
+                            DialogDoNet.startLoadAndCancelable(mActivity, "正在加载中" + openDialogMsgCount++, isOpenCancelable);
 
                     }
                 }, 200, 300, TimeUnit.MILLISECONDS);
+
+                if (openDialogMsgCount >= 30) {
+                    mScheduledExecutorService.shutdown();
+                }
                 break;
         }
     }

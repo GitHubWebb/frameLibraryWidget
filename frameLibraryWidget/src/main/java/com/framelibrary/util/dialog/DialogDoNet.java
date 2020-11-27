@@ -2,6 +2,7 @@ package com.framelibrary.util.dialog;
 
 import android.content.Context;
 
+import com.framelibrary.config.DaemonThreadFactory;
 import com.framelibrary.util.StringUtils;
 import com.framelibrary.widget.xpopup.XPopup;
 import com.framelibrary.widget.xpopup.impl.LoadingPopupView;
@@ -28,7 +29,7 @@ public class DialogDoNet {
      * <p>
      * 通过静态方法创建ScheduledExecutorService的实例
      */
-    private static ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4);
+    private static ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4,new DaemonThreadFactory());
 
     /**
      * @方法说明:加载控件与布局
@@ -178,8 +179,8 @@ public class DialogDoNet {
             public void run() {
                 if (loadingPopupView != null) {
                     loadingPopupView.dismiss();
-                    loadingPopupView = null;
-                    System.gc();
+//                    loadingPopupView = null;
+//                    System.gc();
                 }
                 context = null;
             }

@@ -520,13 +520,22 @@ public abstract class BasePopupView extends FrameLayout implements OnNavigationB
         handler.removeCallbacks(attachTask);
         handler.removeCallbacks(initTask);
         if (popupStatus == PopupStatus.Dismissing || popupStatus == PopupStatus.Dismiss) return;
-        popupStatus = PopupStatus.Dismissing;
         clearFocus();
         if (popupInfo != null && popupInfo.xPopupCallback != null)
             popupInfo.xPopupCallback.beforeDismiss(this);
-        beforeDismiss();
-        doDismissAnimation();
-        doAfterDismiss();
+
+        popupStatus = PopupStatus.Dismissing;
+
+        new Handler(Looper.getMainLooper())
+                .post(new Runnable() {
+                    @Override
+                    public void run() {
+                        beforeDismiss();
+//                        doDismissAnimation();
+                        doAfterDismiss();
+                    }
+                });
+
     }
 
     /**
