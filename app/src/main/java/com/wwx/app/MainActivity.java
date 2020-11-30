@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         boolean isOpenCancelable = false;
                         if (openDialogMsgCount % 2 == 0) isOpenCancelable = true;
 
-                        if (openDialogMsgCount >= 30) {
+                        if (openDialogMsgCount >= 50) {
                             DialogDoNet.dismiss(300);
                             return;
                         } else
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }, 200, 300, TimeUnit.MILLISECONDS);
 
-                if (openDialogMsgCount >= 30) {
+                if (openDialogMsgCount >= 50) {
                     mScheduledExecutorService.shutdown();
                 }
                 break;

@@ -119,7 +119,7 @@ public class DialogDoNet {
                 public void run() {
                     loadingPopupView.setTitle(message).show();
                 }
-            }, 1000);
+            }, 550); // 使用这个毫秒值是为了更好地显示show,低于这个值很可能dismiss之后不会show
     }
 
     /**
