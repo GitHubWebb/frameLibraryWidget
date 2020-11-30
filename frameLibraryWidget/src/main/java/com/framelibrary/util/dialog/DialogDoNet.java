@@ -22,14 +22,14 @@ public class DialogDoNet {
     private static final int UPDATE_DIALOG = 1;//更新对话框
     private static final int STOP_DIALOG = 2;//销毁对话框
     private static Context context = null;
-    private static LoadingPopupView loadingPopupView = null;
+    public static LoadingPopupView loadingPopupView = null;
 
     /**
      * 多线程并行处理定时任务时，Timer运行多个TimeTask时，只要其中之一没有捕获抛出的异常，其它任务便会自动终止运行，使用ScheduledExecutorService则没有这个问题。
      * <p>
      * 通过静态方法创建ScheduledExecutorService的实例
      */
-    private static ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4,new DaemonThreadFactory());
+    private static ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4, new DaemonThreadFactory());
 
     /**
      * @方法说明:加载控件与布局
@@ -93,6 +93,10 @@ public class DialogDoNet {
      * @返回值:void
      */
     public static void startLoadAndCancelable(Context context, String msg, boolean openCancelable) {
+        // 如果下次展示的Dialog和上一次的属于同一个上下文,则执行更新逻辑,如果是新的上下文则将loadingPopupView置为空,从新执行初始化
+        if (DialogDoNet.context != context)
+            loadingPopupView = null;
+
         DialogDoNet.context = context;
         if (DialogDoNet.context == null) {
             return;
