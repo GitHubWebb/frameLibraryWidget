@@ -2,13 +2,13 @@ package com.framelibrary.util.eyes;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -68,7 +68,7 @@ public class SystemBarTintManager {
      */
     @SuppressLint("ResourceType")
     @TargetApi(19)
-    public SystemBarTintManager(Activity activity) {
+    public SystemBarTintManager(AppCompatActivity activity) {
 
         Window win = activity.getWindow();
         ViewGroup decorViewGroup = (ViewGroup) win.getDecorView();
@@ -355,7 +355,7 @@ public class SystemBarTintManager {
         private final boolean mInPortrait;
         private final float mSmallestWidthDp;
 
-        private SystemBarConfig(Activity activity, boolean translucentStatusBar, boolean traslucentNavBar) {
+        private SystemBarConfig(AppCompatActivity activity, boolean translucentStatusBar, boolean traslucentNavBar) {
             Resources res = activity.getResources();
             mInPortrait = (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
             mSmallestWidthDp = getSmallestWidthDp(activity);
@@ -437,7 +437,7 @@ public class SystemBarTintManager {
         }
 
         @SuppressLint("NewApi")
-        private float getSmallestWidthDp(Activity activity) {
+        private float getSmallestWidthDp(AppCompatActivity activity) {
             DisplayMetrics metrics = new DisplayMetrics();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 activity.getWindowManager().getDefaultDisplay().getRealMetrics(metrics);

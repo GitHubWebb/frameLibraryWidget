@@ -1,11 +1,11 @@
 package com.framelibrary.util.dialog;
 
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,7 +33,7 @@ public class DialogUtils {
      *
      * @param activity libActivity 对象
      */
-    public static void showDialog(Activity activity) {
+    public static void showDialog(AppCompatActivity activity) {
         if (activity == null || activity.isFinishing()) {
             return;
         }
@@ -48,7 +48,7 @@ public class DialogUtils {
      * @param activity
      * @param message
      */
-    public static void showDialog(Activity activity, String message) {
+    public static void showDialog(AppCompatActivity activity, String message) {
         if (activity == null || activity.isFinishing()) {
             return;
         }
@@ -65,7 +65,7 @@ public class DialogUtils {
      * @param message
      * @param backPress 是否允许返回键返回
      */
-    public static void showDialog(Activity activity, String message, boolean backPress) {
+    public static void showDialog(AppCompatActivity activity, String message, boolean backPress) {
         if (activity == null || activity.isFinishing()) {
             return;
         }
@@ -80,7 +80,7 @@ public class DialogUtils {
      *
      * @param activity libActivity 对象
      */
-    public static void showDialogUploadImage(Activity activity) {
+    public static void showDialogUploadImage(AppCompatActivity activity) {
         if (activity == null || activity.isFinishing()) {
             return;
         }
@@ -94,7 +94,7 @@ public class DialogUtils {
      *
      * @param activity libActivity 对象
      */
-    public static void showDialogUploadVideo(Activity activity) {
+    public static void showDialogUploadVideo(AppCompatActivity activity) {
         if (activity == null || activity.isFinishing()) {
             return;
         }
@@ -108,7 +108,7 @@ public class DialogUtils {
      *
      * @param activity libActivity 对象
      */
-    public static void showDialogCommitData(Activity activity) {
+    public static void showDialogCommitData(AppCompatActivity activity) {
         if (activity == null || activity.isFinishing()) {
             return;
         }
@@ -122,7 +122,7 @@ public class DialogUtils {
      *
      * @param activity libActivity 对象
      */
-    public static void showDialogCompressFile(Activity activity) {
+    public static void showDialogCompressFile(AppCompatActivity activity) {
         if (activity == null || activity.isFinishing()) {
             return;
         }
@@ -180,7 +180,7 @@ public class DialogUtils {
      * @return 网络请求对话框对象
      */
     private static Dialog showProgressDialog(Context context, String message, boolean backPress) {
-        if (!((Activity) context).isFinishing()) {
+        if (!((AppCompatActivity) context).isFinishing()) {
 /*            int deviceWidth = DeviceUtils.deviceWidth(context);
             int deviceHeight = DeviceUtils.deviceHeight(context);
             ProgressDialog progressDialog = new ProgressDialog(context, ProgressDialog.STYLE_HORIZONTAL);
@@ -235,7 +235,7 @@ public class DialogUtils {
     }
 
     public static void showPermissionDialog(final Context context, String errmsg) {
-        if (context == null || ((Activity) context).isFinishing())
+        if (context == null || ((AppCompatActivity) context).isFinishing())
             return;
         final Dialog dialog = new Dialog(context, R.style.DialogCicleStyle);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -265,7 +265,7 @@ public class DialogUtils {
      * @param callback
      */
     public static void showAlertDialog(final Context context, String title, String errmsg, CommonDialogInterface callback) {
-        if (context == null || ((Activity) context).isFinishing())
+        if (context == null || ((AppCompatActivity) context).isFinishing())
             return;
         final Dialog dialog = new Dialog(context, R.style.common_dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -2,10 +2,10 @@ package com.framelibrary.util.eyes;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -46,7 +46,7 @@ public class StatusBarUtil {
      * @param resId 颜色
      */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static void setStatusBarRes(Activity activity, int resId) {
+    public static void setStatusBarRes(AppCompatActivity activity, int resId) {
         if (activity == null || activity.isDestroyed())
             return;
         
@@ -68,7 +68,7 @@ public class StatusBarUtil {
      * @param colorId 颜色
      */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static void setStatusBarColor(Activity activity, int colorId) {
+    public static void setStatusBarColor(AppCompatActivity activity, int colorId) {
         if (activity == null || activity.isDestroyed())
             return;
 
@@ -88,7 +88,7 @@ public class StatusBarUtil {
      * 设置状态栏透明
      */
     @TargetApi(19)
-    public static void setTranslucentStatus(Activity activity) {
+    public static void setTranslucentStatus(AppCompatActivity activity) {
         if (activity == null || activity.isDestroyed())
             return;
 
@@ -121,7 +121,7 @@ public class StatusBarUtil {
      *
      * @param activity
      */
-    public static void setRootViewFitsSystemWindows(Activity activity, boolean fitSystemWindows) {
+    public static void setRootViewFitsSystemWindows(AppCompatActivity activity, boolean fitSystemWindows) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ViewGroup winContent = (ViewGroup) activity.findViewById(android.R.id.content);
             if (winContent.getChildCount() > 0) {
@@ -141,7 +141,7 @@ public class StatusBarUtil {
     /**
      * 设置状态栏深色浅色切换
      */
-    public static boolean setStatusBarDarkTheme(Activity activity, boolean dark) {
+    public static boolean setStatusBarDarkTheme(AppCompatActivity activity, boolean dark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 setStatusBarFontIconDark(activity, TYPE_M, dark);
@@ -161,7 +161,7 @@ public class StatusBarUtil {
     /**
      * 设置 状态栏深色浅色切换
      */
-    public static boolean setStatusBarFontIconDark(Activity activity, @ViewType int type, boolean dark) {
+    public static boolean setStatusBarFontIconDark(AppCompatActivity activity, @ViewType int type, boolean dark) {
         switch (type) {
             case TYPE_MIUI:
                 return setMiuiUI(activity, dark);
@@ -174,7 +174,7 @@ public class StatusBarUtil {
     }
 
     //设置6.0 状态栏深色浅色切换
-    public static boolean setCommonUI(Activity activity, boolean dark) {
+    public static boolean setCommonUI(AppCompatActivity activity, boolean dark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             View decorView = activity.getWindow().getDecorView();
             if (decorView != null) {
@@ -195,7 +195,7 @@ public class StatusBarUtil {
     }
 
     //设置Flyme 状态栏深色浅色切换
-    public static boolean setFlymeUI(Activity activity, boolean dark) {
+    public static boolean setFlymeUI(AppCompatActivity activity, boolean dark) {
         try {
             Window window = activity.getWindow();
             WindowManager.LayoutParams lp = window.getAttributes();
@@ -220,7 +220,7 @@ public class StatusBarUtil {
     }
 
     //设置MIUI 状态栏深色浅色切换
-    public static boolean setMiuiUI(Activity activity, boolean dark) {
+    public static boolean setMiuiUI(AppCompatActivity activity, boolean dark) {
         try {
             Window window = activity.getWindow();
             Class<?> clazz = activity.getWindow().getClass();

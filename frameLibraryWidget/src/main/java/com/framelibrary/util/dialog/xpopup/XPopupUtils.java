@@ -1,6 +1,5 @@
 package com.framelibrary.util.dialog.xpopup;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.Resources;
@@ -19,6 +18,7 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -475,11 +475,11 @@ public class XPopupUtils {
         return false;
     }
 
-    public static Activity context2Activity(View view) {
+    public static AppCompatActivity context2Activity(View view) {
         Context context = view.getContext();
         while (context instanceof ContextWrapper) {
-            if (context instanceof Activity) {
-                return ((Activity) context);
+            if (context instanceof AppCompatActivity) {
+                return ((AppCompatActivity) context);
             } else {
                 context = ((ContextWrapper) context).getBaseContext();
             }

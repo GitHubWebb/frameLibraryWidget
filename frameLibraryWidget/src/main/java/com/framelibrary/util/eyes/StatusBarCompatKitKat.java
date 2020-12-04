@@ -1,9 +1,9 @@
 package com.framelibrary.util.eyes;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +40,7 @@ class StatusBarCompatKitKat {
      * 1. Add fake statusBarView.
      * 2. set tag to statusBarView.
      */
-    private static View addFakeStatusBarView(Activity activity, int statusBarColor, int statusBarHeight) {
+    private static View addFakeStatusBarView(AppCompatActivity activity, int statusBarColor, int statusBarHeight) {
         Window window = activity.getWindow();
         ViewGroup mDecorView = (ViewGroup) window.getDecorView();
 
@@ -58,7 +58,7 @@ class StatusBarCompatKitKat {
     /**
      * use reserved order to remove is more quickly.
      */
-    private static void removeFakeStatusBarViewIfExist(Activity activity) {
+    private static void removeFakeStatusBarViewIfExist(AppCompatActivity activity) {
         Window window = activity.getWindow();
         ViewGroup mDecorView = (ViewGroup) window.getDecorView();
 
@@ -107,7 +107,7 @@ class StatusBarCompatKitKat {
      * 4. addMarginTopToContentChild
      * 5. cancel ContentChild's fitsSystemWindow
      */
-    static void setStatusBarColor(Activity activity, int statusColor) {
+    static void setStatusBarColor(AppCompatActivity activity, int statusColor) {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
@@ -132,7 +132,7 @@ class StatusBarCompatKitKat {
      * 3. removeMarginTopOfContentChild
      * 4. cancel ContentChild's fitsSystemWindow
      */
-    static void translucentStatusBar(Activity activity) {
+    static void translucentStatusBar(AppCompatActivity activity) {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
@@ -156,7 +156,7 @@ class StatusBarCompatKitKat {
      * 5. removeMarginTopOfContentChild
      * 6. add OnOffsetChangedListener to change statusBarView's alpha
      */
-    static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
+    static void setStatusBarColorForCollapsingToolbar(AppCompatActivity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
                                                       Toolbar toolbar, int statusColor) {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

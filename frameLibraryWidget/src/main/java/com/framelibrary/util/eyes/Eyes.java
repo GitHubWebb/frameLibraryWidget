@@ -2,12 +2,12 @@ package com.framelibrary.util.eyes;
 
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -34,7 +34,7 @@ import java.lang.reflect.Method;
 public class Eyes {
     private static final String TAG = "Eyes";
 
-    public static void setStatusBarColor(Activity activity, int statusColor) {
+    public static void setStatusBarColor(AppCompatActivity activity, int statusColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             EyesLollipop.setStatusBarColor(activity, statusColor);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -42,11 +42,11 @@ public class Eyes {
         }
     }
 
-    public static void translucentStatusBar(Activity activity) {
+    public static void translucentStatusBar(AppCompatActivity activity) {
         translucentStatusBar(activity, false);
     }
 
-    public static void translucentStatusBar(Activity activity, boolean hideStatusBarBackground) {
+    public static void translucentStatusBar(AppCompatActivity activity, boolean hideStatusBarBackground) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             EyesLollipop.translucentStatusBar(activity, hideStatusBarBackground);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -54,7 +54,7 @@ public class Eyes {
         }
     }
 
-    public static void setStatusBarColorForCollapsingToolbar(@NonNull Activity activity, AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
+    public static void setStatusBarColorForCollapsingToolbar(@NonNull AppCompatActivity activity, AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
                                                              Toolbar toolbar, @ColorInt int statusColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             EyesLollipop.setStatusBarColorForCollapsingToolbar(activity, appBarLayout, collapsingToolbarLayout, toolbar, statusColor);
@@ -64,7 +64,7 @@ public class Eyes {
     }
 
     //根据设置颜色显示状态栏 白底黑字
-    public static void setStatusBarLightMode(Activity activity, int color) {
+    public static void setStatusBarLightMode(AppCompatActivity activity, int color) {
         if (Color.TRANSPARENT == color) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Vision24API(activity);
@@ -108,7 +108,7 @@ public class Eyes {
     }
 
     //设置透明的状态栏 (沉浸式)
-    public static void setStatusBarLightModeByTRANSPARENT(Activity activity) {
+    public static void setStatusBarLightModeByTRANSPARENT(AppCompatActivity activity) {
         initWindow(activity);
     }
 
@@ -117,7 +117,7 @@ public class Eyes {
      *
      * @param activity
      */
-    private static void initWindow(Activity activity) {
+    private static void initWindow(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Vision24API(activity);
         } else if (Build.VERSION.SDK_INT >= 21) {
@@ -127,7 +127,7 @@ public class Eyes {
         }
     }
 
-    private static void Vision19API(Activity activity) {
+    private static void Vision19API(AppCompatActivity activity) {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         ViewGroup decorViewGroup = (ViewGroup) window.getDecorView();
@@ -140,7 +140,7 @@ public class Eyes {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static void Vision21API(Activity activity) {
+    private static void Vision21API(AppCompatActivity activity) {
         Window window = activity.getWindow();
         //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -150,7 +150,7 @@ public class Eyes {
         window.setStatusBarColor(Color.TRANSPARENT);
     }
 
-    private static void Vision24API(Activity activity) {
+    private static void Vision24API(AppCompatActivity activity) {
         try {
             Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
             Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
@@ -161,7 +161,7 @@ public class Eyes {
         }
     }
 
-    public static void setStatusBarLightForCollapsingToolbar(Activity activity, AppBarLayout appBarLayout,
+    public static void setStatusBarLightForCollapsingToolbar(AppCompatActivity activity, AppBarLayout appBarLayout,
                                                              CollapsingToolbarLayout collapsingToolbarLayout, Toolbar toolbar, int statusBarColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             EyesLollipop.setStatusBarWhiteForCollapsingToolbar(activity, appBarLayout, collapsingToolbarLayout, toolbar, statusBarColor);
@@ -175,7 +175,7 @@ public class Eyes {
      * MIUI的沉浸支持透明白色字体和透明黑色字体
      * https://dev.mi.com/console/doc/detail?pId=1159
      */
-    static boolean MIUISetStatusBarLightMode(Activity activity, boolean darkmode) {
+    static boolean MIUISetStatusBarLightMode(AppCompatActivity activity, boolean darkmode) {
         try {
             Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
             Window window = activity.getWindow();
@@ -199,7 +199,7 @@ public class Eyes {
     /**
      * 设置状态栏图标为深色和魅族特定的文字风格，Flyme4.0以上
      */
-    static boolean FlymeSetStatusBarLightMode(Activity activity, boolean darkmode) {
+    static boolean FlymeSetStatusBarLightMode(AppCompatActivity activity, boolean darkmode) {
         try {
             WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
             Field darkFlag = WindowManager.LayoutParams.class
@@ -225,7 +225,7 @@ public class Eyes {
 
     }
 
-    static void setContentTopPadding(Activity activity, int padding) {
+    static void setContentTopPadding(AppCompatActivity activity, int padding) {
         ViewGroup mContentView = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
         mContentView.setPadding(0, padding, 0, 0);
     }

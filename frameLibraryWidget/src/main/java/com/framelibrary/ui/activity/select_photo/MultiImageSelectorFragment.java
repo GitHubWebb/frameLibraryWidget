@@ -2,7 +2,6 @@ package com.framelibrary.ui.activity.select_photo;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -15,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,7 +123,7 @@ public class MultiImageSelectorFragment extends Fragment {
     private File mTmpFile;
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(AppCompatActivity activity) {
         super.onAttach(activity);
         try {
             mCallback = (Callback) activity;
@@ -358,7 +358,7 @@ public class MultiImageSelectorFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         // 相机拍照完成后，返回图片路径
         if (requestCode == REQUEST_CAMERA) {
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
                 if (mTmpFile != null) {
                     if (mCallback != null) {
                         mCallback.onCameraShot(mTmpFile);

@@ -1,12 +1,12 @@
 package com.framelibrary.util;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
@@ -436,7 +436,7 @@ public class UIUtils {
     /**
      * 截取除了导航栏之外的整个屏幕
      */
-    public static Bitmap screenShotWholeScreen(Activity activity) {
+    public static Bitmap screenShotWholeScreen(AppCompatActivity activity) {
         View dView = activity.getWindow().getDecorView();
         dView.setDrawingCacheEnabled(true);
         dView.buildDrawingCache();

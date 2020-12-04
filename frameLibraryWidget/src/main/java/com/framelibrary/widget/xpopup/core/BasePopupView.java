@@ -1,10 +1,10 @@
 package com.framelibrary.widget.xpopup.core;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -190,7 +190,7 @@ public abstract class BasePopupView extends FrameLayout implements OnNavigationB
     }
 
     public BasePopupView show() {
-        Activity activity = XPopupUtils.context2Activity(this);
+        AppCompatActivity activity = XPopupUtils.context2Activity(this);
         if (activity == null || activity.isFinishing()) {
             return BasePopupView.this;
         }

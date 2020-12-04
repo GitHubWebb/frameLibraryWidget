@@ -58,7 +58,7 @@
             android:textSize="16sp"
             android:text="@string/xpopup_cancel"
             android:textColor="#666666"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -79,7 +79,7 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />

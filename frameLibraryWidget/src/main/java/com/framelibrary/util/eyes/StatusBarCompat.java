@@ -1,7 +1,7 @@
 package com.framelibrary.util.eyes;
 
-import android.app.Activity;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -29,11 +29,11 @@ public class StatusBarCompat {
      * @param statusColor color
      * @param alpha       0 - 255
      */
-    public static void setStatusBarColor(@NonNull Activity activity, @ColorInt int statusColor, int alpha) {
+    public static void setStatusBarColor(@NonNull AppCompatActivity activity, @ColorInt int statusColor, int alpha) {
         setStatusBarColor(activity, calculateStatusBarColor(statusColor, alpha));
     }
 
-    public static void setStatusBarColor(@NonNull Activity activity, @ColorInt int statusColor) {
+    public static void setStatusBarColor(@NonNull AppCompatActivity activity, @ColorInt int statusColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StatusBarCompatLollipop.setStatusBarColor(activity, statusColor);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -41,7 +41,7 @@ public class StatusBarCompat {
         }
     }
 
-    public static void translucentStatusBar(@NonNull Activity activity) {
+    public static void translucentStatusBar(@NonNull AppCompatActivity activity) {
         translucentStatusBar(activity, false);
     }
 
@@ -49,7 +49,7 @@ public class StatusBarCompat {
      * change to full screen mode
      * @param hideStatusBarBackground hide status bar alpha Background when SDK > 21, true if hide it
      */
-    public static void translucentStatusBar(@NonNull Activity activity, boolean hideStatusBarBackground) {
+    public static void translucentStatusBar(@NonNull AppCompatActivity activity, boolean hideStatusBarBackground) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StatusBarCompatLollipop.translucentStatusBar(activity, hideStatusBarBackground);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -57,7 +57,7 @@ public class StatusBarCompat {
         }
     }
 
-    public static void setStatusBarColorForCollapsingToolbar(@NonNull Activity activity, AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
+    public static void setStatusBarColorForCollapsingToolbar(@NonNull AppCompatActivity activity, AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
                                                              Toolbar toolbar, @ColorInt int statusColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StatusBarCompatLollipop.setStatusBarColorForCollapsingToolbar(activity, appBarLayout, collapsingToolbarLayout, toolbar, statusColor);

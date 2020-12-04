@@ -14,7 +14,7 @@
         android:columnWidth="@dimen/image_size"
         android:horizontalSpacing="@dimen/space_size"
         android:numColumns="auto_fit"
-        android:paddingBottom="?android:attr/actionBarSize"
+        android:paddingBottom="?attr/actionBarSize"
         android:verticalSpacing="@dimen/space_size" />
 
     <TextView
@@ -32,7 +32,7 @@
     <RelativeLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
         android:background="#cc000000"
         android:clickable="true">

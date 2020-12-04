@@ -1,8 +1,8 @@
 package com.framelibrary.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.bumptech.glide.BitmapTypeRequest;
@@ -43,9 +43,9 @@ public class GlideUtils {
             return true;
         if (null == mContext)
             return true;
-        if (mContext instanceof Activity && (
-                ((Activity) mContext).isFinishing() ||
-                        ((Activity) mContext).isDestroyed()
+        if (mContext instanceof AppCompatActivity && (
+                ((AppCompatActivity) mContext).isFinishing() ||
+                        ((AppCompatActivity) mContext).isDestroyed()
         ))
             return true;
         return false;

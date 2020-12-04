@@ -1,7 +1,6 @@
 package com.framelibrary.util;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +28,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -187,7 +187,7 @@ public class DeviceUtils {
     /**
      * 沉浸式状态栏
      */
-    public static void setWindowImmersiveState(Activity activity) {
+    public static void setWindowImmersiveState(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = activity.getWindow();
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -651,7 +651,7 @@ public class DeviceUtils {
      * @param uri
      * @return
      */
-    public static File uri2File(Activity context, Uri uri) {
+    public static File uri2File(AppCompatActivity context, Uri uri) {
         File file;
         String[] project = {MediaStore.Images.Media.DATA};
         Cursor actualImageCursor = context.getContentResolver().query(uri, project, null, null, null);
@@ -713,7 +713,7 @@ public class DeviceUtils {
     /**
      * 启动系统的WIFI连接界面
      */
-    public static void startSystemConnectionActivity(Activity activity) {
+    public static void startSystemConnectionActivity(AppCompatActivity activity) {
         Intent intent = null;
         if (getBuildLevel() > 10) {
             intent = new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS);

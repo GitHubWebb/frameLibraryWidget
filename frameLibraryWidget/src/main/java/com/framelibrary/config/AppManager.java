@@ -1,10 +1,9 @@
 package com.framelibrary.config;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.framelibrary.util.LogUtils;
 import com.framelibrary.util.ObjectUtils;
-import com.framelibrary.util.StringUtils;
 
 import java.util.Stack;
 
@@ -13,7 +12,7 @@ import java.util.Stack;
  */
 public class AppManager {
 
-    private static Stack<Activity> activityStack;
+    private static Stack<AppCompatActivity> activityStack;
     private static AppManager instance;
 
     private AppManager() {
@@ -28,7 +27,7 @@ public class AppManager {
         }
 
         if (activityStack == null) {
-            activityStack = new Stack<Activity>();
+            activityStack = new Stack<AppCompatActivity>();
         }
 
         return instance;
@@ -39,7 +38,7 @@ public class AppManager {
      *
      * @param clsName 注意该值用于是在不能接受到Activity的Module使用
      */
-    public static Activity getActivity(String clsName) {
+    public static AppCompatActivity getActivity(String clsName) {
         Class clazz = null;
         try {
             clazz = Class.forName(clsName);
@@ -54,9 +53,9 @@ public class AppManager {
     /**
      * 获取指定的Activity 实例
      */
-    public static Activity getActivity(Class<?> cls) {
+    public static AppCompatActivity getActivity(Class<?> cls) {
         if (activityStack != null)
-            for (Activity activity : activityStack) {
+            for (AppCompatActivity activity : activityStack) {
                 if (ObjectUtils.isEquals(activity.getClass(), cls)) {
                     return activity;
                 }
@@ -67,7 +66,7 @@ public class AppManager {
     /**
      * 添加Activity到堆栈
      */
-    public void addActivity(Activity activity) {
+    public void addActivity(AppCompatActivity activity) {
         activityStack.add(activity);
     }
 
@@ -76,18 +75,18 @@ public class AppManager {
      *
      * @return 栈中最后一个 或者 null （当栈中没有数据时）
      */
-    public Activity currentActivity() {
+    public AppCompatActivity currentActivity() {
         if (activityStack.isEmpty()) {
             return null;
         }
-        Activity activity = activityStack.lastElement();
+        AppCompatActivity activity = activityStack.lastElement();
         return activity;
     }
 
     /**
      * 结束指定的Activity
      */
-    public void finishActivity(Activity activity) {
+    public void finishActivity(AppCompatActivity activity) {
         if (activity != null && getActivity(activity.getClass()) != null) {
             removeActivity(activity);
             activity.finish();
@@ -97,7 +96,7 @@ public class AppManager {
     /**
      * 结束指定的Activity
      */
-    public void removeActivity(Activity activity) {
+    public void removeActivity(AppCompatActivity activity) {
         if (activity != null) {
             activityStack.remove(activity);
         }
@@ -107,7 +106,7 @@ public class AppManager {
      * 结束指定类名的Activity
      */
     public void finishActivity(Class<?> cls) {
-        for (Activity activity : activityStack) {
+        for (AppCompatActivity activity : activityStack) {
             if (activity.getClass().equals(cls)) {
                 finishActivity(activity);
                 break;
@@ -120,7 +119,7 @@ public class AppManager {
      */
     public void finishAllActivity() {
         while (!activityStack.isEmpty()) {
-            Activity a = activityStack.pop();
+            AppCompatActivity a = activityStack.pop();
             if (a != null && !a.isFinishing()) {
                 a.finish();
             }

@@ -1,11 +1,10 @@
 package com.framelibrary.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 import com.framelibrary.config.FrameLibBaseApplication;
 
@@ -171,7 +170,7 @@ public class ScreenUtils {
     /**
      * 获取状态栏的高
      */
-    public static int getStatusBarHeight(Activity context) {
+    public static int getStatusBarHeight(AppCompatActivity context) {
         Rect frame = new Rect();
         context.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
         int statusBarHeight = frame.top;

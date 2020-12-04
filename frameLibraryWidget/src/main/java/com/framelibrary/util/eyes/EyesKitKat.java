@@ -2,10 +2,10 @@ package com.framelibrary.util.eyes;
 
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -29,7 +29,7 @@ class EyesKitKat {
     private static final String TAG_FAKE_STATUS_BAR_VIEW = "statusBarView";
     private static final String TAG_MARGIN_ADDED = "marginAdded";
 
-    static void setStatusBarColor(Activity activity, int statusColor) {
+    static void setStatusBarColor(AppCompatActivity activity, int statusColor) {
         Window window = activity.getWindow();
         //设置Window为全透明
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -62,7 +62,7 @@ class EyesKitKat {
         }
     }
 
-    static void translucentStatusBar(Activity activity) {
+    static void translucentStatusBar(AppCompatActivity activity) {
         Window window = activity.getWindow();
         //设置Window为透明
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -79,7 +79,7 @@ class EyesKitKat {
         }
     }
 
-    static void setStatusBarColorForCollapsingToolbar(final Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
+    static void setStatusBarColorForCollapsingToolbar(final AppCompatActivity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
                                                       Toolbar toolbar, int statusColor) {
         Window window = activity.getWindow();
         //设置Window为全透明
@@ -142,7 +142,7 @@ class EyesKitKat {
         });
     }
 
-    static void setStatusBarWhiteForCollapsingToolbar(final Activity activity, AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout, Toolbar toolbar, final int statusBarColor) {
+    static void setStatusBarWhiteForCollapsingToolbar(final AppCompatActivity activity, AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout, Toolbar toolbar, final int statusBarColor) {
         final Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
@@ -226,7 +226,7 @@ class EyesKitKat {
         });
     }
 
-    private static void removeFakeStatusBarViewIfExist(Activity activity) {
+    private static void removeFakeStatusBarViewIfExist(AppCompatActivity activity) {
         Window window = activity.getWindow();
         ViewGroup mDecorView = (ViewGroup) window.getDecorView();
 
@@ -236,7 +236,7 @@ class EyesKitKat {
         }
     }
 
-    private static View addFakeStatusBarView(Activity activity, int statusBarColor, int statusBarHeight) {
+    private static View addFakeStatusBarView(AppCompatActivity activity, int statusBarColor, int statusBarHeight) {
         Window window = activity.getWindow();
         ViewGroup mDecorView = (ViewGroup) window.getDecorView();
 

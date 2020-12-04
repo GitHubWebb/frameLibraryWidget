@@ -2,10 +2,10 @@ package com.framelibrary.util.eyes;
 
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -22,7 +22,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class EyesLollipop {
 
-    static void setStatusBarColor(Activity activity, int statusColor) {
+    static void setStatusBarColor(AppCompatActivity activity, int statusColor) {
         Window window = activity.getWindow();
         //取消状态栏透明
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -41,7 +41,7 @@ class EyesLollipop {
         }
     }
 
-    static void translucentStatusBar(Activity activity, boolean hideStatusBarBackground) {
+    static void translucentStatusBar(AppCompatActivity activity, boolean hideStatusBarBackground) {
         Window window = activity.getWindow();
         //添加Flag把状态栏设为可绘制模式
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -67,7 +67,7 @@ class EyesLollipop {
         }
     }
 
-    static void setStatusBarColorForCollapsingToolbar(final Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
+    static void setStatusBarColorForCollapsingToolbar(final AppCompatActivity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
                                                       Toolbar toolbar, final int statusColor) {
         final Window window = activity.getWindow();
         //取消设置Window半透明的Flag
@@ -135,7 +135,7 @@ class EyesLollipop {
         });
     }
 
-    static void setStatusBarWhiteForCollapsingToolbar(final Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout, final Toolbar toolbar, final int statusBarColor) {
+    static void setStatusBarWhiteForCollapsingToolbar(final AppCompatActivity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout, final Toolbar toolbar, final int statusBarColor) {
         final Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

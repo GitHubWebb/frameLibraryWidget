@@ -2,9 +2,9 @@ package com.framelibrary.util.eyes;
 
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -21,7 +21,7 @@ public class ToolBarUtility {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(context, true);
         }
-        SystemBarTintManager tintManager = new SystemBarTintManager((Activity) context);
+        SystemBarTintManager tintManager = new SystemBarTintManager((AppCompatActivity) context);
         tintManager.setStatusBarTintEnabled(true);
         //设置颜色
         tintManager.setStatusBarTintResource(R.color.color_tool_bar);
@@ -29,7 +29,7 @@ public class ToolBarUtility {
 
     @TargetApi(19)
     public static void setTranslucentStatus(Context context, boolean on) {
-        Window win = ((Activity) context).getWindow();
+        Window win = ((AppCompatActivity) context).getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
         final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
         if (on) {

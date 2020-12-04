@@ -2,9 +2,8 @@ package com.framelibrary.config;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
-
-import androidx.multidex.MultiDexApplication;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.framelibrary.BuildConfig;

@@ -1,7 +1,6 @@
 package com.framelibrary.util;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +8,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,12 +77,12 @@ public class PermissionCheckUtils {
     };
 
 
-    public static boolean checkWritePermission(Activity activity) {
+    public static boolean checkWritePermission(AppCompatActivity activity) {
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         return permission == PackageManager.PERMISSION_GRANTED;
     }
 
-    public static boolean checkReadPermission(Activity activity) {
+    public static boolean checkReadPermission(AppCompatActivity activity) {
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
         return permission == PackageManager.PERMISSION_GRANTED;
     }
@@ -89,7 +90,7 @@ public class PermissionCheckUtils {
     /**
      * 启动系统的WIFI连接界面
      */
-    public static void startSystemConnectionActivity(Activity activity) {
+    public static void startSystemConnectionActivity(AppCompatActivity activity) {
         Intent intent = null;
         if (DeviceUtils.getBuildLevel() > 10) {
             intent = new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS);
@@ -143,7 +144,7 @@ public class PermissionCheckUtils {
      *
      * @param activity
      */
-    public static void requestAliPayPermission(Activity activity) {
+    public static void requestAliPayPermission(AppCompatActivity activity) {
         // Here, thisActivity is the current libActivity
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED
@@ -160,11 +161,11 @@ public class PermissionCheckUtils {
         }
     }
 
-    public static boolean openWritePermission(Activity activity) {
+    public static boolean openWritePermission(AppCompatActivity activity) {
         return activity != null && !activity.isFinishing() && (!isNeedCheckPermission() || checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, PermissionCheckUtils.PERMISSIONS_WRITE_FILE, REQUEST_CODE_WRITE_FILE_PERMISSION));
     }
 
-    public static boolean openReadPermission(Activity activity) {
+    public static boolean openReadPermission(AppCompatActivity activity) {
         return activity != null && !activity.isFinishing() && (!isNeedCheckPermission() || checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE, PermissionCheckUtils.PERMISSION_READ_FILE, REQUEST_CODE_READ_FILE_PERMISSION));
     }
 
@@ -173,7 +174,7 @@ public class PermissionCheckUtils {
      *
      * @param activity
      */
-    public static void openScreenLightPermission(Activity activity) {
+    public static void openScreenLightPermission(AppCompatActivity activity) {
         //申请android.permission.WRITE_SETTINGS权限的方式
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //如果当前平台版本大于23平台
@@ -190,23 +191,23 @@ public class PermissionCheckUtils {
         }
     }
 
-    public static boolean openCameraPermission(Activity activity) {
+    public static boolean openCameraPermission(AppCompatActivity activity) {
         return activity != null && !activity.isFinishing() && (!isNeedCheckPermission() || checkSelfPermission(activity, Manifest.permission.CAMERA, PermissionCheckUtils.PERMISSIONS_CAMERA, REQUEST_CODE_CAMERA_PERMISSION));
     }
 
-    public static boolean checkScanPermission(Activity activity) {
+    public static boolean checkScanPermission(AppCompatActivity activity) {
         return checkPermission(activity, PERMISSIONS_SCAN_QCODE, REQUEST_CODE_SCAE_PERMISSION);
     }
 
-    public static boolean checkCameraPermission(Activity activity) {
+    public static boolean checkCameraPermission(AppCompatActivity activity) {
         return checkPermission(activity, PERMISSIONS_CAMERA, REQUEST_CODE_CAMERA_PERMISSION);
     }
 
-    public static boolean checkVideoPermission(Activity activity) {
+    public static boolean checkVideoPermission(AppCompatActivity activity) {
         return checkPermission(activity, PERMISSIONS_VIDEO, REQUEST_CODE_VIDEO_PERMISSION);
     }
 
-    private static boolean checkPermission(Activity activity, String[] strings, int requestCode) {
+    private static boolean checkPermission(AppCompatActivity activity, String[] strings, int requestCode) {
         if (activity == null || activity.isFinishing())
             return false;
         if (!isNeedCheckPermission())
@@ -224,7 +225,7 @@ public class PermissionCheckUtils {
     }
 
 
-    private static List<String> getPermissionList(Activity activity, String[] strings) {
+    private static List<String> getPermissionList(AppCompatActivity activity, String[] strings) {
         List<String> permissionList = new ArrayList<>();
         for (String string : strings) {
             int checkPermission = ContextCompat.checkSelfPermission(activity, string);
@@ -235,7 +236,7 @@ public class PermissionCheckUtils {
     }
 
 
-    private static boolean checkSelfPermission(Activity activity, String permission, String[] permissionGroup, int requestCode) {
+    private static boolean checkSelfPermission(AppCompatActivity activity, String permission, String[] permissionGroup, int requestCode) {
         int checkCallPhonePermission = ContextCompat.checkSelfPermission(activity, permission);
         if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, permissionGroup, requestCode);
@@ -251,7 +252,7 @@ public class PermissionCheckUtils {
     /**
      * 判断是否是8.0系统,是的话需要获取此权限，判断开没开，没开的话处理未知应用来源权限问题,否则直接安装
      */
-    public static void checkIsAndroidO(Activity activity) {
+    public static void checkIsAndroidO(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT >= 26) {
             //PackageManager类中在Android Oreo版本中添加了一个方法：判断是否可以安装未知来源的应用
             boolean b = activity.getPackageManager().canRequestPackageInstalls();

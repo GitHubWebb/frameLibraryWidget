@@ -2,10 +2,10 @@ package com.framelibrary.util.eyes;
 
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -42,7 +42,7 @@ class StatusBarCompatLollipop {
      * 2. call setSystemUiVisibility to clear translucentStatusBar's Flag.
      * 3. set FitsSystemWindows to false
      */
-    static void setStatusBarColor(Activity activity, int statusColor) {
+    static void setStatusBarColor(AppCompatActivity activity, int statusColor) {
         Window window = activity.getWindow();
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -66,7 +66,7 @@ class StatusBarCompatLollipop {
      *
      * @param hideStatusBarBackground hide statusBar's shadow
      */
-    static void translucentStatusBar(Activity activity, boolean hideStatusBarBackground) {
+    static void translucentStatusBar(AppCompatActivity activity, boolean hideStatusBarBackground) {
         Window window = activity.getWindow();
 
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -97,7 +97,7 @@ class StatusBarCompatLollipop {
      * 5. change statusBarColor by AppBarLayout's offset.
      * 6. add Listener to change statusBarColor
      */
-    static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
+    static void setStatusBarColorForCollapsingToolbar(AppCompatActivity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
                                                       Toolbar toolbar, final int statusColor) {
         final Window window = activity.getWindow();
 

@@ -1,7 +1,6 @@
 package com.framelibrary.util.select.selectphoto;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +9,7 @@ import android.media.ExifInterface;
 import android.media.MediaMetadataRetriever;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 
 import com.framelibrary.util.LogUtils;
 import com.framelibrary.util.StringUtils;
@@ -136,7 +136,7 @@ public class FileUtils {
     }
 
 
-    public static void compressVideoResource(final Activity activity, String videoPath, PLVideoSaveListener plVideoSaveListener) {
+    public static void compressVideoResource(final AppCompatActivity activity, String videoPath, PLVideoSaveListener plVideoSaveListener) {
         if (StringUtils.isBlank(videoPath)) {
             if (plVideoSaveListener != null) {
                 plVideoSaveListener.onSaveVideoFailed(PLErrorCode.ERROR_INVALID_ARG);

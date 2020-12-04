@@ -1,6 +1,6 @@
 package com.wenld.wenldbanner;
 
-import androidx.viewpager.widget.ViewPager;
+import android.support.v4.view.ViewPager;
 
 import java.util.List;
 

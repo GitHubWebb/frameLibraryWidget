@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,7 +17,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:scaleType="centerInside"
-        android:src="@mipmap/fl_default_error"
+        app:srcCompat="@mipmap/fl_default_error"
         tools:src="@mipmap/btn_back" />
 
     <LinearLayout
@@ -59,6 +60,6 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="20dp"
-        android:src="@mipmap/fl_default_check" />
+        app:srcCompat="@mipmap/fl_default_check" />
 
 </RelativeLayout>
