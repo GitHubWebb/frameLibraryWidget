@@ -1,5 +1,6 @@
 package com.wenld.wenldbanner;
 
+
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.util.AttributeSet;
