@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mActivity = this;
-        TextView tvTest = findViewById(R.id.tv_test);
+        TextView tvTest = findViewById(R.id.et_test);
+        TextView tvTest1 = findViewById(R.id.et_test1);
         findViewById(R.id.btn_get_img_mime_type).setOnClickListener(this);
         findViewById(R.id.btn_open_spliteditactivity).setOnClickListener(this);
         findViewById(R.id.btn_open_dialog_message).setOnClickListener(this);
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mActivity = this;
         UIUtils.makeTextViewResizable(tvTest, 4, 1, "...");
 
+        UIUtils.setEditAndClickByTextView(tvTest, true, null);
+        UIUtils.setEditAndClickByTextView(tvTest1, true, null);
         LoggerUtils.D("activity");
 
         runOnUiThread(new Runnable() {

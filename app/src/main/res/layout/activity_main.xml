@@ -7,8 +7,14 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_test"
+    <EditText
+        android:id="@+id/et_test"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
+
+    <EditText
+        android:id="@+id/et_test1"
         android:layout_width="@dimen/dp_200"
         android:layout_height="wrap_content"
         android:text="Hello World!" />

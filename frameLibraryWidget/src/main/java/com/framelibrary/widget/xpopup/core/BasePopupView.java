@@ -106,7 +106,8 @@ public abstract class BasePopupView extends FrameLayout implements OnNavigationB
             //2. 收集动画执行器
             collectAnimator();
 
-            if (popupInfo.xPopupCallback != null) popupInfo.xPopupCallback.beforeShow(BasePopupView.this);
+            if (popupInfo.xPopupCallback != null)
+                popupInfo.xPopupCallback.beforeShow(BasePopupView.this);
             focusAndProcessBackPress();
 
             //3. 执行动画
@@ -470,7 +471,8 @@ public abstract class BasePopupView extends FrameLayout implements OnNavigationB
     }
 
     public int getAnimationDuration() {
-        return popupInfo.popupAnimation == NoAnimation ? 10 : XPopup.getAnimationDuration() + 10;
+        // 避免popupInfo 是空的情况 出错
+        return popupInfo == null ? 10 : popupInfo.popupAnimation == NoAnimation ? 10 : XPopup.getAnimationDuration() + 10;
     }
 
     /**
