@@ -1,6 +1,7 @@
 package com.framelibrary.widget.xpopup.interfaces;
 
-import androidx.annotation.NonNull;
+
+import android.support.annotation.NonNull;
 
 import com.lxj.xpopup.core.ImageViewerPopupView;
 

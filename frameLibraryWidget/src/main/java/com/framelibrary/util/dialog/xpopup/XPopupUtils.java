@@ -18,6 +18,8 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.support.annotation.FloatRange;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -29,8 +31,6 @@ import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-
-import androidx.annotation.FloatRange;
 
 import com.framelibrary.widget.xpopup.core.AttachPopupView;
 import com.framelibrary.widget.xpopup.core.BasePopupView;
@@ -392,6 +392,7 @@ public class XPopupUtils {
     }
 
     //获取应用可用的屏幕高度
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static int getPhoneScreenHeight(Window window) {
         DisplayMetrics outMetrics = new DisplayMetrics();
         window.getWindowManager().getDefaultDisplay().getRealMetrics(outMetrics);

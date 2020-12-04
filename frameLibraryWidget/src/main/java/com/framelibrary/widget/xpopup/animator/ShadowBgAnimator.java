@@ -3,9 +3,8 @@ package com.framelibrary.widget.xpopup.animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.View;
-
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.framelibrary.widget.xpopup.XPopup;
 

@@ -4,10 +4,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.MotionEvent;
 import android.view.View;
-
-import androidx.annotation.RequiresApi;
 
 import com.framelibrary.widget.xpopup.animator.PopupAnimation;
 import com.framelibrary.widget.xpopup.animator.PopupAnimator;

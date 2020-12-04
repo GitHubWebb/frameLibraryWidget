@@ -2,14 +2,12 @@ package com.framelibrary.widget.xpopup.impl;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-
 import com.framelibrary.R;
 import com.framelibrary.widget.xpopup.XPopup;
 import com.framelibrary.widget.xpopup.core.CenterPopupView;

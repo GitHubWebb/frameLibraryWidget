@@ -6,14 +6,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-
-import androidx.annotation.NonNull;
-
 import com.framelibrary.R;
 import com.framelibrary.util.dialog.xpopup.FuckRomUtils;
 import com.framelibrary.util.dialog.xpopup.XPopupUtils;

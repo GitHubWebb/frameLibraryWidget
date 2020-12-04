@@ -3,13 +3,13 @@ package com.framelibrary.widget.xpopup.impl;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.transition.ChangeBounds;
+import android.support.transition.TransitionManager;
+import android.support.transition.TransitionSet;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.transition.ChangeBounds;
-import androidx.transition.TransitionManager;
-import androidx.transition.TransitionSet;
 
 import com.framelibrary.R;
 import com.framelibrary.util.dialog.xpopup.XPopupUtils;
@@ -39,6 +39,7 @@ public class LoadingPopupView extends CenterPopupView {
         return bindLayoutId != 0 ? bindLayoutId : R.layout._xpopup_center_impl_loading;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void initPopupContent() {
         super.initPopupContent();

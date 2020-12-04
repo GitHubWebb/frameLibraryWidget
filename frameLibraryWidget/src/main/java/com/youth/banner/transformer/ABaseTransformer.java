@@ -16,9 +16,8 @@
 
 package com.youth.banner.transformer;
 
+import android.support.v4.view.ViewPager;
 import android.view.View;
-
-import androidx.viewpager.widget.ViewPager;
 
 public abstract class ABaseTransformer implements ViewPager.PageTransformer {
 

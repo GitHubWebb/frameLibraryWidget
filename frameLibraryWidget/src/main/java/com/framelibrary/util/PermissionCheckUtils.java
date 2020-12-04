@@ -8,12 +8,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import com.framelibrary.ui.activity.select_photo.MultiImageSelectorActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,11 +162,11 @@ public class PermissionCheckUtils {
         }
     }
 
-    public static boolean openWritePermission(AppCompatActivity activity) {
+    public static boolean openWritePermission(MultiImageSelectorActivity activity) {
         return activity != null && !activity.isFinishing() && (!isNeedCheckPermission() || checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, PermissionCheckUtils.PERMISSIONS_WRITE_FILE, REQUEST_CODE_WRITE_FILE_PERMISSION));
     }
 
-    public static boolean openReadPermission(AppCompatActivity activity) {
+    public static boolean openReadPermission(MultiImageSelectorActivity activity) {
         return activity != null && !activity.isFinishing() && (!isNeedCheckPermission() || checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE, PermissionCheckUtils.PERMISSION_READ_FILE, REQUEST_CODE_READ_FILE_PERMISSION));
     }
 
@@ -191,7 +192,7 @@ public class PermissionCheckUtils {
         }
     }
 
-    public static boolean openCameraPermission(AppCompatActivity activity) {
+    public static boolean openCameraPermission(MultiImageSelectorActivity activity) {
         return activity != null && !activity.isFinishing() && (!isNeedCheckPermission() || checkSelfPermission(activity, Manifest.permission.CAMERA, PermissionCheckUtils.PERMISSIONS_CAMERA, REQUEST_CODE_CAMERA_PERMISSION));
     }
 
@@ -236,7 +237,7 @@ public class PermissionCheckUtils {
     }
 
 
-    private static boolean checkSelfPermission(AppCompatActivity activity, String permission, String[] permissionGroup, int requestCode) {
+    private static boolean checkSelfPermission(MultiImageSelectorActivity activity, String permission, String[] permissionGroup, int requestCode) {
         int checkCallPhonePermission = ContextCompat.checkSelfPermission(activity, permission);
         if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, permissionGroup, requestCode);

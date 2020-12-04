@@ -2,17 +2,16 @@ package com.framelibrary.widget.xpopup;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
-
-import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
-import androidx.customview.widget.ViewDragHelper;
-import androidx.viewpager.widget.ViewPager;
 
 import com.framelibrary.util.dialog.xpopup.XPopupUtils;
 import com.framelibrary.widget.xpopup.animator.ShadowBgAnimator;

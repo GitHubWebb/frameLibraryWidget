@@ -2,9 +2,7 @@ package com.framelibrary.widget.xpopup.core;
 
 import android.content.Context;
 import android.graphics.Rect;
-
-import androidx.annotation.NonNull;
-
+import android.support.annotation.NonNull;
 import com.framelibrary.util.dialog.xpopup.XPopupUtils;
 import com.framelibrary.widget.xpopup.animator.PopupAnimation;
 import com.framelibrary.widget.xpopup.animator.PopupAnimator;

@@ -12,10 +12,8 @@ import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
-
-import androidx.annotation.RequiresApi;
-
 import com.framelibrary.BuildConfig;
 
 import java.lang.reflect.Field;

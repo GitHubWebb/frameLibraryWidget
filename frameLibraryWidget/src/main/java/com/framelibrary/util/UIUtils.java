@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -22,7 +23,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.framelibrary.config.FrameLibBaseApplication;
-import com.google.android.material.tabs.TabLayout;
 
 import java.lang.reflect.Field;
 
