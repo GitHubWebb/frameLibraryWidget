@@ -54,14 +54,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: app-release.apk
-          path: android/app/build/outputs/apk/release/
-      #Uploads
-      - name: Upload Artifact
-        if: steps.prepare_release.outputs.bundle_path
-        uses: actions/upload-artifact@v1
-        with:
-          name: app-release.aab
-          path: android/app/build/outputs/bundle/release/
+          path: app/build/outputs/apk/release/
 
       - name: Create GitHub release
         id: create_release
@@ -89,14 +82,3 @@ jobs:
           asset_path: ${{steps.prepare_release.outputs.apk_path}}
           asset_name: ${{steps.prepare_release.outputs.apk_name}}
           asset_content_type: application/vnd.android.package-archive
-      #       選用 ＢＢＡ
-      - name: Upload Bundle Asset
-        if: steps.create_release.outputs.upload_url && steps.prepare_release.outputs.bundle_path && steps.prepare_release.outputs.bundle_name
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        with:
-          upload_url: ${{steps.create_release.outputs.upload_url}}
-          asset_path: ${{steps.prepare_release.outputs.bundle_path}}
-          asset_name: ${{steps.prepare_release.outputs.bundle_name}}
-          asset_content_type: application/octet-stream
