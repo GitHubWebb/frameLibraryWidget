@@ -14,7 +14,8 @@ jobs:
         id: openwrt
         run: |
           echo "name=useVersionInfo::$useVersionInfo"
-          echo $GITHUB_SHA
+          echo $GITHUB
+          echo $GITHUB_MESSAGE
 
       - uses: release-drafter/release-drafter@v5
         name: Draft
