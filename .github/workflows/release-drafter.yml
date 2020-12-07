@@ -10,16 +10,16 @@ jobs:
     name: Draft release
     runs-on: ubuntu-latest
     steps:
-      - name: $github
-          run: |
-            echo "$GITHUB_CONTEXT"
-          
-          env:
-            GITHUB_CONTEXT: ${{ toJson(github) }}
+      - name: Generate changelog
+          id: changelog
+          uses: metcalfc/changelog-generator@v0.4.1
+          with:
+            myToken: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: release-drafter/release-drafter@v5
         name: Draft
         with:
+          body: ${{ steps.changelog.outputs.changelog }}
           config-name: config-release-drafter.yml
           # 预发布 prerelease : true ,publish 已发布,草稿 draft: true
           publish: true
