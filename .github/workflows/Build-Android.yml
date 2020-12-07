@@ -1,0 +1,104 @@
+name: Github Actions
+# 注意：如果您的默認分支不是main，請更新的值 DEFAULT_BRANCH 以匹配存儲庫的默認分支名稱
+# on: [push, pull_request]
+on:
+  push:
+    branches: [  master  ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [  master  ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: reactnativecommunity/react-native-android
+    steps:
+      - name: "#️⃣ Generate Build Number"
+        id: buildnumber
+        uses: einaregilsson/build-number@v2
+        with:
+          token: ${{ secrets.ACTION_TEST }}
+      - name: Print new build number
+        run: |
+          echo "Build number is $BUILD_NUMBER"
+          echo "Build number is $buildnumber" ${{ steps.buildnumber.outputs.build_number }}
+          echo  $BUILD_NUMBER
+      - uses: actions/checkout@v2
+      - name: Envinfo
+        run: npx envinfo
+      - name: Build application
+        run: |
+          yarn install && cd android && chmod +x gradlew && ./gradlew build bundleRelease
+          du -shc `find . -regex '.+\.\(apk\|aab\)$'`
+          #      run: yarn install && cd android && chmod +x gradlew && ./gradlew assembleRelease
+
+        #Prepare Release
+
+      - name: Prepare Release
+        id: prepare_release
+        run: |
+          APK_PATH=`find . -name '*.apk' | grep release`
+          echo ::set-output name=apk_path::$APK_PATH
+          APK_NAME=`basename $APK_PATH`
+          echo ::set-output name=apk_name::$APK_NAME
+          BUNDLE_PATH=`find . -name '*.aab' | grep release | grep -v intermediates`
+          echo ::set-output name=bundle_path::$BUNDLE_PATH
+          BUNDLE_NAME=`basename $BUNDLE_PATH`
+          echo ::set-output name=bundle_name::$BUNDLE_NAME
+      #        選用
+      #        TAG_NAME=`echo $GITHUB_REF | cut -d / -f3`
+      #        echo ::set-output name=tag_name::$TAG_NAME
+      #        PACKAGE_NAME=`./tools/aapt2 dump packagename $APK_PATH`
+      #        echo ::set-output name=package_name::$PACKAGE_NAME
+      #Uploads
+      - name: Upload Artifact
+        if: steps.prepare_release.outputs.apk_path
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
+      #Uploads
+      - name: Upload Artifact
+        if: steps.prepare_release.outputs.bundle_path
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.aab
+          path: android/app/build/outputs/bundle/release/
+
+      - name: Create GitHub release
+        id: create_release
+        #       if: steps.version_check.outputs.changed == 'true'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: V-${{ steps.buildnumber.outputs.build_number }}
+          release_name: V-${{ steps.buildnumber.outputs.build_number }}
+          body: |
+            ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
+            # Changelog
+            Release type: ${{ steps.buildnumber.outputs.build_number }}
+          prerelease: true
+
+
+      - name: Upload APK Asset
+        if: steps.create_release.outputs.upload_url && steps.prepare_release.outputs.apk_path && steps.prepare_release.outputs.apk_name
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: ${{steps.prepare_release.outputs.apk_path}}
+          asset_name: ${{steps.prepare_release.outputs.apk_name}}
+          asset_content_type: application/vnd.android.package-archive
+      #       選用 ＢＢＡ
+      - name: Upload Bundle Asset
+        if: steps.create_release.outputs.upload_url && steps.prepare_release.outputs.bundle_path && steps.prepare_release.outputs.bundle_name
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: ${{steps.prepare_release.outputs.bundle_path}}
+          asset_name: ${{steps.prepare_release.outputs.bundle_name}}
+          asset_content_type: application/octet-stream
