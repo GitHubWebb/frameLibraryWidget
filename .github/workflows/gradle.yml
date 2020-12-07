@@ -24,14 +24,3 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
-
-      - uses: actions/cache@preview
-        id: cache
-        with:
-          path: ~/local/rubies
-          key: ruby-2.6.5
-      - uses: clupprich/ruby-build-action@master
-        id: ruby
-        with:
-          ruby-version: 2.6.5
-          files: app/build/outputs/apk/release/app-release.apk
