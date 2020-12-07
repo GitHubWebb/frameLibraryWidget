@@ -12,8 +12,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@v5
-        name: create Draft
+      - uses: release-drafter/release-drafter@v5.12.1
+        name: Release Drafter
         id: createDraft
         with:
           config-name: config-release-drafter.yml
@@ -29,7 +29,7 @@ jobs:
       #    token: ${{ secrets.GITHUB_TOKEN }}
       - name: Print new build number
         run: |
-#          echo "Build number is ${{ steps.createDraft.outputs.tag_name }}
+          echo "Build number is ${{ steps.createDraft.outputs.tag_name }}
           echo "Build Commit Body is ${{ steps.createDraft.outputs.body }}
           echo  $NEXT_PATCH_VERSION $BUILD_NUMBER
 
@@ -72,7 +72,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name:111 # ${{ steps.createDraft.outputs.tag_name }} #${{ steps.buildnumber.outputs.build_number }}
+          tag_name: ${{ steps.createDraft.outputs.tag_name }} #${{ steps.buildnumber.outputs.build_number }}
           release_name: ${{ steps.createDraft.outputs.name }} #${{ steps.buildnumber.outputs.build_number }}
           body: |
             ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)

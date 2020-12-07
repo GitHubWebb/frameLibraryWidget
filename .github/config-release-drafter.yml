@@ -12,7 +12,7 @@ categories:
       - 'bug'
   - title: '🧰 Maintenance'
     label: 'chore'
-change-template: '* $TITLE (#$NUMBER) @$AUTHOR $BODY $BODY'
+change-template: '* $TITLE (#$NUMBER) @$AUTHOR $BODY '
 template: |
   # Changes
   $CHANGES
