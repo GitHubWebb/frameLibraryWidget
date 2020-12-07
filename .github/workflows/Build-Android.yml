@@ -12,14 +12,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Draft
-          uses: release-drafter/release-drafter@v5
-          with:
+      - uses: release-drafter/release-drafter@v5
+        name: Draft
+        with:
             config-name: config-release-drafter.yml
             # 预发布 prerelease : true ,草稿 draft: true
             prerelease: false
             draft: false
-          env:
+        env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       #- uses: einaregilsson/build-number@v3
