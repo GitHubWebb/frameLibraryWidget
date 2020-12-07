@@ -66,12 +66,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: V-${{ NEXT_PATCH_VERSION }} #${{ steps.buildnumber.outputs.build_number }}
-          release_name: V-${{ NEXT_PATCH_VERSION }} #${{ steps.buildnumber.outputs.build_number }}
+          #tag_name: V-${{NEXT_PATCH_VERSION}} #${{ steps.buildnumber.outputs.build_number }}
+          #release_name: V-${{NEXT_PATCH_VERSION #${{ steps.buildnumber.outputs.build_number }}
           body: |
             ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
             # Changelog
-            Release ${{ GITHUB_SHA }}
+            Release ${{ secrets.GITHUB_SHA }}
           # 预发布 prerelease : true ,草稿 draft: true
           prerelease: false
           draft: false
