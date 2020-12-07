@@ -10,6 +10,11 @@ jobs:
     name: Draft release
     runs-on: ubuntu-latest
     steps:
+      - name: $github
+          run:   echo "$GITHUB_CONTEXT"
+          env:
+            GITHUB_CONTEXT: ${{ toJson(github) }}
+
       - uses: release-drafter/release-drafter@v5
         name: Draft
         with:
