@@ -14,7 +14,8 @@ jobs:
         name: Draft
         with:
           config-name: config-release-drafter.yml
-        prerelease: false
-        draft: false
+          # 预发布 prerelease : true ,草稿 draft: true
+          prerelease: false
+          draft: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
