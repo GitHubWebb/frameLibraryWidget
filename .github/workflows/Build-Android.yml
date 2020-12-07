@@ -17,7 +17,7 @@ jobs:
         id: buildnumber
         uses: einaregilsson/build-number@v2
         with:
-          token: ${{ secrets.ACTION_TEST }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Print new build number
         run: |
           echo "Build number is $BUILD_NUMBER"
