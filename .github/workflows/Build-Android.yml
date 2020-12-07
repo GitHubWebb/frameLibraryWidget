@@ -11,10 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: reactnativecommunity/react-native-android
     steps:
-      - uses: release-drafter/release-drafter@v5
-          name: Draft
+      - name: Draft
+          uses: release-drafter/release-drafter@v5
           with:
             config-name: config-release-drafter.yml
             # 预发布 prerelease : true ,草稿 draft: true
@@ -22,7 +21,7 @@ jobs:
             draft: false
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+
       #- uses: einaregilsson/build-number@v3
       #  with:
       #    token: ${{ secrets.GITHUB_TOKEN }}
