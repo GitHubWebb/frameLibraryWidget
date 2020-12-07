@@ -29,7 +29,7 @@ jobs:
         run: npx envinfo
       - name: Build application
         run: |
-          yarn install && cd android && chmod +x gradlew && ./gradlew build && ./gradlew assembleRelease && ./gradlew assembleDebug
+          yarn install  && chmod +x gradlew && ./gradlew build && ./gradlew assembleRelease && ./gradlew assembleDebug
           du -shc `find . -regex '.+\.\(apk\|aab\)$'`
           #      run: yarn install && cd android && chmod +x gradlew && ./gradlew assembleRelease
 
