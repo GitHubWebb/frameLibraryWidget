@@ -12,11 +12,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Draft
-          uses: release-drafter/release-drafter@v5
+      - uses: release-drafter/release-drafter@v5
+          name: Draft
           with:
             config-name: config-release-drafter.yml
-            # 预发布 prerelease : true ,草稿 draft: true
+          # 预发布 prerelease : true ,publish 已发布,草稿 draft: true
+            publish: true
             prerelease: false
             draft: false
           env:
