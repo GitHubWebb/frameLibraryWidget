@@ -15,14 +15,17 @@ jobs:
     steps:
       - name: "#️⃣ Generate Build Number"
         id: buildnumber
-        uses: einaregilsson/build-number@v3
+      - uses: release-drafter/release-drafter@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          config-name: config-release-drafter.yml
+      #- uses: einaregilsson/build-number@v3
+      #  with:
+      #    token: ${{ secrets.GITHUB_TOKEN }}
       - name: Print new build number
         run: |
-          echo "Build number is $BUILD_NUMBER"
-          echo "Build number is $buildnumber" ${{ steps.buildnumber.outputs.build_number }}
-          echo  $BUILD_NUMBER
+          echo "Build number is $NEXT_PATCH_VERSION"
+          echo "Build number is $NEXT_PATCH_VERSION $buildnumber" ${{ steps.buildnumber.outputs.build_number }}
+          echo  $NEXT_PATCH_VERSION $BUILD_NUMBER
 
       - uses: actions/checkout@v2
       - name: Envinfo
@@ -63,12 +66,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: V-${{ steps.buildnumber.outputs.build_number }}
-          release_name: V-${{ steps.buildnumber.outputs.build_number }}
+          tag_name: V-$NEXT_PATCH_VERSION #${{ steps.buildnumber.outputs.build_number }}
+          release_name: V-$NEXT_PATCH_VERSION #${{ steps.buildnumber.outputs.build_number }}
           body: |
             ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
             # Changelog
-            Release type: ${{ steps.buildnumber.outputs.build_number }}
+            Release ${{ GITHUB_SHA }}
           # 预发布 prerelease : true ,草稿 draft: true
           prerelease: false
           draft: false
