@@ -69,7 +69,9 @@ jobs:
             ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
             # Changelog
             Release type: ${{ steps.buildnumber.outputs.build_number }}
-          prerelease: true
+          # 预发布 prerelease : true ,草稿 draft: true
+          prerelease: false
+          draft: false
 
 
       - name: Upload APK Asset
