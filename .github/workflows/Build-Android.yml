@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: "#️⃣ Generate Build Number"
         id: buildnumber
-        uses: einaregilsson/build-number@v2
+        uses: einaregilsson/build-number@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Print new build number
@@ -23,6 +23,7 @@ jobs:
           echo "Build number is $BUILD_NUMBER"
           echo "Build number is $buildnumber" ${{ steps.buildnumber.outputs.build_number }}
           echo  $BUILD_NUMBER
+
       - uses: actions/checkout@v2
       - name: Envinfo
         run: npx envinfo
