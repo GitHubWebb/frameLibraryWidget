@@ -42,7 +42,7 @@ jobs:
           echo ::set-output name=apk_path::$APK_PATH
           APK_NAME=`basename $APK_PATH`
           echo ::set-output name=apk_name::$APK_NAME
-          
+
       #        選用
       #        TAG_NAME=`echo $GITHUB_REF | cut -d / -f3`
       #        echo ::set-output name=tag_name::$TAG_NAME
