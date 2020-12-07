@@ -1,0 +1,32 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    strategy:
+      matrix: # 这个我也不知道怎么翻译了，大致实现的功能是把每个变量的每种取值都遍历一遍
+        java_version: [1.8] # key: valueSet
+        os: [ubuntu-latest]
+
+    name: build with java ${{ matrix.java_version }} on ${{ matrix.os }} # 在 job.<job_id>.strategy.matrix 中定义的变量在整个 job 下都有效
+    runs-on: ${{ matrix.os }} # 使用的 OS
+
+    steps:  # 步骤
+      - uses: actions/checkout@v2 # 要引用的 actions
+      - name: Set up Java JDK ${{ matrix.java_version }}  # 每一步的名字
+        uses: actions/setup-java@v1
+        with: # 指定 actions 的入参
+          java-version: ${{ matrix.java_version }}
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
