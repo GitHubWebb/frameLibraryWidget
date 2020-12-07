@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate changelog
-          id: changelog
-          uses: metcalfc/changelog-generator@v0.4.1
-          with:
-            myToken: ${{ secrets.GITHUB_TOKEN }}
+        id: changelog
+        uses: metcalfc/changelog-generator@v0.4.1
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: release-drafter/release-drafter@v5
         name: Draft
