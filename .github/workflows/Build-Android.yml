@@ -27,7 +27,7 @@ jobs:
           echo "Build number is $NEXT_PATCH_VERSION $buildnumber" ${{ steps.buildnumber.outputs.build_number }}
           echo  $NEXT_PATCH_VERSION $BUILD_NUMBER
 
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - name: Envinfo
         run: npx envinfo
       - name: Build application
