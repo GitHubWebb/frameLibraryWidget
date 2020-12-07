@@ -13,15 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: release-drafter/release-drafter@v5
-        name: create-Draft
+        name: create Draft
+        id: createDraft
         with:
-            config-name: config-release-drafter.yml
+          config-name: config-release-drafter.yml
           # 预发布 prerelease : true ,publish 已发布,草稿 draft: true
-            publish: true
-            prerelease: false
-            draft: false
+          publish: true
+          prerelease: false
+          draft: false
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       #- uses: einaregilsson/build-number@v3
       #  with:
@@ -71,13 +72,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.create-Draft.outputs.tag_name }} #${{ steps.buildnumber.outputs.build_number }}
-          release_name: ${{ steps.create-Draft.outputs.name }} #${{ steps.buildnumber.outputs.build_number }}
+          tag_name: ${{ steps.createDraft.outputs.tag_name }} #${{ steps.buildnumber.outputs.build_number }}
+          release_name: ${{ steps.createDraft.outputs.name }} #${{ steps.buildnumber.outputs.build_number }}
           body: |
             ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
             # Changelog
-            Release ${{ steps.create-Draft.outputs.body }}
-            ReleaseHtmlUrl ${{ steps.create-Draft.outputs.html_url }}
+            Release ${{ steps.createDraft.outputs.body }}
+            ReleaseHtmlUrl ${{ steps.createDraft.outputs.html_url }}
 
           # 预发布 prerelease : true ,草稿 draft: true
           prerelease: false
