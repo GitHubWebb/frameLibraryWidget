@@ -27,7 +27,7 @@ jobs:
         with:
           body: |
             当前使用版本：
-            ${{ env.useVersionInfo }}
+            ${{ steps.changelog.outputs.changelog }}
           config-name: config-release-drafter.yml
           # 预发布 prerelease : true ,publish 已发布,草稿 draft: true
           publish: true
