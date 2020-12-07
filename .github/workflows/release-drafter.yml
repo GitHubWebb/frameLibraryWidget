@@ -10,12 +10,14 @@ jobs:
     name: Draft release
     runs-on: ubuntu-latest
     steps:
-      - name: Set useVersionInfo
-        id: openwrt
-        run: |
-          echo "name=useVersionInfo::$useVersionInfo"
-          echo $GITHUB
-          echo $GITHUB_MESSAGE
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v0.4.4
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+          
+        run: echo "${{ steps.changelog.outputs.changelog }}"
+
 
       - uses: release-drafter/release-drafter@v5
         name: Draft
