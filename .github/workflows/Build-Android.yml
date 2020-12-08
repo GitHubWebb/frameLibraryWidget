@@ -34,8 +34,8 @@ jobs:
       - name: Print new build number
         run: |
           echo "Build tag is ${{ steps.changelog.outputs }}"
-          echo ${{ steps.changelog.outputs }}
-          echo "Build tag_name is ${{ steps.changelog.outputs.changelog }}"
+          echo "Build tag_name is ${{ steps.changelog.outputs.changelog }}" | tac
+
         #  echo "Build Commit Body is ${{ steps.createDraft.outputs.body }}"
         #  echo  $NEXT_PATCH_VERSION $BUILD_NUMBER
 
