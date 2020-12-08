@@ -12,12 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate changelog
-        id: changelog
-        uses: metcalfc/changelog-generator@v0.4.4
-        with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
-
       #- uses: einaregilsson/build-number@v3
       #  with:
       #    token: ${{ secrets.GITHUB_TOKEN }}
@@ -37,6 +31,11 @@ jobs:
           #      run: yarn install && cd android && chmod +x gradlew && ./gradlew assembleRelease
 
         #Prepare Release
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v0.4.4
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prepare Release
         id: prepare_release
