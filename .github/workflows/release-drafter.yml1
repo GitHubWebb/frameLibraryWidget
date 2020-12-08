@@ -27,7 +27,6 @@ jobs:
           echo "fromJson PR outputs pr ${{ fromJson(steps.PR.outputs.pr).head.ref }}"
           echo "GITHUB_REF_NAME ${{ env.GITHUB_REF_NAME }}"
 
-
       - name: Release Drafter
         if: ${{ steps.PR.outputs.number && (steps.PR.outputs.pr != '') && fromJson(steps.PR.outputs.pr).head.ref == env.GITHUB_REF_NAME }}
         uses: release-drafter/release-drafter@v5.12.1
