@@ -26,12 +26,9 @@ jobs:
         name: Release Drafter
         with:
           config-name: config-release-drafter.yml
-          body: |
-            当前使用版本：
-            ${{ steps.changelog.outputs.changelog }}
-          # 预发布 prerelease : true ,publish 已发布,草稿 draft: true
+
+          # 预发布 prerelease : true ,publish 已发布,
           publish: true
           prerelease: false
-          draft: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
