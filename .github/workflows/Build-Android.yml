@@ -34,7 +34,7 @@ jobs:
       - name: Print new build number
         run: |
           TAG_VERSION_NAME= git describe --abbrev=0 --tags
-          TAG_VERSION_NAME = ${$TAG_VERSION_NAME%.*}.$((${$TAG_VERSION_NAME##*.}+1))
+          TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
           echo ::set-output name=tag_name::$TAG_VERSION_NAME
           echo "Build tag is ${{ steps.changelog.outputs }}"
           echo "Build tag_name is ${{ steps.changelog.outputs.changelog }}" | tac
