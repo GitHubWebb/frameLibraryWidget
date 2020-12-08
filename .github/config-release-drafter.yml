@@ -14,5 +14,6 @@ categories:
     label: 'chore'
 change-template: '* $TITLE (#$NUMBER) @$AUTHOR'
 template: |
+  ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
   # Changes
   $CHANGES

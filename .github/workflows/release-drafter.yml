@@ -22,7 +22,7 @@ jobs:
       - name: Get the changelog
         run: echo "${{ steps.changelog.outputs.changelog }}"
 
-      - uses: release-drafter/release-drafter@v5.12.1
+      - uses: release-drafter/release-drafter@v5
         name: Draft
         with:
           config-name: config-release-drafter.yml
