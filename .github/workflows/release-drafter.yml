@@ -22,7 +22,7 @@ jobs:
       - name: Get the changelog
         id: get_changelog
         run: |
-          echo "${{ steps.changelog.outputs.changelog }}"
+          # echo "${{ steps.changelog.outputs.changelog }}"
           echo "PR outputs number ${{ steps.PR.outputs.number }}"
           echo "PR outputs pr ${{ steps.PR.outputs.pr }}"
           echo "fromJson PR outputs pr ${{ fromJson(steps.PR.outputs.pr).head.ref }}"
