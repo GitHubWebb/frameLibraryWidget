@@ -20,6 +20,7 @@ jobs:
 
 
       - name: Get the changelog
+        id: get_changelog
         run: |
           echo "${{ steps.changelog.outputs.changelog }}"
           echo "PR outputs number ${{ steps.PR.outputs.number }}"
