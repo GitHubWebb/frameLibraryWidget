@@ -33,11 +33,13 @@ jobs:
           myToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Print new build number
         run: |
-          TAG_VERSION_NAME= git describe --abbrev=0 --tags
+          TAG_VERSION_NAME=` git describe --abbrev=0 --tags `
           TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
           echo ::set-output name=tag_name::$TAG_VERSION_NAME
-          echo "Build tag is ${{ steps.changelog.outputs }}"
-          echo "Build tag_name is ${{ steps.changelog.outputs.changelog }}" | tac
+          echo "Build changelog is ${{ steps.changelog.outputs.changelog }}"
+          echo ::set-output name=changelog::${{ steps.changelog.outputs.changelog }} | tac
+
+          echo "Build tag_name is ${{ steps.changelog.outputs.changelog }}"
 
         #  echo "Build Commit Body is ${{ steps.createDraft.outputs.body }}"
         #  echo  $NEXT_PATCH_VERSION $BUILD_NUMBER
