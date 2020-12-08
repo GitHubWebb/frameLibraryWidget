@@ -32,11 +32,11 @@ jobs:
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Print new build number
-          run: |
-            echo "Build tag_name is ${{ steps.changelog.outputs.changelog }}"
-          #  echo "Build Commit Body is ${{ steps.createDraft.outputs.body }}"
-          #  echo  $NEXT_PATCH_VERSION $BUILD_NUMBER
-          
+        run: |
+          echo "Build tag_name is ${{ steps.changelog.outputs.changelog }}"
+        #  echo "Build Commit Body is ${{ steps.createDraft.outputs.body }}"
+        #  echo  $NEXT_PATCH_VERSION $BUILD_NUMBER
+
       - name: Prepare Release
         id: prepare_release
         run: |
