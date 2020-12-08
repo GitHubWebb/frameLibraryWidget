@@ -25,7 +25,7 @@ jobs:
           echo "${{ steps.PR.outputs.number }}"
           echo "${{ steps.PR.outputs.pr }}"
           echo "${{ fromJson(steps.PR.outputs.pr).head.ref }}"
-          echo "${{ env.GITHUB_REF_NAME }}"`
+          echo "${{ env.GITHUB_REF_NAME }}"
 
       - name: Release Drafter
         if: ${{ steps.PR.outputs.number && (steps.PR.outputs.pr != '') && fromJson(steps.PR.outputs.pr).head.ref == env.GITHUB_REF_NAME }}
