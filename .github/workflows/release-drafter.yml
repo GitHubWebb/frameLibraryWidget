@@ -24,7 +24,6 @@ jobs:
           echo ${{ steps.changelog.outputs.changelog }}
           echo ${{ steps.PR.outputs.number }}
           echo ${{ steps.PR.outputs.pr }}
-          echo ${{ fromJson(steps.PR.outputs.pr).head.ref }}
           echo ${{ env.GITHUB_REF_NAME }}
 
       - name: Release Drafter
