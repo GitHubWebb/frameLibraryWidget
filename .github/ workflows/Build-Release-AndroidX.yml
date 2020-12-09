@@ -11,7 +11,7 @@ on:
   pull_request:
     branches: [  master-al-open-androidx  ]
 jobs:
- AndroidX build:
+ AndroidXBuild:
     runs-on: ubuntu-latest
     steps:
       #- uses: einaregilsson/build-number@v3
