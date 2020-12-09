@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         LoggerUtils.D("activity1");
                     }
                 }).start();
-
             }
         });
         photoShow();
