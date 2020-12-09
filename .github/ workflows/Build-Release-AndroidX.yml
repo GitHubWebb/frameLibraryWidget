@@ -1,0 +1,113 @@
+name: Github Actions AndroidX
+# 注意：如果您的默認分支不是main，請更新的值 DEFAULT_BRANCH 以匹配存儲庫的默認分支名稱
+# on: [push, pull_request]
+# 注意该分支下release的suffix为: "-androidx"
+
+on:
+  push:
+    branches: [  master-al-open-androidx  ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [  master-al-open-androidx  ]
+jobs:
+ AndroidX build:
+    runs-on: ubuntu-latest
+    steps:
+      #- uses: einaregilsson/build-number@v3
+      #  with:
+      #    token: ${{ secrets.GITHUB_TOKEN }}
+      - name: current release suffix
+        run:  echo "releaseSuffix=-androidx" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v2
+      - name: Envinfo
+        run: npx envinfo
+      - name: Build application
+        run: |
+          yarn install  && chmod +x gradlew && ./gradlew build && ./gradlew assembleRelease && ./gradlew assembleDebug
+          du -shc `find . -regex '.+\.\(apk\|aab\)$'`
+          #      run: yarn install && cd android && chmod +x gradlew && ./gradlew assembleRelease
+
+        #Prepare Release
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v0.4.4
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print new build number
+        run: |
+          TAG_VERSION_NAME=` git describe --abbrev=0 --tags `
+          TAG_VERSION_NAME=${TAG_VERSION_NAME%%${{ env.releaseSuffix }}*}
+          TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
+          while [ "$(echo ` git rev-parse --verify --quiet $TAG_VERSION_NAME `)" ]
+            do
+              echo "do not is empty by TAG_VERSION_NAME :$TAG_VERSION_NAME"
+              TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
+
+            done
+              echo "done is empty by TAG_VERSION_NAME :$TAG_VERSION_NAME"
+
+          echo "tag_name=$TAG_VERSION_NAME" >> $GITHUB_ENV
+          echo ::set-output name=changelog::` ${{ steps.changelog.outputs.changelog }} | tac `
+        # 循环验证当前git是否存在TAG_VERSION_NAME,如果存在则尾号+1   -z 判断是空
+        # while [ -z "$(echo ` git rev-parse --verify --quiet $TAG_VERSION_NAME `)" ]
+        # 如果当前git中存在生成的git Tag版本,则尾号+1
+        # 如果当前git中不存在生成的git Tag版本,则继续执行
+
+        #  TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
+        #  echo "Build changelog is ${{ steps.changelog.outputs.changelog }}"
+
+        #  echo "Build Commit Body is ${{ steps.createDraft.outputs.body }}"
+        #  echo  $NEXT_PATCH_VERSION $BUILD_NUMBER
+
+      - name: Prepare Release
+        id: prepare_release
+        run: |
+          APK_PATH=`find . -name '*.apk' | grep release`
+          echo ::set-output name=apk_path::$APK_PATH
+          APK_NAME=`basename $APK_PATH`
+          echo ::set-output name=apk_name::$APK_NAME
+
+      #        選用
+      #        TAG_NAME=`echo $GITHUB_REF | cut -d / -f3`
+      #        echo ::set-output name=tag_name::$TAG_NAME
+      #        PACKAGE_NAME=`./tools/aapt2 dump packagename $APK_PATH`
+      #        echo ::set-output name=package_name::$PACKAGE_NAME
+      #Uploads
+      - name: Upload Artifact
+        if: steps.prepare_release.outputs.apk_path
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: app/build/outputs/apk/release/
+
+      - name: Create GitHub release
+        id: create_release
+        #       if: steps.version_check.outputs.changed == 'true'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.tag_name }}${{ env.releaseSuffix }}
+          release_name: ${{ env.tag_name }}${{ env.releaseSuffix }}
+          body: |
+            ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
+            # Changelog
+            ${{ steps.changelog.outputs.changelog }}
+
+          # 预发布 prerelease : true ,草稿 draft: true
+          prerelease: false
+          draft: false
+
+
+      - name: Upload APK Asset
+        if: steps.create_release.outputs.upload_url && steps.prepare_release.outputs.apk_path && steps.prepare_release.outputs.apk_name
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: ${{steps.prepare_release.outputs.apk_path}}
+          asset_name: ${{steps.prepare_release.outputs.apk_name}}
+          asset_content_type: application/vnd.android.package-archive
