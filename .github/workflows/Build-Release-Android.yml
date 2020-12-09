@@ -34,7 +34,7 @@ jobs:
       - name: Print new build number
         run: |
           TAG_VERSION_NAME=` git describe --abbrev=0 --tags `
-          echo ::set-output name=tag_name::${TAG_VERSION_NAME}
+          echo "::set-env name=tag_name::${TAG_VERSION_NAME}"
           echo ::set-output name=changelog::` ${{ steps.changelog.outputs.changelog }} | tac `
         #  TAG_VERSION_NAME=${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))
         #  TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )  echo "Build changelog is ${{ steps.changelog.outputs.changelog }}"
@@ -70,12 +70,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.changelog.outputs.tag_name }}
-          release_name: ${{ steps.changelog.outputs.tag_name }}
+          tag_name: ${tag_name}
+          release_name: ${tag_name}
           body: |
             ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
             # Changelog
-            ${{ steps.changelog.outputs.changelog }} | tac
+            ${{ steps.changelog.outputs.changelog }}
 
           # 预发布 prerelease : true ,草稿 draft: true
           prerelease: false
