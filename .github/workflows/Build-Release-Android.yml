@@ -35,7 +35,7 @@ jobs:
         run: |
           TAG_VERSION_NAME=` git describe --abbrev=0 --tags `
           echo 'tag_name=${TAG_VERSION_NAME}' >> $GITHUB_ENV
-          echo ::set-output name=changelog::` ${{ steps.changelog.outputs.changelog }} | tac `
+          echo ::set-output name=changelog::` ${{ steps.changelog.outputs.changelog }} | cat `
         #  TAG_VERSION_NAME=${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))
         #  TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )  echo "Build changelog is ${{ steps.changelog.outputs.changelog }}"
 
@@ -70,8 +70,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${tag_name}
-          release_name: ${tag_name}
+          tag_name: $tag_name
+          release_name: $tag_name
           body: |
             ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
             # Changelog
