@@ -31,7 +31,8 @@ jobs:
 
       - name: Print Get current Tag
         run: |
-          CURRENT_TAG_NAME=` git describe --always --abbrev=0 --tags `
+          branch_name=` git symbolic-ref -q --short HEAD || git describe --tags --exact-match `
+          CURRENT_TAG_NAME=` git describe --tag $(git rev-parse --verify refs/remotes/origin/$branch_name"") `
           echo "CURRENT_TAG_NAME IS $CURRENT_TAG_NAME"
           if [[ $CURRENT_TAG_NAME =~ ${{ env.releaseSuffix }} ]];
               then
@@ -55,6 +56,7 @@ jobs:
             done
               echo "done is empty by TAG_VERSION_NAME :$TAG_VERSION_NAME"
 
+          echo "branchName=$branch_name" >> $GITHUB_ENV
           echo "current_tag_name=$CURRENT_TAG_NAME" >> $GITHUB_ENV
           echo "tag_name=$TAG_VERSION_NAME" >> $GITHUB_ENV
         # 循环验证当前git是否存在TAG_VERSION_NAME,如果存在则尾号+1   -z 判断是空
@@ -106,6 +108,7 @@ jobs:
         with:
           tag_name: ${{ env.tag_name }}${{ env.releaseSuffix }}
           release_name: ${{ env.tag_name }}${{ env.releaseSuffix }}
+          commitish: ${{ env.branchName }}
           body: |
             ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
             # Changelog
