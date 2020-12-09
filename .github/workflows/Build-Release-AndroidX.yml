@@ -11,7 +11,7 @@ on:
   pull_request:
     branches: [  master-al-open-androidx  ]
 jobs:
- AndroidXBuild:
+  AndroidXBuild:
     runs-on: ubuntu-latest
     steps:
       #- uses: einaregilsson/build-number@v3
@@ -25,6 +25,7 @@ jobs:
         run: npx envinfo
       - name: Build application
         run: |
+          echo ` git log --first-parent --pretty=%d | grep -m1 tag: `
           yarn install  && chmod +x gradlew && ./gradlew build && ./gradlew assembleRelease && ./gradlew assembleDebug
           du -shc `find . -regex '.+\.\(apk\|aab\)$'`
           #      run: yarn install && cd android && chmod +x gradlew && ./gradlew assembleRelease
