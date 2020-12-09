@@ -31,7 +31,8 @@ jobs:
 
       - name: Print Get current Tag
         run: |
-          CURRENT_TAG_NAME=` git describe --abbrev=0 --tags `
+          CURRENT_TAG_NAME=` git describe --always --abbrev=0 --tags `
+          echo "CURRENT_TAG_NAME IS $CURRENT_TAG_NAME"
           CURRENT_TAG_NAME=${CURRENT_TAG_NAME%%${{ env.releaseSuffix }}*}
           TAG_VERSION_NAME=$CURRENT_TAG_NAME
 
