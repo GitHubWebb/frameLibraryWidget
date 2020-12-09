@@ -36,16 +36,16 @@ jobs:
           TAG_VERSION_NAME=` git describe --abbrev=0 --tags `
           TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
 
-   #  循环验证当前git是否存在TAG_VERSION_NAME,如果存在则尾号+1   -z 判断是空
-   #  while [ -z "$(echo ` git rev-parse --verify --quiet $TAG_VERSION_NAME `)" ]
+# 循环验证当前git是否存在TAG_VERSION_NAME,如果存在则尾号+1   -z 判断是空
+# while [ -z "$(echo ` git rev-parse --verify --quiet $TAG_VERSION_NAME `)" ]
           while [ "$(echo ` git rev-parse --verify --quiet $TAG_VERSION_NAME `)" ]
             do
               echo "do not is empty by TAG_VERSION_NAME :$TAG_VERSION_NAME"
-   #  如果当前git中存在生成的git Tag版本,则尾号+1
+# 如果当前git中存在生成的git Tag版本,则尾号+1
               TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
 
             done
-   #  如果当前git中不存在生成的git Tag版本,则继续执行
+# 如果当前git中不存在生成的git Tag版本,则继续执行
               echo "done is empty by TAG_VERSION_NAME :$TAG_VERSION_NAME"
 
           echo "tag_name=$TAG_VERSION_NAME" >> $GITHUB_ENV
