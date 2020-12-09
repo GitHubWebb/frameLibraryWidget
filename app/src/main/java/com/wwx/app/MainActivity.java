@@ -30,9 +30,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public final int SELECT_PHOTO_FROM_SDCARD = 1;
     private ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4, new DaemonThreadFactory());
-
     private Activity mActivity;
-
     private int openDialogMsgCount = 0; // 点击打开信息dialog次数
 
     @Override
