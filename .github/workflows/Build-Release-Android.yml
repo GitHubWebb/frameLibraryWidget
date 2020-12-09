@@ -70,8 +70,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ tag_name }}
-          release_name: ${{ tag_name }}
+          tag_name: ${{ env.tag_name }}
+          release_name: ${{ env.tag_name }}
           body: |
             ![release!](https://i.giphy.com/media/lPulaaB9lDMnGZiivs/source.gif)
             # Changelog
