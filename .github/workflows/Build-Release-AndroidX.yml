@@ -32,10 +32,11 @@ jobs:
       - name: Print Get current Tag
         run: |
           CURRENT_TAG_NAME=` git describe --abbrev=0 --tags `
+          CURRENT_TAG_NAME=${CURRENT_TAG_NAME%%${{ env.releaseSuffix }}*}
           TAG_VERSION_NAME=$CURRENT_TAG_NAME
-          TAG_VERSION_NAME=${TAG_VERSION_NAME%%${{ env.releaseSuffix }}*}
+
           TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
-          while [ "$(echo ` git rev-parse --verify --quiet $TAG_VERSION_NAME `)" ]
+          while [ "$(echo ` git rev-parse --verify --quiet $TAG_VERSION_NAME${{ env.releaseSuffix }} `)" ]
             do
               echo "do not is empty by TAG_VERSION_NAME :$TAG_VERSION_NAME"
               TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
