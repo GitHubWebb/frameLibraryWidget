@@ -34,10 +34,11 @@ jobs:
       - name: Print new build number
         run: |
           TAG_VERSION_NAME=` git describe --abbrev=0 --tags `
-          echo 'tag_name=${TAG_VERSION_NAME}' >> $GITHUB_ENV
+          TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
+          echo 'tag_name= $( echo $TAG_VERSION_NAME)' >> $GITHUB_ENV
           echo ::set-output name=changelog::` ${{ steps.changelog.outputs.changelog }} | cat `
-        #  TAG_VERSION_NAME=${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))
-        #  TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )  echo "Build changelog is ${{ steps.changelog.outputs.changelog }}"
+        #  TAG_VERSION_NAME=$( echo "${TAG_VERSION_NAME%.*}.$((${TAG_VERSION_NAME##*.}+1))" )
+        #  echo "Build changelog is ${{ steps.changelog.outputs.changelog }}"
 
         #  echo "Build Commit Body is ${{ steps.createDraft.outputs.body }}"
         #  echo  $NEXT_PATCH_VERSION $BUILD_NUMBER
