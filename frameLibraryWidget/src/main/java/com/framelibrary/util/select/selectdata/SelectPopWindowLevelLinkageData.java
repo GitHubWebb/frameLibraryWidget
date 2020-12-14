@@ -27,7 +27,7 @@ public class SelectPopWindowLevelLinkageData {
      * @param separator    数据源之间显示分割符号
      * @param tvOptions    需要显示的控件
      */
-    protected void showSelectDataNPicker(Context context, final TextView tvOptions, String separator, List<String>... arrayListArr) {
+    public static void showSelectDataNPicker(Context context, final TextView tvOptions, String separator, List<String>... arrayListArr) {
         OptionsPickerView pvOptions = new OptionsPickerBuilder(context, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {

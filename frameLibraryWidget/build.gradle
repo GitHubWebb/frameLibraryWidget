@@ -176,7 +176,6 @@ dependencies {
     // @Link "https://github.com/Bigkoo/Android-PickerView/wiki/%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%884.x%E7%89%88%EF%BC%89"
     api 'com.contrarywind:Android-PickerView:4.1.9'
 
-
     // http://p.codekk.com/detail/Android/simplepeng/SpiderMan debug 模式崩溃日志抓取
     api 'com.simple:spiderman:1.1.6'
     debugImplementation('com.simple:spiderman:1.1.6') {
