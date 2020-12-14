@@ -17,11 +17,13 @@ import com.framelibrary.util.PermissionCheckUtils;
 import com.framelibrary.util.UIUtils;
 import com.framelibrary.util.dialog.DialogDoNet;
 import com.framelibrary.util.logutil.LoggerUtils;
+import com.framelibrary.util.select.selectdata.SelectPopWindowLevelLinkageData;
 import com.framelibrary.util.select.selectphoto.FileUtils;
 import com.framelibrary.widget.image.ShowImagesDialog;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -32,17 +34,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4, new DaemonThreadFactory());
     private Activity mActivity;
     private int openDialogMsgCount = 0; // 点击打开信息dialog次数
+    private TextView tvTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mActivity = this;
-        TextView tvTest = findViewById(R.id.et_test);
+        tvTest = findViewById(R.id.et_test);
         TextView tvTest1 = findViewById(R.id.et_test1);
         findViewById(R.id.btn_get_img_mime_type).setOnClickListener(this);
         findViewById(R.id.btn_open_spliteditactivity).setOnClickListener(this);
         findViewById(R.id.btn_open_dialog_message).setOnClickListener(this);
+        findViewById(R.id.btn_open_choose_pop).setOnClickListener(this);
         tvTest.setText("Hello");
 
         mActivity = this;
@@ -260,6 +264,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (openDialogMsgCount >= 50) {
                     mScheduledExecutorService.shutdown();
                 }
+                break;
+
+            case R.id.btn_open_choose_pop:
+                SelectPopWindowLevelLinkageData.showSelectDataNPicker(this, tvTest, "/",
+                        Arrays.asList("请选择", "男", "女"),
+                        Arrays.asList("请选择", "男", "女"),
+                        Arrays.asList("请选择", "男", "女")
+                );
                 break;
         }
     }
