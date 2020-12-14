@@ -117,6 +117,16 @@ public class LoggerUtils {
      * @param e          报错Exception
      * @param methodName 报错方法名
      */
+    public static void printStackToLog(Exception e) {
+        printStackToLog(e, "");
+    }
+
+    /**
+     * 避免e.printStackTrace()堆栈过多造成锁死
+     *
+     * @param e          报错Exception
+     * @param methodName 报错方法名
+     */
     public static void printStackToLog(Exception e, String methodName) {
         printStackToLog(e, methodName, "execute fail!");
     }
