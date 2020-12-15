@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.framelibrary.R;
-import com.framelibrary.bean.select_photo.Image;
+import com.framelibrary.bean.select.select_photo.Image;
 
 import java.io.File;
 import java.util.ArrayList;

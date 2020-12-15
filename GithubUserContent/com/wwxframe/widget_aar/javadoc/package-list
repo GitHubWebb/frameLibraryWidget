@@ -1,6 +1,6 @@
 com.framelibrary.adapter.photoselect
 com.framelibrary.bean
-com.framelibrary.bean.select_photo
+com.framelibrary.bean.select.select_photo
 com.framelibrary.config
 com.framelibrary.listener
 com.framelibrary.ui.activity.select_photo

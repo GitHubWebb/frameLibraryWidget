@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
 
     <EditText
         android:id="@+id/et_test"
@@ -50,6 +50,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_10"
         android:text="open dialog message" />
+
+    <Button
+        android:id="@+id/btn_open_choose_pop_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="btn_open_choose_pop_test" />
 
     <Button
         android:id="@+id/btn_open_choose_pop"

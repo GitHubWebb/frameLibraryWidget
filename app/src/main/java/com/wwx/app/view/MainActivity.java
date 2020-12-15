@@ -1,4 +1,4 @@
-package com.wwx.app;
+package com.wwx.app.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.framelibrary.bean.select.select_popdata.SelectPopDataBean;
 import com.framelibrary.config.DaemonThreadFactory;
 import com.framelibrary.config.FrameLibBaseApplication;
 import com.framelibrary.ui.activity.select_photo.MultiImageSelectorActivity;
@@ -20,10 +21,10 @@ import com.framelibrary.util.logutil.LoggerUtils;
 import com.framelibrary.util.select.selectdata.SelectPopWindowLevelLinkageData;
 import com.framelibrary.util.select.selectphoto.FileUtils;
 import com.framelibrary.widget.image.ShowImagesDialog;
+import com.wwx.app.R;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_get_img_mime_type).setOnClickListener(this);
         findViewById(R.id.btn_open_spliteditactivity).setOnClickListener(this);
         findViewById(R.id.btn_open_dialog_message).setOnClickListener(this);
+        findViewById(R.id.btn_open_choose_pop_test).setOnClickListener(this);
         findViewById(R.id.btn_open_choose_pop).setOnClickListener(this);
         tvTest.setText("Hello");
 
@@ -266,12 +268,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
 
+            case R.id.btn_open_choose_pop_test:
+                startActivity(new Intent(this, MainSelectPopActivity.class));
+                break;
             case R.id.btn_open_choose_pop:
-                SelectPopWindowLevelLinkageData.showSelectDataNPicker(this, tvTest, "/",
+                /*SelectPopWindowLevelLinkageData.showSelectDataNPicker(this, tvTest, "/",
                         Arrays.asList("请选择", "男", "女"),
                         Arrays.asList("请选择", "男", "女"),
                         Arrays.asList("请选择", "男", "女")
-                );
+                );*/
+
+                List<SelectPopDataBean> option1Items = new ArrayList<>();
+                option1Items.add(new SelectPopDataBean(
+                        "1", "1", ""
+                ));
+                option1Items.add(new SelectPopDataBean(
+                        "2", "2", ""
+                ));
+                option1Items.add(new SelectPopDataBean(
+                        "3", "3", ""
+                ));
+                option1Items.add(new SelectPopDataBean(
+                        "4", "4", ""
+                ));
+
+                List<List<SelectPopDataBean>> option2Items = new ArrayList<>();
+                for (int i = 1; i < 5; i++) {
+                    List<SelectPopDataBean> option2ChildItems = new ArrayList<>();
+                    option2ChildItems.add(new SelectPopDataBean(
+                            "1" + i, "1" + i, "1"
+                    ));
+                    option2ChildItems.add(new SelectPopDataBean(
+                            "1" + i, "1" + i, "1"
+                    ));
+                    option2ChildItems.add(new SelectPopDataBean(
+                            "1" + i, "1" + i, "1"
+                    ));
+                    option2ChildItems.add(new SelectPopDataBean(
+                            "1" + i, "1" + i, "1"
+                    ));
+                    option2Items.add(option2ChildItems);
+                }
+
+                List<List<List<SelectPopDataBean>>> option3Items = new ArrayList<>();
+                for (int i = 0; i < 5; i++) {
+                    List<List<SelectPopDataBean>> option3ChildItems = new ArrayList<>();
+                    for (int j = 1; j < 5; j++) {
+                        List<SelectPopDataBean> option2ChildItems = new ArrayList<>();
+                        option2ChildItems.add(new SelectPopDataBean(
+                                "1" + j, "1" + j, "1"
+                        ));
+                        option3ChildItems.add(option2ChildItems);
+                    }
+                    option3Items.add(option3ChildItems);
+                }
+
+                SelectPopWindowLevelLinkageData.showSelectDataPicker(this, tvTest, "-", "测试标题",
+                        option1Items, option2Items);
                 break;
         }
     }

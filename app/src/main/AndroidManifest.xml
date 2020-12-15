@@ -14,14 +14,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".SplitEditActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.MainSelectPopActivity">
+
+        </activity>
+        <activity android:name=".view.SplitEditActivity"></activity>
+
+        <activity android:name=".view.selectpop.JsonDataActivity"/>
+        <activity android:name=".view.selectpop.FragmentTestActivity">
+
+
+        </activity>
+        <activity android:name=".view.selectpop.TestCircleWheelViewActivity" />
     </application>
 
 </manifest>

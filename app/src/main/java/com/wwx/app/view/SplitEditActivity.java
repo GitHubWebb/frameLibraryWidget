@@ -1,4 +1,4 @@
-package com.wwx.app;
+package com.wwx.app.view;
 
 import android.os.Bundle;
 
@@ -8,6 +8,7 @@ import com.al.open.OnInputListener;
 import com.al.open.SplitEditTextView;
 import com.framelibrary.util.TextChangedListener;
 import com.framelibrary.util.dialog.DialogDoNet;
+import com.wwx.app.R;
 
 public class SplitEditActivity extends AppCompatActivity {
 

@@ -42,8 +42,8 @@ import com.bumptech.glide.RequestManager;
 import com.framelibrary.R;
 import com.framelibrary.adapter.photoselect.FolderAdapter;
 import com.framelibrary.adapter.photoselect.ImageGridAdapter;
-import com.framelibrary.bean.select_photo.Folder;
-import com.framelibrary.bean.select_photo.Image;
+import com.framelibrary.bean.select.select_photo.Folder;
+import com.framelibrary.bean.select.select_photo.Image;
 import com.framelibrary.util.select.selectphoto.FileUtils;
 import com.framelibrary.util.select.selectphoto.TimeUtils;
 
