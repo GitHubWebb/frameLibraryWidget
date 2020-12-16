@@ -4,12 +4,18 @@ package com.framelibrary.bean.select.select_popdata;
 import com.contrarywind.interfaces.IPickerViewData;
 import com.google.gson.Gson;
 
+import java.util.List;
+
 /**
  * SelectPopWindow选择器实体数据¬
  *
  * @author wangweixu
  * @Date 2020年12月15日13:26:46
+ * @Filed id 根的唯一标识符 必须传递,为了避免数据错乱!!!
+ * @Filed description 根的描述 随意 可不传,如果传递则description作为数据选择器的title显示
  * @see "基于'com.contrarywind:Android-PickerView:4.1.9' 实现"
+ * <p>
+ * 第一层Bean 为根,根中的集合为子集依次类推
  */
 public class SelectPopDataBean implements IPickerViewData {
     private String id;
@@ -17,18 +23,20 @@ public class SelectPopDataBean implements IPickerViewData {
     private String parentId;
     private String description;
     private String others;
+    private List<SelectPopDataBean> childListBean;
 
-    public SelectPopDataBean(String id, String name, String parentId) {
+    public SelectPopDataBean(String id, String name, List<SelectPopDataBean> childListBean) {
         this.id = id;
         this.name = name;
-        this.parentId = parentId;
+        this.childListBean = childListBean;
     }
 
-    public SelectPopDataBean(String id, String name, String description, String others) {
+    public SelectPopDataBean(String id, String name, String description, List<SelectPopDataBean> childListBean) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.others = others;
+        this.childListBean = childListBean;
+
     }
 
     public String getId() {
@@ -69,6 +77,14 @@ public class SelectPopDataBean implements IPickerViewData {
 
     public void setOthers(String others) {
         this.others = others;
+    }
+
+    public List<SelectPopDataBean> getChildListBean() {
+        return childListBean;
+    }
+
+    public void setChildListBean(List<SelectPopDataBean> childListBean) {
+        this.childListBean = childListBean;
     }
 
     //这个用来显示在PickerView上面的字符串,PickerView会通过getPickerViewText方法获取字符串显示出来。

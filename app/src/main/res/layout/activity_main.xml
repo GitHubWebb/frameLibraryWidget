@@ -52,6 +52,13 @@
         android:text="open dialog message" />
 
     <Button
+        android:id="@+id/btn_put_sp_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="btn_put_sp_test" />
+ <Button
         android:id="@+id/btn_open_choose_pop_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
