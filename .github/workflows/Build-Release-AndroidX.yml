@@ -30,7 +30,7 @@ jobs:
       - name: Build application
         run: |
           echo ` git log --first-parent --pretty=%d | grep -m1 tag: `
-          yarn install  && chmod +x gradlew && ./gradlew build && ./gradlew assembleRelease && ./gradlew assembleDebug
+          yarn install  && chmod +x gradlew && ./gradlew build && ./gradlew assembleRelease
           du -shc `find . -regex '.+\.\(apk\|aab\)$'`
           #      run: yarn install && cd android && chmod +x gradlew && ./gradlew assembleRelease
 
