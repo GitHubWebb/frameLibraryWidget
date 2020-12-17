@@ -12,6 +12,7 @@ import java.util.List;
  * @author wangweixu
  * @Date 2020年12月15日13:26:46
  * @Filed id 根的唯一标识符 必须传递,为了避免数据错乱!!!
+ * @Filed name 作为根时候可不传,子集时候必须传递,根据这个值显示数据
  * @Filed description 根的描述 随意 可不传,如果传递则description作为数据选择器的title显示
  * @see "基于'com.contrarywind:Android-PickerView:4.1.9' 实现"
  * <p>
@@ -24,6 +25,12 @@ public class SelectPopDataBean implements IPickerViewData {
     private String description;
     private String others;
     private List<SelectPopDataBean> childListBean;
+
+    public SelectPopDataBean(String id, String name) {
+        this.id = id;
+        this.name = name;
+        this.childListBean = null;
+    }
 
     public SelectPopDataBean(String id, String name, List<SelectPopDataBean> childListBean) {
         this.id = id;

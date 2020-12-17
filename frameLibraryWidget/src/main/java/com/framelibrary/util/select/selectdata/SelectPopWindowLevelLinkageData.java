@@ -127,11 +127,15 @@ public class SelectPopWindowLevelLinkageData {
 
             List<SelectPopDataBean> twoChildDataBeanList = oneChildataBean.getChildListBean(); // 该一级下的所有数据（第二级）
             // 如果第一条就不存在二级数据的话,那二级列表也没必要存在了
-            if (i == 0) if (twoChildDataBeanList == null) return;
-            else options2Items = options2Items != null ? options2Items : new ArrayList<>();
+            if (twoChildDataBeanList == null) {
+                options2Items = null;
+                options3Items = null;
+                break;
+            } else options2Items = options2Items != null ? options2Items : new ArrayList<>();
 
             // 将该一级对应对的所有二级数据添加到二级数据列表
-            options2Items.add(twoChildDataBeanList);
+            if (options2Items != null)
+                options2Items.add(twoChildDataBeanList);
 
             List<List<SelectPopDataBean>> threeChildDataBeans = new ArrayList<>(); // 存储该二级下的所有三级数据
             // 再根据当前一级列表的二级列表集合,取出每一条二级列表对应的三级列表数据集
@@ -146,8 +150,10 @@ public class SelectPopWindowLevelLinkageData {
 
                 List<SelectPopDataBean> threeChildDataBeanList = twoChildDataBean.getChildListBean(); // 该二级下的所有数据（第二级）
                 // 同理,如果第一条就不存在三级数据的话,那三级列表也没必要存在了
-                if (j == 0) if (threeChildDataBeanList == null) return;
-                else
+                if (threeChildDataBeanList == null) {
+                    options3Items = null;
+                    break;
+                } else
                     options3Items = options3Items != null ? options3Items : new ArrayList<>();
 
                 if (splitDataArr != null && splitDataArr.length >= 3)
@@ -165,8 +171,13 @@ public class SelectPopWindowLevelLinkageData {
             }
 
             // 把合并后的对应二级对的三级子项存储,转换为三级列表s
-            options3Items.add(threeChildDataBeans);
+            if (options3Items != null)
+                options3Items.add(threeChildDataBeans);
         }
+
+        // 第二级都不存在 第三极更没必要存在
+        if (options2Items == null)
+            options3Items = null;
 
         optionsPickerBuilder
                 .setSelectOptions(mOptions1, mOptions2, mOptions3); // 设置默认选中项

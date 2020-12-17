@@ -324,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ));
 
                 option1Items.add(new SelectPopDataBean(
-                        "女", "女", option2Items
+                        "女", "女", null
                 ));
 
 
