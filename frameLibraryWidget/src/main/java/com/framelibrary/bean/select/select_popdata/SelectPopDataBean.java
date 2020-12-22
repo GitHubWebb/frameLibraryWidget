@@ -2,6 +2,7 @@ package com.framelibrary.bean.select.select_popdata;
 
 
 import com.contrarywind.interfaces.IPickerViewData;
+import com.framelibrary.util.StringUtils;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -47,6 +48,8 @@ public class SelectPopDataBean implements IPickerViewData {
     }
 
     public String getId() {
+        if (!StringUtils.isBlank(id))
+            setId(id.trim());
         return id;
     }
 
@@ -55,6 +58,8 @@ public class SelectPopDataBean implements IPickerViewData {
     }
 
     public String getName() {
+        if (!StringUtils.isBlank(name))
+            setName(name.trim());
         return name;
     }
 

@@ -6,10 +6,20 @@ import com.framelibrary.config.FrameLibBaseApplication;
 import com.framelibrary.util.StringUtils;
 import com.framelibrary.util.logutil.LoggerUtils;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * 设备数据存储类SP
+ * SharedPreference 提 交 数 据 时 ， 尽 量 使 用 Editor#apply()
+ * ，而非Editor#commit()。一般来讲，仅当需要确定提交结果，并据此有后续操作时，才使用 Editor#commit()。
+ * <p>
+ * 说明：
+ * <p>
+ * SharedPreference 相关修改使用 apply 方法进行提交会先写入内存，然后异步写入磁盘，commit
+ * 方法是直接写入磁盘。如果频繁操作的话 apply 的性能会优于 commit，apply会将最后修改内容写入磁盘。
+ * 但是如果希望立刻获取存储操作的结果，并据此做相应的其他操作，应当使用 commit。
  *
  * @author wangweixu
  * @Date 😪2017年12月16日14:58:41
@@ -104,9 +114,32 @@ public class DeviceDataShare {
 
 
     /**
-     * 获取accessToken
+     * 获取选中的selectPop下标
      *
-     * @return accessToken
+     * @param key "SelectPopData"+SelectPopDataBean.getId();
+     * @return 下标
+     */
+    public String getSelectPopStringValueByKey(String key) {
+        key = "SelectPopData:" + key;
+        return getStringValueByKey(key);
+    }
+
+    /**
+     * 获取选中的selectPop下标
+     *
+     * @param key   "SelectPopData"+SelectPopDataBean.getId();
+     * @param value options1 , options2 , options3 ....
+     * @return 下标
+     */
+    public void setSelectPopStringValueByKey(String key, String value) {
+        key = "SelectPopData:" + key;
+        setStringValueByKey(key, value);
+    }
+
+    /**
+     * 根据key获取value
+     *
+     * @return
      */
     public String getStringValueByKey(String key) {
         if (StringUtils.isBlank(key))
@@ -117,13 +150,50 @@ public class DeviceDataShare {
         return value;
     }
 
-    //存储access_token
+    //存储根据key,存储value
     public void setStringValueByKey(String key, String value) {
-        LoggerUtils.I("setStringValueBy Key.--------" + key+" ,value.--------" + value);
+        LoggerUtils.I("setStringValueBy Key.--------" + key + " ,value.--------" + value);
         if (StringUtils.isBlank(value)) return;
 
         getSharedPreferences().edit().putString(key, value).apply();
 
+    }
+
+    // 删除所有SelectPop选中项缓存数据
+    public void removeBySelectPopDataAll() {
+        Iterator<? extends Map.Entry<String, ?>> entryIterator = getSharedPreferences().getAll().entrySet().iterator();
+        while (entryIterator.hasNext()) {
+            String key = entryIterator.next().getKey();
+            if (StringUtils.isBlank(key))
+                continue;
+
+            if (key.indexOf("SelectPopData:") != -1)
+                removeByKey(key);
+        }
+    }
+
+    // 删除所有数据
+    public void removeByAll() {
+        Iterator<? extends Map.Entry<String, ?>> entryIterator = getSharedPreferences().getAll().entrySet().iterator();
+        while (entryIterator.hasNext()) {
+            String key = entryIterator.next().getKey();
+            removeByKey(key);
+        }
+    }
+
+    // 删除所有数据
+    public void removeAll() {
+        getSharedPreferences().edit().clear().apply();
+    }
+
+    // 根据Key删除
+    public void removeByKey(String key) {
+
+        if (StringUtils.isBlank(key))
+            return;
+
+        LoggerUtils.D("删除了key:" + key);
+        getSharedPreferences().edit().remove(key).apply();
     }
 
 }

@@ -67,7 +67,7 @@ public class SelectPopWindowLevelLinkageData {
                  * 在使用选择器的时候,通常意味着要像后台传递选中的参数,但可能传递的是选中参数对应的值,例如 code:123,name:测试,选中测试,要把123传递给后台
                  * 所以把当前选中下标保存下来
                  */
-                DeviceDataShare.getInstance().setStringValueByKey(popDataBean.getId(), putSPJO.toString());
+                DeviceDataShare.getInstance().setSelectPopStringValueByKey(popDataBean.getId(), putSPJO.toString());
 
                 String opt1tx = options1Items.size() > 0 ?
                         options1Items.get(options1).getPickerViewText() : "";
@@ -95,7 +95,7 @@ public class SelectPopWindowLevelLinkageData {
         String[] splitDataArr = tvStr.split(separator); // 将文本值根据分割符进行拆分用于跟三个数组集合进行比对
 
         // 获取存储的选择器上一次选择的下标,JSON格式
-        String valueByKeyJOStr = DeviceDataShare.getInstance().getStringValueByKey(popDataBean.getId());
+        String valueByKeyJOStr = DeviceDataShare.getInstance().getSelectPopStringValueByKey(popDataBean.getId());
         JsonObject cacheSelectPositionByJO = new Gson().fromJson(valueByKeyJOStr, JsonObject.class);
 
         mOptions1 = 1;
@@ -130,7 +130,7 @@ public class SelectPopWindowLevelLinkageData {
             if (twoChildDataBeanList == null) {
                 options2Items = null;
                 options3Items = null;
-                break;
+                continue;
             } else options2Items = options2Items != null ? options2Items : new ArrayList<>();
 
             // 将该一级对应对的所有二级数据添加到二级数据列表

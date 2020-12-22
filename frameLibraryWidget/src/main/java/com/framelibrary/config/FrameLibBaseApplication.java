@@ -15,6 +15,7 @@ import com.framelibrary.BuildConfig;
 import com.framelibrary.util.Constant;
 import com.framelibrary.util.DateUtils;
 import com.framelibrary.util.logutil.AppDiskLogStrategy;
+import com.framelibrary.util.share.DeviceDataShare;
 import com.github.anzewei.parallaxbacklayout.ParallaxHelper;
 import com.hjq.toast.ToastUtils;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -132,6 +133,8 @@ public class FrameLibBaseApplication extends MultiDexApplication {
 
         ToastUtils.init(instance);
 
+        // 每次重新启动都删除SP中已缓存的SelectPopData选中数据
+        DeviceDataShare.getInstance().removeBySelectPopDataAll();
     }
 
     public static FrameLibBaseApplication getInstance() {
