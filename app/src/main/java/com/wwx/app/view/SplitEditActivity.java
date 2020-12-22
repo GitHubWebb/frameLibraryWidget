@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.al.open.OnInputListener;
 import com.al.open.SplitEditTextView;
-import com.framelibrary.util.TextChangedListener;
+import com.framelibrary.util.filter.text.TextChangedListener;
 import com.framelibrary.util.dialog.DialogDoNet;
 import com.wwx.app.R;
 

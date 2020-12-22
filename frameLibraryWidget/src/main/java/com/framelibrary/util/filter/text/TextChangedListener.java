@@ -1,4 +1,4 @@
-package com.framelibrary.util;
+package com.framelibrary.util.filter.text;
 
 import android.text.Editable;
 import android.text.InputFilter;
@@ -7,6 +7,8 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.widget.EditText;
+
+import com.framelibrary.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +19,24 @@ import java.util.regex.Pattern;
  * EditText字符串修改监听
  *
  * @author wangwx
+ * @Date 2020年12月22日18:25:24
  */
-
 public class TextChangedListener {
 
+    // 限制不能输入特殊字符与数字,但允许输入  .  `
+    public static void specialStringExcludePointsWatcher(int maxLength, final EditText... editText) {
+        InputFilter[] inputFilters = {TextChangedListener.filterSpecialExcludePointsCharacters, TextChangedListener.chineseTypeFilter, TextChangedListener.NumWrap, new EmojiFilter()};
+        TextChangedListener.inputLimitSpaceWrap(20, inputFilters, editText);
+    }
+
+    // 限制不能输入特殊字符与数字
+    public static void specialStringWatcher(int maxLength, final EditText... editText) {
+        InputFilter[] inputFilters = {TextChangedListener.chineseTypeFilter, TextChangedListener.NumWrap, TextChangedListener.filterSpecialCharacters, new EmojiFilter()};
+        TextChangedListener.inputLimitSpaceWrap(20, inputFilters, editText);
+    }
+
     // 限制输入框不能输入汉字
-    public static void StringWatcher(final EditText editText) {
+    public static void stringWatcher(final EditText editText) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -49,9 +63,10 @@ public class TextChangedListener {
     //限制不能输入空格与换行
     public static void inputLimitSpaceWrap(int maxLength, EditText... editText) {
 
-        for (int i = 0; i < editText.length; i++) {
+        /*for (int i = 0; i < editText.length; i++) {
             editText[i].setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength), SpaceWrap});
-        }
+        }*/
+        inputLimitSpaceWrap(maxLength, new InputFilter[]{new InputFilter.LengthFilter(maxLength), SpaceWrap}, editText);
     }
 
     /**
@@ -76,7 +91,7 @@ public class TextChangedListener {
                 for (int z = 0; z < inputFilterList.size(); z++) {
                     inputFilters[z] = inputFilterList.get(z);
                 }
-                editText[i].setFilters( inputFilters);
+                editText[i].setFilters(inputFilters);
             }
         }
     }
@@ -120,9 +135,27 @@ public class TextChangedListener {
     public static InputFilter chineseTypeFilter = new InputFilter() {
         @Override
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            Pattern p = Pattern.compile("[a-zA-Z|\u4e00-\u9fa5]+");
+            Pattern p = Pattern.compile("[a-zA-Z|•|\u4e00-\u9fa5]+");
             Matcher matcher = p.matcher(source.toString());
             if (!matcher.find()) {
+//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入特殊字符!");
+                return "";
+            } else {
+                return null;
+            }
+        }
+    };
+
+    /**
+     * 禁止EditText输入特殊字符,但允许输入点  .   `
+     */
+    public static InputFilter filterSpecialExcludePointsCharacters = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            String speChat = "[`~!@#$%^&*()+-=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+            Pattern pattern = Pattern.compile(speChat);
+            Matcher matcher = pattern.matcher(source.toString());
+            if (matcher.find()) {
 //                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入特殊字符!");
                 return "";
             } else {
