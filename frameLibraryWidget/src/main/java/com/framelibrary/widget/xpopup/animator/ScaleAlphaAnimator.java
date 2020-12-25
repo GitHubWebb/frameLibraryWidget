@@ -8,7 +8,6 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import com.framelibrary.widget.xpopup.XPopup;
 
 
-
 /**
  * Description: 缩放透明
  * Create by dance, at 2018/12/9

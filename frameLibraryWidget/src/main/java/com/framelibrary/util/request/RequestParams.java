@@ -1,7 +1,7 @@
 package com.framelibrary.util.request;
 
-import com.framelibrary.util.logutil.LoggerUtils;
 import com.framelibrary.util.StringUtils;
+import com.framelibrary.util.logutil.LoggerUtils;
 
 /**
  * @author wangwx

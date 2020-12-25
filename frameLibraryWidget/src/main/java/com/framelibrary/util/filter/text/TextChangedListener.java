@@ -23,10 +23,136 @@ import java.util.regex.Pattern;
  */
 public class TextChangedListener {
 
-    // 限制不能输入特殊字符与数字,但允许输入  .  `
+    // 只可以输入英文+数字s
+    public static InputFilter allowEnglishNumWrap = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern p = Pattern.compile("[a-zA-Z|[0-9]*]+");
+            Matcher matcher = p.matcher(source.toString());
+            if (!matcher.find()) {
+//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入特殊字符!");
+                return "";
+            } else {
+                return null;
+            }
+        }
+    };
+    public static InputFilter NumWrap = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            if (StringUtils.isNumeric(source.toString())) {
+                int sourceNum = Integer.parseInt(source.toString());
+                if (sourceNum == (0) || sourceNum == (1) ||
+                        sourceNum == (2) || sourceNum == (3) ||
+                        sourceNum == (4) || sourceNum == (5) ||
+                        sourceNum == (6) || sourceNum == (7) ||
+                        sourceNum == (8) || sourceNum == (9)) {
+
+//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入数字!");
+                    return "";
+
+                } else return null;
+            } else return null;
+        }
+    };
+    // 允许输入汉字
+    public static InputFilter allowChineseWrap = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern p = Pattern.compile("[|\u4e00-\u9fa5]+");
+            Matcher matcher = p.matcher(source.toString());
+            if (!matcher.find()) {
+//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入特殊字符!");
+                return "";
+            } else {
+                return null;
+            }
+        }
+    };
+    // 禁止输入汉字
+    public static InputFilter prohibitChineseWrap = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern p = Pattern.compile("[|\u4e00-\u9fa5]+");
+            Matcher matcher = p.matcher(source.toString());
+            if (matcher.find()) {
+//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入汉字");
+                return "";
+            } else {
+                return null;
+            }
+        }
+    };
+    /**
+     * 只可以输入汉字+英文
+     */
+    public static InputFilter chineseTypeFilter = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern p = Pattern.compile("[a-zA-Z|•|\u4e00-\u9fa5]+");
+            Matcher matcher = p.matcher(source.toString());
+            if (!matcher.find()) {
+//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入特殊字符!");
+                return "";
+            } else {
+                return null;
+            }
+        }
+    };
+    /**
+     * 禁止EditText输入特殊字符,但允许输入点  .   `
+     */
+    public static InputFilter filterSpecialExcludePointsCharacters = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            String speChat = "[`~!@#$%^&*()+-=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+            Pattern pattern = Pattern.compile(speChat);
+            Matcher matcher = pattern.matcher(source.toString());
+            if (matcher.find()) {
+//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入特殊字符!");
+                return "";
+            } else {
+                return null;
+            }
+        }
+    };
+    /**
+     * 禁止EditText输入特殊字符
+     */
+    public static InputFilter filterSpecialCharacters = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            String speChat = "[`~!@#$%^&*()+-=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+            Pattern pattern = Pattern.compile(speChat);
+            Matcher matcher = pattern.matcher(source.toString());
+            if (matcher.find()) {
+//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入特殊字符!");
+                return "";
+            } else {
+                return null;
+            }
+        }
+    };
+    /**
+     * 禁止输入空格
+     */
+    private static InputFilter SpaceWrap = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            //返回null表示接收输入的字符,返回空字符串表示不接受输入的字符
+            if (source.equals(" ") || source.toString().contentEquals("\n")) {
+
+//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入空格!");
+                return "";
+
+            } else return null;
+        }
+    };
+
+    // 限制不能输入特殊字符与数字,但允许输入点  •
     public static void specialStringExcludePointsWatcher(int maxLength, final EditText... editText) {
         InputFilter[] inputFilters = {TextChangedListener.filterSpecialExcludePointsCharacters, TextChangedListener.chineseTypeFilter, TextChangedListener.NumWrap, new EmojiFilter()};
-        TextChangedListener.inputLimitSpaceWrap(20, inputFilters, editText);
+        TextChangedListener.inputLimitSpaceWrap(maxLength, inputFilters, editText);
     }
 
     // 限制不能输入特殊字符与数字
@@ -95,92 +221,6 @@ public class TextChangedListener {
             }
         }
     }
-
-    /**
-     * 禁止输入空格
-     */
-    private static InputFilter SpaceWrap = new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            //返回null表示接收输入的字符,返回空字符串表示不接受输入的字符
-            if (source.equals(" ") || source.toString().contentEquals("\n")) {
-
-//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入空格!");
-                return "";
-
-            } else return null;
-        }
-    };
-
-    public static InputFilter NumWrap = new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            if (source.equals(0) || source.equals(1) ||
-                    source.equals(2) || source.equals(3) ||
-                    source.equals(4) || source.equals(5) ||
-                    source.equals(6) || source.equals(7) ||
-                    source.equals(8) || source.equals(9)) {
-
-//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入数字!");
-                return "";
-
-            } else return null;
-        }
-    };
-
-
-    /**
-     * 只可以输入汉字+英文
-     */
-    public static InputFilter chineseTypeFilter = new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            Pattern p = Pattern.compile("[a-zA-Z|•|\u4e00-\u9fa5]+");
-            Matcher matcher = p.matcher(source.toString());
-            if (!matcher.find()) {
-//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入特殊字符!");
-                return "";
-            } else {
-                return null;
-            }
-        }
-    };
-
-    /**
-     * 禁止EditText输入特殊字符,但允许输入点  .   `
-     */
-    public static InputFilter filterSpecialExcludePointsCharacters = new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            String speChat = "[`~!@#$%^&*()+-=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
-            Pattern pattern = Pattern.compile(speChat);
-            Matcher matcher = pattern.matcher(source.toString());
-            if (matcher.find()) {
-//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入特殊字符!");
-                return "";
-            } else {
-                return null;
-            }
-        }
-    };
-
-    /**
-     * 禁止EditText输入特殊字符
-     */
-    public static InputFilter filterSpecialCharacters = new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            String speChat = "[`~!@#$%^&*()+-=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
-            Pattern pattern = Pattern.compile(speChat);
-            Matcher matcher = pattern.matcher(source.toString());
-            if (matcher.find()) {
-//                ToastUtils.showShortToast(BaseApplication.getInstance().getBaseContext(), "禁止输入特殊字符!");
-                return "";
-            } else {
-                return null;
-            }
-        }
-    };
 
     /**
      * 根据regular规则限制EditText输入类型

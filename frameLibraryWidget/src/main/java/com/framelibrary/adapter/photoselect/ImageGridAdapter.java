@@ -55,16 +55,16 @@ public class ImageGridAdapter extends BaseAdapter {
         showSelectIndicator = b;
     }
 
+    public boolean isShowCamera() {
+        return showCamera;
+    }
+
     public void setShowCamera(boolean b) {
         if (showCamera == b)
             return;
 
         showCamera = b;
         notifyDataSetChanged();
-    }
-
-    public boolean isShowCamera() {
-        return showCamera;
     }
 
     /**

@@ -24,9 +24,20 @@ import com.lxj.xpopup.widget.PartShadowContainer;
  * Create by dance, at 2018/12/11
  */
 public abstract class AttachPopupView extends BasePopupView {
+    public boolean isShowUp;
     protected int defaultOffsetY = 0;
     protected int defaultOffsetX = 0;
     protected PartShadowContainer attachPopupContainer;
+    protected int bgDrawableMargin = 6;
+    boolean isShowLeft;
+    /**
+     * 执行倚靠逻辑
+     */
+    float translationX = 0, translationY = 0;
+    // 弹窗显示的位置不能超越Window高度
+    float maxY = XPopupUtils.getWindowHeight(getContext());
+    int overflow = 10;
+    float centerY = 0;
 
     public AttachPopupView(@NonNull Context context) {
         super(context);
@@ -42,10 +53,6 @@ public abstract class AttachPopupView extends BasePopupView {
     protected int getPopupLayoutId() {
         return R.layout._xpopup_attach_popup_view;
     }
-
-    public boolean isShowUp;
-    boolean isShowLeft;
-    protected int bgDrawableMargin = 6;
 
     @Override
     protected void initPopupContent() {
@@ -106,15 +113,6 @@ public abstract class AttachPopupView extends BasePopupView {
             }
         }
     }
-
-    /**
-     * 执行倚靠逻辑
-     */
-    float translationX = 0, translationY = 0;
-    // 弹窗显示的位置不能超越Window高度
-    float maxY = XPopupUtils.getWindowHeight(getContext());
-    int overflow = 10;
-    float centerY = 0;
 
     public void doAttach() {
         overflow = XPopupUtils.dp2px(getContext(), overflow);
@@ -259,9 +257,9 @@ public abstract class AttachPopupView extends BasePopupView {
 
     //是否显示在目标上方
     protected boolean isShowUpToTarget() {
-        if(popupInfo.positionByWindowCenter){
+        if (popupInfo.positionByWindowCenter) {
             //目标在屏幕上半方，弹窗显示在下；反之，则在上
-            return centerY > XPopupUtils.getWindowHeight(getContext())/2;
+            return centerY > XPopupUtils.getWindowHeight(getContext()) / 2;
         }
         //默认是根据Material规范定位，优先显示在目标下方，下方距离不足才显示在上方
         return (isShowUp || popupInfo.popupPosition == PopupPosition.Top)

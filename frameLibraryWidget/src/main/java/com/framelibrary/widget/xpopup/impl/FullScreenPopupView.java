@@ -30,30 +30,33 @@ public class FullScreenPopupView extends BasePopupView {
     public ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     protected View contentView;
     protected FrameLayout fullPopupContainer;
+    Paint paint = new Paint();
+    Rect shadowRect;
+    int currColor = Color.TRANSPARENT;
+
     public FullScreenPopupView(@NonNull Context context) {
         super(context);
         fullPopupContainer = findViewById(R.id.fullPopupContainer);
     }
+
     @Override
     protected int getPopupLayoutId() {
         return R.layout._xpopup_fullscreen_popup_view;
     }
-    protected void addInnerContent(){
+
+    protected void addInnerContent() {
         contentView = LayoutInflater.from(getContext()).inflate(getImplLayoutId(), fullPopupContainer, false);
         fullPopupContainer.addView(contentView);
     }
+
     @Override
     protected void initPopupContent() {
         super.initPopupContent();
-        if(fullPopupContainer.getChildCount()==0)addInnerContent();
+        if (fullPopupContainer.getChildCount() == 0) addInnerContent();
         getPopupContentView().setTranslationX(popupInfo.offsetX);
         getPopupContentView().setTranslationY(popupInfo.offsetY);
     }
 
-    Paint paint = new Paint();
-    Rect shadowRect;
-
-    int currColor = Color.TRANSPARENT;
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
@@ -76,7 +79,7 @@ public class FullScreenPopupView extends BasePopupView {
         doStatusBarColorTransform(false);
     }
 
-    public void doStatusBarColorTransform(boolean isShow){
+    public void doStatusBarColorTransform(boolean isShow) {
         if (popupInfo.hasStatusBarShadow) {
             //状态栏渐变动画
             ValueAnimator animator = ValueAnimator.ofObject(argbEvaluator,

@@ -6,46 +6,46 @@
     android:orientation="vertical">
 
     <TextView
-        android:drawablePadding="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_20"
         android:id="@+id/tv_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_20"
+        android:drawablePadding="@dimen/dp_15"
+        android:gravity="center_horizontal"
         android:text="@string/permission_open_tip_title"
         android:textColor="@color/base_black"
         android:textSize="@dimen/sp_14"
-        android:gravity="center_horizontal"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_centerHorizontal="true"
         android:id="@+id/tv_error_message"
-        android:layout_below="@+id/tv_tip"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:gravity="center_horizontal|start"
-        android:textSize="@dimen/sp_13"
-        android:textColor="@color/light_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/permission_open_write_tip_msg"/>
+        android:layout_below="@+id/tv_tip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:gravity="center_horizontal|start"
+        android:text="@string/permission_open_write_tip_msg"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/sp_13" />
 
 
     <TextView
-        android:layout_below="@+id/tv_error_message"
         android:id="@+id/tv_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_error_message"
         android:layout_margin="@dimen/dp_30"
+        android:background="@drawable/bg_yellow_btn_filling"
+        android:gravity="center_horizontal"
         android:paddingTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
         android:text="@string/text_know"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_14"
-        android:gravity="center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_yellow_btn_filling"/>
+        android:textSize="@dimen/sp_14" />
 
 
 </RelativeLayout>

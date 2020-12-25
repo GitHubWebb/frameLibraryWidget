@@ -24,10 +24,10 @@ import java.util.List;
 public class DefaultPageIndicator<T> extends LinearLayout implements PageIndicatorListener<T> {
 
     List<T> mDatas;
-    private int[] pageIndicatorRes;
-    private ArrayList<ImageView> mPointViews = new ArrayList<>();
     LinearLayout hView;
     int position = -1;
+    private int[] pageIndicatorRes;
+    private ArrayList<ImageView> mPointViews = new ArrayList<>();
 
     public DefaultPageIndicator(@NonNull Context context) {
         this(context, null);
@@ -46,7 +46,7 @@ public class DefaultPageIndicator<T> extends LinearLayout implements PageIndicat
         hView = (LinearLayout) LayoutInflater.from(context).inflate(
                 R.layout.default_indicator, this, true);
         hView.setOrientation(LinearLayout.HORIZONTAL);
-        pageIndicatorRes=new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused};
+        pageIndicatorRes = new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused};
 //        hView.setGravity(Gravity.CENTER);
     }
 
@@ -56,14 +56,14 @@ public class DefaultPageIndicator<T> extends LinearLayout implements PageIndicat
         return this;
     }
 
-    public void setmDatas(List<T> mDatas) {
-        this.mDatas = mDatas;
-        notifyDataChangedView();
-    }
-
     @Override
     public List<T> getmDatas() {
         return null;
+    }
+
+    public void setmDatas(List<T> mDatas) {
+        this.mDatas = mDatas;
+        notifyDataChangedView();
     }
 
     private void notifyDataChangedView() {

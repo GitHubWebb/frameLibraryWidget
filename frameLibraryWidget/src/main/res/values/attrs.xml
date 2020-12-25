@@ -6,6 +6,6 @@
         <attr name="autoTurnTime" format="integer|reference" />
         <attr name="scrollDuration" format="integer|reference" />
         <attr name="isTouchScroll" format="boolean" />
-        <attr name="reverse" format="boolean"/>
+        <attr name="reverse" format="boolean" />
     </declare-styleable>
 </resources>

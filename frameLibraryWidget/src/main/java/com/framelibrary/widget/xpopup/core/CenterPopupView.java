@@ -24,12 +24,13 @@ public class CenterPopupView extends BasePopupView {
     protected int bindLayoutId;
     protected int bindItemLayoutId;
     protected View contentView;
+
     public CenterPopupView(@NonNull Context context) {
         super(context);
         centerPopupContainer = findViewById(R.id.centerPopupContainer);
     }
 
-    protected void addInnerContent(){
+    protected void addInnerContent() {
         contentView = LayoutInflater.from(getContext()).inflate(getImplLayoutId(), centerPopupContainer, false);
         LayoutParams params = (LayoutParams) contentView.getLayoutParams();
         params.gravity = Gravity.CENTER;
@@ -44,16 +45,17 @@ public class CenterPopupView extends BasePopupView {
     @Override
     protected void initPopupContent() {
         super.initPopupContent();
-        if(centerPopupContainer.getChildCount()==0)addInnerContent();
+        if (centerPopupContainer.getChildCount() == 0) addInnerContent();
         getPopupContentView().setTranslationX(popupInfo.offsetX);
         getPopupContentView().setTranslationY(popupInfo.offsetY);
         XPopupUtils.applyPopupSize((ViewGroup) getPopupContentView(), getMaxWidth(), getMaxHeight());
     }
-    protected void applyTheme(){
-        if(bindLayoutId==0) {
-            if(popupInfo.isDarkTheme){
+
+    protected void applyTheme() {
+        if (bindLayoutId == 0) {
+            if (popupInfo.isDarkTheme) {
                 applyDarkTheme();
-            }else {
+            } else {
                 applyLightTheme();
             }
         }
@@ -89,7 +91,7 @@ public class CenterPopupView extends BasePopupView {
     }
 
     protected int getMaxWidth() {
-        return popupInfo.maxWidth==0 ? (int) (XPopupUtils.getWindowWidth(getContext()) * 0.8f)
+        return popupInfo.maxWidth == 0 ? (int) (XPopupUtils.getWindowWidth(getContext()) * 0.8f)
                 : popupInfo.maxWidth;
     }
 

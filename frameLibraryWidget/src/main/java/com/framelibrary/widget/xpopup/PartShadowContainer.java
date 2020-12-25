@@ -20,6 +20,8 @@ import com.framelibrary.widget.xpopup.interfaces.OnClickOutsideListener;
  */
 public class PartShadowContainer extends FrameLayout {
     public boolean isDismissOnTouchOutside = true;
+    private float x, y;
+    private OnClickOutsideListener listener;
 
     public PartShadowContainer(@NonNull Context context) {
         super(context);
@@ -33,7 +35,6 @@ public class PartShadowContainer extends FrameLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    private float x, y;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // 计算implView的Rect
@@ -64,8 +65,6 @@ public class PartShadowContainer extends FrameLayout {
         }
         return true;
     }
-
-    private OnClickOutsideListener listener;
 
     public void setOnClickOutsideListener(OnClickOutsideListener listener) {
         this.listener = listener;

@@ -30,8 +30,8 @@ public class ViewHolder {
     private SparseArray<View> mViews;
     private View mConvertView;
     private Context mContext;
-    private int viewType=0;
-    private int position=-1;
+    private int viewType = 0;
+    private int position = -1;
 
     public ViewHolder(Context context, View itemView) {
         mContext = context;
@@ -222,7 +222,7 @@ public class ViewHolder {
     }
 
     public ViewHolder setChecked(int viewId, boolean checked) {
-        Checkable view = (Checkable) getView(viewId);
+        Checkable view = getView(viewId);
         view.setChecked(checked);
         return this;
     }
@@ -255,11 +255,11 @@ public class ViewHolder {
         return viewType;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
     public int getPosition() {
         return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

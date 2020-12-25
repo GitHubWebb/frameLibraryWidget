@@ -5,8 +5,8 @@
     android:layout_height="fill_parent"
     android:background="@android:color/transparent"
     android:gravity="center"
-    android:minHeight="60dp"
     android:minWidth="180dp"
+    android:minHeight="60dp"
     android:orientation="vertical"
     android:padding="10dp">
 

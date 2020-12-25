@@ -73,6 +73,22 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
     private DisplayMetrics dm;
 
     private WeakHandler handler = new WeakHandler();
+    private final Runnable task = new Runnable() {
+        @Override
+        public void run() {
+            if (count > 1 && isAutoPlay) {
+                currentItem = currentItem % (count + 1) + 1;
+//                Log.i(tag, "curr:" + currentItem + " count:" + count);
+                if (currentItem == 1) {
+                    viewPager.setCurrentItem(currentItem, false);
+                    handler.post(task);
+                } else {
+                    viewPager.setCurrentItem(currentItem);
+                    handler.postDelayed(task, delayTime);
+                }
+            }
+        }
+    };
 
     public Banner(Context context) {
         this(context, null);
@@ -94,18 +110,33 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         initView(context, attrs);
     }
 
+    /**
+     * dp 转化为 px
+     *
+     * @param context
+     * @param dpValue
+     * @return
+     */
+    public static int dp2px(Context context, float dpValue) {
+        if (context != null) {
+            final float scale = context.getResources().getDisplayMetrics().density;
+            return (int) (dpValue * scale + 0.5f);
+        }
+        return 0;
+    }
+
     private void initView(Context context, AttributeSet attrs) {
         imageViews.clear();
         handleTypedArray(context, attrs);
         View view = LayoutInflater.from(context).inflate(mLayoutResId, this, true);
-        bannerDefaultImage = (ImageView) view.findViewById(R.id.bannerDefaultImage);
-        viewPager = (BannerViewPager) view.findViewById(R.id.bannerViewPager);
-        titleView = (LinearLayout) view.findViewById(R.id.titleView);
-        indicator = (LinearLayout) view.findViewById(R.id.circleIndicator);
-        indicatorInside = (LinearLayout) view.findViewById(R.id.indicatorInside);
-        bannerTitle = (TextView) view.findViewById(R.id.bannerTitle);
-        numIndicator = (TextView) view.findViewById(R.id.numIndicator);
-        numIndicatorInside = (TextView) view.findViewById(R.id.numIndicatorInside);
+        bannerDefaultImage = view.findViewById(R.id.bannerDefaultImage);
+        viewPager = view.findViewById(R.id.bannerViewPager);
+        titleView = view.findViewById(R.id.titleView);
+        indicator = view.findViewById(R.id.circleIndicator);
+        indicatorInside = view.findViewById(R.id.indicatorInside);
+        bannerTitle = view.findViewById(R.id.bannerTitle);
+        numIndicator = view.findViewById(R.id.numIndicator);
+        numIndicatorInside = view.findViewById(R.id.numIndicatorInside);
         bannerDefaultImage.setImageResource(bannerBackgroundImage);
         initViewPagerScroll();
     }
@@ -144,7 +175,6 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
             Log.e(tag, e.getMessage());
         }
     }
-
 
     public Banner isAutoPlay(boolean isAutoPlay) {
         this.isAutoPlay = isAutoPlay;
@@ -395,21 +425,6 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         }
     }
 
-    /**
-     * dp 转化为 px
-     *
-     * @param context
-     * @param dpValue
-     * @return
-     */
-    public static int dp2px(Context context, float dpValue) {
-        if (context != null) {
-            final float scale = context.getResources().getDisplayMetrics().density;
-            return (int) (dpValue * scale + 0.5f);
-        }
-        return 0;
-    }
-
     private void createIndicator() {
         indicatorImages.clear();
         indicator.removeAllViews();
@@ -435,7 +450,6 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         }
     }
 
-
     private void setData() {
         currentItem = 1;
         if (adapter == null) {
@@ -456,7 +470,6 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
             startAutoPlay();
     }
 
-
     public void startAutoPlay() {
         handler.removeCallbacks(task);
         handler.postDelayed(task, delayTime);
@@ -465,23 +478,6 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
     public void stopAutoPlay() {
         handler.removeCallbacks(task);
     }
-
-    private final Runnable task = new Runnable() {
-        @Override
-        public void run() {
-            if (count > 1 && isAutoPlay) {
-                currentItem = currentItem % (count + 1) + 1;
-//                Log.i(tag, "curr:" + currentItem + " count:" + count);
-                if (currentItem == 1) {
-                    viewPager.setCurrentItem(currentItem, false);
-                    handler.post(task);
-                } else {
-                    viewPager.setCurrentItem(currentItem);
-                    handler.postDelayed(task, delayTime);
-                }
-            }
-        }
-    };
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -509,50 +505,6 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         if (realPosition < 0)
             realPosition += count;
         return realPosition;
-    }
-
-    class BannerPagerAdapter extends PagerAdapter {
-
-        @Override
-        public int getCount() {
-            return imageViews.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, final int position) {
-            container.addView(imageViews.get(position));
-            View view = imageViews.get(position);
-            if (bannerListener != null) {
-                view.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.e(tag, "你正在使用旧版点击事件接口，下标是从1开始，" +
-                                "为了体验请更换为setOnBannerListener，下标从0开始计算");
-                        bannerListener.OnBannerClick(position);
-                    }
-                });
-            }
-            if (listener != null) {
-                view.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        listener.OnBannerClick(toRealPosition(position));
-                    }
-                });
-            }
-            return view;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
     }
 
     @Override
@@ -646,5 +598,49 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
 
     public void releaseBanner() {
         handler.removeCallbacksAndMessages(null);
+    }
+
+    class BannerPagerAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            return imageViews.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, final int position) {
+            container.addView(imageViews.get(position));
+            View view = imageViews.get(position);
+            if (bannerListener != null) {
+                view.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.e(tag, "你正在使用旧版点击事件接口，下标是从1开始，" +
+                                "为了体验请更换为setOnBannerListener，下标从0开始计算");
+                        bannerListener.OnBannerClick(position);
+                    }
+                });
+            }
+            if (listener != null) {
+                view.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.OnBannerClick(toRealPosition(position));
+                    }
+                });
+            }
+            return view;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
     }
 }

@@ -23,6 +23,8 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class StatusBarCompatLollipop {
 
+    private static ValueAnimator sAnimator;
+
     /**
      * return statusBar's Height in pixels
      */
@@ -37,7 +39,7 @@ class StatusBarCompatLollipop {
 
     /**
      * set StatusBarColor
-     *
+     * <p>
      * 1. set Flags to call setStatusBarColor
      * 2. call setSystemUiVisibility to clear translucentStatusBar's Flag.
      * 3. set FitsSystemWindows to false
@@ -50,7 +52,7 @@ class StatusBarCompatLollipop {
         window.setStatusBarColor(statusColor);
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
-        ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup mContentView = window.findViewById(Window.ID_ANDROID_CONTENT);
         View mChildView = mContentView.getChildAt(0);
         if (mChildView != null) {
             ViewCompat.setFitsSystemWindows(mChildView, false);
@@ -60,7 +62,7 @@ class StatusBarCompatLollipop {
 
     /**
      * translucentStatusBar(full-screen)
-     *
+     * <p>
      * 1. set Flags to full-screen
      * 2. set FitsSystemWindows to false
      *
@@ -79,7 +81,7 @@ class StatusBarCompatLollipop {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         }
 
-        ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup mContentView = window.findViewById(Window.ID_ANDROID_CONTENT);
         View mChildView = mContentView.getChildAt(0);
         if (mChildView != null) {
             ViewCompat.setFitsSystemWindows(mChildView, false);
@@ -89,7 +91,7 @@ class StatusBarCompatLollipop {
 
     /**
      * compat for CollapsingToolbarLayout
-     *
+     * <p>
      * 1. change to full-screen mode(like translucentStatusBar).
      * 2. cancel CollapsingToolbarLayout's WindowInsets, let it layout as normal(now setStatusBarScrimColor is useless).
      * 3. set View's FitsSystemWindow to false.
@@ -113,7 +115,7 @@ class StatusBarCompatLollipop {
             }
         });
 
-        ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup mContentView = window.findViewById(Window.ID_ANDROID_CONTENT);
         View mChildView = mContentView.getChildAt(0);
         if (mChildView != null) {
             ViewCompat.setFitsSystemWindows(mChildView, false);
@@ -183,6 +185,4 @@ class StatusBarCompatLollipop {
         });
         sAnimator.start();
     }
-
-    private static ValueAnimator sAnimator;
 }

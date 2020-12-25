@@ -43,6 +43,12 @@ public class MyImmersionBottomSheetDialog extends BottomSheetDialog {
         super(context, cancelable, cancelListener);
     }
 
+    public static int getScreenHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        return height;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +99,6 @@ public class MyImmersionBottomSheetDialog extends BottomSheetDialog {
         });
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -105,12 +110,6 @@ public class MyImmersionBottomSheetDialog extends BottomSheetDialog {
         /*if (bottomSheetBehavior != null)
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);*/
 
-    }
-
-    public static int getScreenHeight(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        return height;
     }
 
     @Override

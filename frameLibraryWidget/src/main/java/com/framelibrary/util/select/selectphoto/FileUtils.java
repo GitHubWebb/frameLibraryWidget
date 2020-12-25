@@ -11,8 +11,8 @@ import android.media.MediaMetadataRetriever;
 import android.os.Build;
 import android.os.Environment;
 
-import com.framelibrary.util.logutil.LoggerUtils;
 import com.framelibrary.util.StringUtils;
+import com.framelibrary.util.logutil.LoggerUtils;
 import com.qiniu.pili.droid.shortvideo.PLErrorCode;
 import com.qiniu.pili.droid.shortvideo.PLShortVideoTranscoder;
 import com.qiniu.pili.droid.shortvideo.PLVideoSaveListener;
@@ -34,6 +34,20 @@ import java.util.Locale;
 public class FileUtils {
 
     private static final String TAG = FileUtils.class.getSimpleName();
+    /**
+     * 选的越高文件质量越大，质量越好
+     */
+    private static final int[] ENCODING_BITRATE_LEVEL_ARRAY = {
+            500 * 1000,
+            800 * 1000,
+            1000 * 1000,
+            1200 * 1000,
+            1600 * 1000,
+            2000 * 1000,
+            2500 * 1000,
+            4000 * 1000,
+            8000 * 1000,
+    };
 
     public static String compressImage(String filePath, String targetPath, int quality) {
         Bitmap bm = getSmallBitmap(filePath);//获取一定尺寸的图片
@@ -74,7 +88,6 @@ public class FileUtils {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(filePath, options);
     }
-
 
     /**
      * 获取照片角度
@@ -137,7 +150,6 @@ public class FileUtils {
         return inSampleSize;
     }
 
-
     public static void compressVideoResource(final Activity activity, String videoPath, PLVideoSaveListener plVideoSaveListener) {
         if (StringUtils.isBlank(videoPath)) {
             if (plVideoSaveListener != null) {
@@ -155,22 +167,6 @@ public class FileUtils {
         int width = 480;
         mShortVideoTranscoder.transcode(width, height, ENCODING_BITRATE_LEVEL_ARRAY[3], false, plVideoSaveListener);
     }
-
-    /**
-     * 选的越高文件质量越大，质量越好
-     */
-    private static final int[] ENCODING_BITRATE_LEVEL_ARRAY = {
-            500 * 1000,
-            800 * 1000,
-            1000 * 1000,
-            1200 * 1000,
-            1600 * 1000,
-            2000 * 1000,
-            2500 * 1000,
-            4000 * 1000,
-            8000 * 1000,
-    };
-
 
     /**
      * bitmap转file

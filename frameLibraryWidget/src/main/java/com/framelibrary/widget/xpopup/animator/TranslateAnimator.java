@@ -12,11 +12,11 @@ import com.framelibrary.widget.xpopup.XPopup;
  * Create by dance, at 2018/12/9
  */
 public class TranslateAnimator extends PopupAnimator {
+    public boolean hasInitDefTranslation = false;
     //动画起始坐标
     private float startTranslationX, startTranslationY;
     private int oldWidth, oldHeight;
     private float initTranslationX, initTranslationY;
-    public boolean hasInitDefTranslation = false;
 
     public TranslateAnimator(View target, PopupAnimation popupAnimation) {
         super(target, popupAnimation);
@@ -24,7 +24,7 @@ public class TranslateAnimator extends PopupAnimator {
 
     @Override
     public void initAnimator() {
-        if(!hasInitDefTranslation){
+        if (!hasInitDefTranslation) {
             initTranslationX = targetView.getTranslationX();
             initTranslationY = targetView.getTranslationY();
             hasInitDefTranslation = true;

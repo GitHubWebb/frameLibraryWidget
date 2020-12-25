@@ -3,6 +3,7 @@ package com.framelibrary.util;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
 import com.bumptech.glide.BitmapTypeRequest;
@@ -43,12 +44,10 @@ public class GlideUtils {
             return true;
         if (null == mContext)
             return true;
-        if (mContext instanceof Activity && (
+        return mContext instanceof Activity && (
                 ((Activity) mContext).isFinishing() ||
                         ((Activity) mContext).isDestroyed()
-        ))
-            return true;
-        return false;
+        );
     }
 
     /**
@@ -125,8 +124,12 @@ public class GlideUtils {
     public static void loadImageViewLodingRadius(Context mContext, String path,
                                                  int placeHolderId, int radiusdp, ImageView imageView) {
         DrawableRequestBuilder<? extends Serializable> requestBuilder = loadImageViewLoding(mContext, path, placeHolderId, placeHolderId);
-        if (requestBuilder == null)
+        if (requestBuilder == null) {
+            if (imageView != null)
+                imageView.setImageResource(placeHolderId);
+
             return;
+        }
 
         requestBuilder.transform(new GlideRadiusCornerTransform(mContext, radiusdp)).priority(Priority.HIGH);
 
@@ -141,8 +144,14 @@ public class GlideUtils {
     public static void loadImageViewLodingRadius(Context mContext, String path,
                                                  int placeHolderId, int radiusdp, SimpleTarget<Bitmap> simpleTarget) {
         BitmapTypeRequest<? extends Serializable> requestBuilder = loadBitMapImageViewLoding(mContext, path, placeHolderId, placeHolderId);
-        if (requestBuilder == null)
+        if (requestBuilder == null) {
+            if (mContext != null && simpleTarget != null) {
+                Bitmap resource = BitmapFactory.decodeResource(mContext.getResources(), placeHolderId);
+                simpleTarget.onResourceReady(resource, null);
+            }
+
             return;
+        }
 
         requestBuilder.transform(new GlideRadiusCornerTransform(mContext, radiusdp)).priority(Priority.HIGH);
 

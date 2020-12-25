@@ -19,10 +19,14 @@ public class ShadowBgAnimator extends PopupAnimator {
     public ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     public int startColor = Color.TRANSPARENT;
     public boolean isZeroDuration = false;
+
     public ShadowBgAnimator(View target) {
         super(target);
     }
-    public ShadowBgAnimator() {}
+
+    public ShadowBgAnimator() {
+    }
+
     @Override
     public void initAnimator() {
         targetView.setBackgroundColor(startColor);
@@ -38,7 +42,7 @@ public class ShadowBgAnimator extends PopupAnimator {
             }
         });
         animator.setInterpolator(new FastOutSlowInInterpolator());
-        animator.setDuration(isZeroDuration?0: XPopup.getAnimationDuration()).start();
+        animator.setDuration(isZeroDuration ? 0 : XPopup.getAnimationDuration()).start();
     }
 
     @Override
@@ -51,10 +55,10 @@ public class ShadowBgAnimator extends PopupAnimator {
             }
         });
         animator.setInterpolator(new FastOutSlowInInterpolator());
-        animator.setDuration(isZeroDuration?0: XPopup.getAnimationDuration()).start();
+        animator.setDuration(isZeroDuration ? 0 : XPopup.getAnimationDuration()).start();
     }
 
-    public int calculateBgColor(float fraction){
+    public int calculateBgColor(float fraction) {
         return (int) argbEvaluator.evaluate(fraction, startColor, XPopup.getShadowBgColor());
     }
 

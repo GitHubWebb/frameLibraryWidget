@@ -100,7 +100,7 @@ class StatusBarCompatKitKat {
 
     /**
      * set StatusBarColor
-     *
+     * <p>
      * 1. set Window Flag : WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
      * 2. removeFakeStatusBarViewIfExist
      * 3. addFakeStatusBarView
@@ -111,7 +111,7 @@ class StatusBarCompatKitKat {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-        ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup mContentView = window.findViewById(Window.ID_ANDROID_CONTENT);
         View mContentChild = mContentView.getChildAt(0);
         int statusBarHeight = getStatusBarHeight(activity);
 
@@ -126,7 +126,7 @@ class StatusBarCompatKitKat {
 
     /**
      * translucentStatusBar
-     *
+     * <p>
      * 1. set Window Flag : WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
      * 2. removeFakeStatusBarViewIfExist
      * 3. removeMarginTopOfContentChild
@@ -136,7 +136,7 @@ class StatusBarCompatKitKat {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-        ViewGroup mContentView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup mContentView = activity.findViewById(Window.ID_ANDROID_CONTENT);
         View mContentChild = mContentView.getChildAt(0);
 
         removeFakeStatusBarViewIfExist(activity);
@@ -148,7 +148,7 @@ class StatusBarCompatKitKat {
 
     /**
      * compat for CollapsingToolbarLayout
-     *
+     * <p>
      * 1. set Window Flag : WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
      * 2. set FitsSystemWindows for views.
      * 3. add Toolbar's height, let it layout from top, then add paddingTop to layout normal.
@@ -160,7 +160,7 @@ class StatusBarCompatKitKat {
                                                       Toolbar toolbar, int statusColor) {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup mContentView = window.findViewById(Window.ID_ANDROID_CONTENT);
 
         View mContentChild = mContentView.getChildAt(0);
         mContentChild.setFitsSystemWindows(false);

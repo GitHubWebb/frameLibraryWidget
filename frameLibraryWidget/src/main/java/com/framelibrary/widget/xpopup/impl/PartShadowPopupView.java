@@ -26,7 +26,9 @@ import com.lxj.xpopup.enums.PopupPosition;
  * Create by dance, at 2018/12/21
  */
 public abstract class PartShadowPopupView extends BasePopupView {
+    public boolean isShowUp;
     protected PartShadowContainer attachPopupContainer;
+
     public PartShadowPopupView(@NonNull Context context) {
         super(context);
         attachPopupContainer = findViewById(R.id.attachPopupContainer);
@@ -36,6 +38,7 @@ public abstract class PartShadowPopupView extends BasePopupView {
     protected int getPopupLayoutId() {
         return R.layout._xpopup_partshadow_popup_view;
     }
+
     protected void addInnerContent() {
         View contentView = LayoutInflater.from(getContext()).inflate(getImplLayoutId(), attachPopupContainer, false);
         attachPopupContainer.addView(contentView);
@@ -71,7 +74,6 @@ public abstract class PartShadowPopupView extends BasePopupView {
         });
     }
 
-    public boolean isShowUp;
     public void doAttach() {
         if (popupInfo.getAtView() == null)
             throw new IllegalArgumentException("atView must not be null for PartShadowPopupView！");
@@ -90,13 +92,13 @@ public abstract class PartShadowPopupView extends BasePopupView {
         if (popupInfo.isCenterHorizontal && getPopupImplView() != null) {
 //            getPopupImplView().setTranslationX(XPopupUtils.getWindowWidth(getContext()) / 2f - getPopupContentView().getMeasuredWidth() / 2f);
             //参考目标View居中，而不是屏幕居中
-            int tx = (rect.left + rect.right)/2 - getPopupImplView().getMeasuredWidth()/2;
+            int tx = (rect.left + rect.right) / 2 - getPopupImplView().getMeasuredWidth() / 2;
             getPopupImplView().setTranslationX(tx);
-        }else {
+        } else {
             int tx = rect.left + popupInfo.offsetX;
-            if(tx + getPopupImplView().getMeasuredWidth() > XPopupUtils.getWindowWidth(getContext())){
+            if (tx + getPopupImplView().getMeasuredWidth() > XPopupUtils.getWindowWidth(getContext())) {
                 //右边超出屏幕了，往左移动
-                tx -= (tx + getPopupImplView().getMeasuredWidth()- XPopupUtils.getWindowWidth(getContext()));
+                tx -= (tx + getPopupImplView().getMeasuredWidth() - XPopupUtils.getWindowWidth(getContext()));
             }
             getPopupImplView().setTranslationX(tx);
         }

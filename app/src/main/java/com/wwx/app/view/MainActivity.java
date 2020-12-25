@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.framelibrary.util.PermissionCheckUtils;
 import com.framelibrary.util.StringUtils;
 import com.framelibrary.util.UIUtils;
 import com.framelibrary.util.dialog.DialogDoNet;
+import com.framelibrary.util.filter.text.EmojiFilter;
 import com.framelibrary.util.filter.text.TextChangedListener;
 import com.framelibrary.util.logutil.LoggerUtils;
 import com.framelibrary.util.select.selectdata.SelectPopWindowLevelLinkageData;
@@ -48,7 +50,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mActivity = this;
         tvTest = findViewById(R.id.et_test);
         TextView tvTest1 = findViewById(R.id.et_test1);
-        TextChangedListener.specialStringExcludePointsWatcher(20, (EditText) tvTest1);
+
+        InputFilter[] inputFilters = {TextChangedListener.allowEnglishNumWrap, new EmojiFilter()};
+        TextChangedListener.inputLimitSpaceWrap(18, inputFilters, (EditText) tvTest1);
+
+//        TextChangedListener.specialStringExcludePointsWatcher(20, (EditText) tvTest1);
 
         findViewById(R.id.btn_get_img_mime_type).setOnClickListener(this);
         findViewById(R.id.btn_open_spliteditactivity).setOnClickListener(this);

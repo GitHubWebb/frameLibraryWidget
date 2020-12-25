@@ -6,6 +6,6 @@
     <com.wenld.wenldbanner.AutoTurnViewPager
         android:id="@+id/vp_wenld_banner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

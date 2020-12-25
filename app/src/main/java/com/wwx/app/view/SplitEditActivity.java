@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.al.open.OnInputListener;
 import com.al.open.SplitEditTextView;
-import com.framelibrary.util.filter.text.TextChangedListener;
 import com.framelibrary.util.dialog.DialogDoNet;
+import com.framelibrary.util.filter.text.TextChangedListener;
 import com.wwx.app.R;
 
 public class SplitEditActivity extends AppCompatActivity {
@@ -30,8 +30,8 @@ public class SplitEditActivity extends AppCompatActivity {
             @Override
             public void onInputChanged(String text) {
                 //可选择重写该方法
-                if (text.toString().indexOf(" ") != -1) {
-                    String content = text.toString().replaceAll(" ", "").trim();
+                if (text.indexOf(" ") != -1) {
+                    String content = text.replaceAll(" ", "").trim();
                     splitEditTextView.setText(content);
                 }
             }

@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class BaseBean implements Serializable {
-    private List<BaseBean> baseBeans ;
+    private List<BaseBean> baseBeans;
 
     public BaseBean() {
     }

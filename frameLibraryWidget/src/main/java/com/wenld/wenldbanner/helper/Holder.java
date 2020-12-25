@@ -10,9 +10,11 @@ import android.view.ViewGroup;
  * github: https://github.com/LidongWen
  */
 
-public interface Holder<T>{
+public interface Holder<T> {
     ViewHolder createView(Context context,
-                          ViewGroup parent,int position,int viewType);
+                          ViewGroup parent, int position, int viewType);
+
     void UpdateUI(Context context, ViewHolder viewHolder, int position, T data);
+
     int getViewType(int position);
 }

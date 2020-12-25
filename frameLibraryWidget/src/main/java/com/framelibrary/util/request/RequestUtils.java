@@ -10,20 +10,17 @@ import org.json.JSONArray;
 public abstract class RequestUtils {
 
     private static final String TAG = Class.class.getSimpleName();
-    public static int fail_Login = 0; //失败调用标记点
-
     /**
      * 请求成功返回码
      */
 
     private static final String REQUEST_SUCCESS_CODE = "0";
-
-
     /**
      * 请求失败返回码
      */
 
     private static final String REQUEST_FAIL_CODE = "1";
+    public static int fail_Login = 0; //失败调用标记点
     public static JSONArray appShareCallBackJA;  //分享回调
     public static JSONArray appAddWXCard;  //领取微信卡劵
     public static JSONArray appMiniProgram;  //打开微信小程序

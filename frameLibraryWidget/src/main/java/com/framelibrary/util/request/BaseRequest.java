@@ -14,13 +14,13 @@ public class BaseRequest {
     private static BaseRequest instance;
     private OkHttpClient okHttpClient;
 
-    private BaseRequest(){
+    private BaseRequest() {
         okHttpClient = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS).readTimeout(10, TimeUnit.SECONDS).build();
     }
 
-    public static BaseRequest getInstance(){
-        if(instance == null){
-            synchronized (BaseRequest.class){
+    public static BaseRequest getInstance() {
+        if (instance == null) {
+            synchronized (BaseRequest.class) {
                 instance = new BaseRequest();
             }
         }
@@ -31,12 +31,11 @@ public class BaseRequest {
         return okHttpClient;
     }
 
-    public Call post(){
+    public Call post() {
 
 
         return null;
     }
-
 
 
 }

@@ -11,6 +11,7 @@ import okhttp3.Call;
 public interface OkHttpRequestListener {
 
     void onResponse(Call call, BaseRespBean baseRespBean, String result);
+
     void onFail(Call call, Exception e);
 
 }

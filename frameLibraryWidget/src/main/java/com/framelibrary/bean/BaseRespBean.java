@@ -30,13 +30,13 @@ public class BaseRespBean extends BaseBean {
 
     public String getToastErrmsg() {
         if (StringUtils.isEmpty(msg)) {
-            return errcode+"";
+            return errcode + "";
         }
         return msg;
     }
 
     public boolean isRequestSuccess() {
-        return RequestUtils.isRequestSuccess(errcode+"");
+        return RequestUtils.isRequestSuccess(errcode + "");
     }
 
 

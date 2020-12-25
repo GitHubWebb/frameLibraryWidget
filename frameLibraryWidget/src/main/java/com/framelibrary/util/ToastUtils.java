@@ -3,9 +3,6 @@ package com.framelibrary.util;
 import android.app.Application;
 import android.widget.Toast;
 
-import com.framelibrary.BuildConfig;
-import com.framelibrary.util.Constant;
-
 /**
  * Toast弹出类
  *

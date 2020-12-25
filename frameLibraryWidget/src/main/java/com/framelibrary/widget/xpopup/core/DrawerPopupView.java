@@ -27,9 +27,14 @@ import com.lxj.xpopup.enums.PopupStatus;
  * Create by dance, at 2018/12/20
  */
 public abstract class DrawerPopupView extends BasePopupView {
-    PopupDrawerLayout drawerLayout;
+    public ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     protected FrameLayout drawerContentContainer;
+    PopupDrawerLayout drawerLayout;
     float mFraction = 0f;
+    Paint paint = new Paint();
+    Rect shadowRect;
+    int currColor = Color.TRANSPARENT;
+    int defaultColor = Color.TRANSPARENT;
     public DrawerPopupView(@NonNull Context context) {
         super(context);
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -52,18 +57,22 @@ public abstract class DrawerPopupView extends BasePopupView {
             @Override
             public void onClose() {
                 beforeDismiss();
-                if(popupInfo.xPopupCallback!=null) popupInfo.xPopupCallback.beforeDismiss(DrawerPopupView.this);
+                if (popupInfo.xPopupCallback != null)
+                    popupInfo.xPopupCallback.beforeDismiss(DrawerPopupView.this);
                 doAfterDismiss();
             }
+
             @Override
             public void onOpen() {
                 DrawerPopupView.super.doAfterShow();
             }
+
             @Override
             public void onDrag(int x, float fraction, boolean isToLeft) {
                 drawerLayout.isDrawStatusBarShadow = popupInfo.hasStatusBarShadow;
-                if(popupInfo.xPopupCallback!=null) popupInfo.xPopupCallback.onDrag(DrawerPopupView.this,
-                        x, fraction,isToLeft);
+                if (popupInfo.xPopupCallback != null)
+                    popupInfo.xPopupCallback.onDrag(DrawerPopupView.this,
+                            x, fraction, isToLeft);
                 mFraction = fraction;
                 postInvalidate();
             }
@@ -80,11 +89,6 @@ public abstract class DrawerPopupView extends BasePopupView {
         });
     }
 
-    Paint paint = new Paint();
-    Rect shadowRect;
-    public ArgbEvaluator argbEvaluator = new ArgbEvaluator();
-    int currColor = Color.TRANSPARENT;
-    int defaultColor = Color.TRANSPARENT;
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
@@ -96,7 +100,8 @@ public abstract class DrawerPopupView extends BasePopupView {
             canvas.drawRect(shadowRect, paint);
         }
     }
-    public void doStatusBarColorTransform(boolean isShow){
+
+    public void doStatusBarColorTransform(boolean isShow) {
         if (popupInfo.hasStatusBarShadow) {
             //状态栏渐变动画
             ValueAnimator animator = ValueAnimator.ofObject(argbEvaluator,
@@ -112,8 +117,10 @@ public abstract class DrawerPopupView extends BasePopupView {
             animator.setDuration(XPopup.getAnimationDuration()).start();
         }
     }
+
     @Override
-    protected void doAfterShow() { }
+    protected void doAfterShow() {
+    }
 
     @Override
     public void doShowAnimation() {
@@ -141,10 +148,12 @@ public abstract class DrawerPopupView extends BasePopupView {
         drawerLayout.close();
 //        super.dismiss();
     }
+
     @Override
     protected ScaleAlphaAnimator getPopupAnimator() {
         return null;
     }
+
     @Override
     protected View getTargetSizeView() {
         return getPopupImplView();

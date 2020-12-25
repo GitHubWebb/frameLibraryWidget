@@ -19,10 +19,44 @@ import java.util.Map;
 public class DateUtils {
 
     /**
+     * 默认格式化时间规则
+     */
+    public static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    /**
+     * 精确到天的时间规则 年 月 日
+     */
+    public static final String DATE_PATTERN_STR = "yyyy年MM月dd日";
+    public static final int ERROR_PARSE_VALUE = -1;
+    /**
+     * 仅带分秒的时间
+     */
+    public static final String PATTERN_ONLY_MS_SS = "mm:ss";
+    /**
+     * 带毫秒的时间
+     */
+    public static final String PATTERN_HAS_SS = "yyyy-MM-dd HH:mm:ss:SS";
+    /**
+     * 精确到天的时间规则
+     */
+    private static final String DATE_PATTERN = "yyyy-MM-dd";
+    /**
+     * 日期格式
+     */
+    public static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
+    /**
+     * 时间格式
+     */
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DEFAULT_PATTERN, Locale.getDefault());
+    private static final SimpleDateFormat hourTimeFormat = new SimpleDateFormat("yyyy-MM-ddHH");
+    private static final long ONE_MINUTE = 60000L;
+    private static final long ONE_HOUR = 3600000L;
+    private static final String ONE_SECOND_AGO = "秒前";
+    private static final String ONE_MINUTE_AGO = "分钟前";
+    private static final String ONE_HOUR_AGO = "小时前";
+    /**
      * time of last click
      */
     private static long lastClickTime;
-
     /**
      * switch of limit for click
      */
@@ -46,54 +80,9 @@ public class DateUtils {
             return timeD < 0;
         return timeD <= intervalTime;
     }
-
-    /**
-     * 精确到天的时间规则
-     */
-    private static final String DATE_PATTERN = "yyyy-MM-dd";
-
-    /**
-     * 默认格式化时间规则
-     */
-    public static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
-
-    /**
-     * 日期格式
-     */
-    public static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
-
-    /**
-     * 时间格式
-     */
-    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DEFAULT_PATTERN, Locale.getDefault());
-
-    /**
-     * 精确到天的时间规则 年 月 日
-     */
-    public static final String DATE_PATTERN_STR = "yyyy年MM月dd日";
-
-    public static final int ERROR_PARSE_VALUE = -1;
-    /**
-     * 仅带分秒的时间
-     */
-    public static final String PATTERN_ONLY_MS_SS = "mm:ss";
-    /**
-     * 带毫秒的时间
-     */
-    public static final String PATTERN_HAS_SS = "yyyy-MM-dd HH:mm:ss:SS";
-
-    private static final SimpleDateFormat hourTimeFormat = new SimpleDateFormat("yyyy-MM-ddHH");
-
-
-    private static final long ONE_MINUTE = 60000L;
-    private static final long ONE_HOUR = 3600000L;
-    private static final String ONE_SECOND_AGO = "秒前";
-    private static final String ONE_MINUTE_AGO = "分钟前";
-    private static final String ONE_HOUR_AGO = "小时前";
     //	private static final String ONE_DAY_AGO = "天前";
     //	private static final String ONE_MONTH_AGO = "月前";
     //	private static final String ONE_YEAR_AGO = "年前";
-
 
     /**
      * 格式化时间转换为日期 2003-01-01 00:00:00 转换为 2003-01-01
@@ -227,10 +216,7 @@ public class DateUtils {
     public static boolean isExpireTime(String expireTimeStr) {
         long expireTimeParse = strParseLong(expireTimeStr);
         long currentTimeMillis = System.currentTimeMillis();
-        if (expireTimeParse > currentTimeMillis) {
-            return false;
-        }
-        return true;
+        return expireTimeParse <= currentTimeMillis;
     }
 
 
@@ -497,7 +483,7 @@ public class DateUtils {
     }
 
     public static String getDayOfWeek() {
-        final String dayNames[] = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        final String[] dayNames = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
         Calendar calendar = Calendar.getInstance();
         Date date = new Date();
         calendar.setTime(date);

@@ -200,10 +200,10 @@ public class DialogUtils {
 
             LayoutInflater inflater = LayoutInflater.from(context);
             View v = inflater.inflate(R.layout.loading_dialog, null);// 得到加载view
-            LinearLayout layout = (LinearLayout) v.findViewById(com.framelibrary.R.id.dialog_view);// 加载布局
+            LinearLayout layout = v.findViewById(R.id.dialog_view);// 加载布局
             // main.xml中的ImageView
-            ImageView spaceshipImage = (ImageView) v.findViewById(com.framelibrary.R.id.loading_img);
-            TextView tipTextView = (TextView) v.findViewById(com.framelibrary.R.id.tipTextView);// 提示文字
+            ImageView spaceshipImage = v.findViewById(R.id.loading_img);
+            TextView tipTextView = v.findViewById(R.id.tipTextView);// 提示文字
             // 加载动画
             Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(
                     context, com.framelibrary.R.anim.load_progress_animation);

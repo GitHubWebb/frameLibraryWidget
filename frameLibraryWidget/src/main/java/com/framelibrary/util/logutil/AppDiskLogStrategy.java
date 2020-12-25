@@ -30,6 +30,14 @@ public class AppDiskLogStrategy extends DiskLogStrategy {
         this.handler = checkNotNull(handler);
     }
 
+    @NonNull
+    static <T> T checkNotNull(@Nullable final T obj) {
+        if (obj == null) {
+            throw new NullPointerException();
+        }
+        return obj;
+    }
+
     @Override
     public void log(int level, @Nullable String tag, @NonNull String message) {
         checkNotNull(message);
@@ -119,14 +127,5 @@ public class AppDiskLogStrategy extends DiskLogStrategy {
 
             return newFile;
         }
-    }
-
-
-    @NonNull
-    static <T> T checkNotNull(@Nullable final T obj) {
-        if (obj == null) {
-            throw new NullPointerException();
-        }
-        return obj;
     }
 }

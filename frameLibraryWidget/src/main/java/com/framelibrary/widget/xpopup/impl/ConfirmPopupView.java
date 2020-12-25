@@ -21,16 +21,15 @@ import com.framelibrary.widget.xpopup.interfaces.OnConfirmListener;
  * Create by dance, at 2018/12/16
  */
 public class ConfirmPopupView extends CenterPopupView implements View.OnClickListener {
+    public boolean isHideCancel = false;
     OnCancelListener cancelListener;
     OnConfirmListener confirmListener;
     TextView tv_title, tv_content, tv_cancel, tv_confirm;
     CharSequence title, content, hint, cancelText, confirmText;
     EditText et_input;
     View divider1, divider2;
-    public boolean isHideCancel = false;
 
     /**
-     *
      * @param context
      * @param bindLayoutId layoutId 要求布局中必须包含的TextView以及id有：tv_title，tv_content，tv_cancel，tv_confirm
      */
@@ -68,7 +67,7 @@ public class ConfirmPopupView extends CenterPopupView implements View.OnClickLis
 
         if (!TextUtils.isEmpty(content)) {
             tv_content.setText(content);
-        }else {
+        } else {
             tv_content.setVisibility(GONE);
         }
         if (!TextUtils.isEmpty(cancelText)) {
@@ -79,7 +78,7 @@ public class ConfirmPopupView extends CenterPopupView implements View.OnClickLis
         }
         if (isHideCancel) {
             tv_cancel.setVisibility(GONE);
-            if(divider2!=null) divider2.setVisibility(GONE);
+            if (divider2 != null) divider2.setVisibility(GONE);
         }
         applyTheme();
     }
@@ -94,21 +93,22 @@ public class ConfirmPopupView extends CenterPopupView implements View.OnClickLis
         divider2.setBackgroundColor(getResources().getColor(R.color._xpopup_list_divider));
     }
 
-    public TextView getTitleTextView(){
+    public TextView getTitleTextView() {
         return findViewById(R.id.tv_title);
     }
 
-    public TextView getContentTextView(){
+    public TextView getContentTextView() {
         return findViewById(R.id.tv_content);
     }
 
-    public TextView getCancelTextView(){
+    public TextView getCancelTextView() {
         return findViewById(R.id.tv_cancel);
     }
 
-    public TextView getConfirmTextView(){
+    public TextView getConfirmTextView() {
         return findViewById(R.id.tv_confirm);
     }
+
     @Override
     protected void applyDarkTheme() {
         super.applyDarkTheme();

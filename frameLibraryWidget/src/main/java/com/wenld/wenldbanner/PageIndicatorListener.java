@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 public interface PageIndicatorListener<T> extends ViewPager.OnPageChangeListener {
-    void setmDatas(List<T> mDatas);
-
     List<T> getmDatas();
+
+    void setmDatas(List<T> mDatas);
 }

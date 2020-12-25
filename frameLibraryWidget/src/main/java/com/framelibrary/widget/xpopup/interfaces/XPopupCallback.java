@@ -36,12 +36,14 @@ public interface XPopupCallback {
 
     /**
      * 暴漏返回按键的处理，如果返回true，XPopup不会处理；如果返回false，XPopup会处理，
+     *
      * @return
      */
     boolean onBackPressed(BasePopupView popupView);
 
     /**
      * 当软键盘高度改变时调用，比如打开和关闭软键盘
+     *
      * @param height
      * @return
      */
@@ -49,10 +51,11 @@ public interface XPopupCallback {
 
     /**
      * 弹窗被拖拽时执行，适用于能拖拽的弹窗
+     *
      * @param popupView
-     * @param value  拖拽的距离
-     * @param percent  拖拽的百分比
-     * @param upOrLeft 是否是向上或者向左
+     * @param value     拖拽的距离
+     * @param percent   拖拽的百分比
+     * @param upOrLeft  是否是向上或者向左
      */
     void onDrag(BasePopupView popupView, int value, float percent, boolean upOrLeft);
 }

@@ -30,6 +30,47 @@ public class KeyBoardUtils {
 
 
     /**
+     * 最可靠的打开软键盘
+     *
+     * @param mEditText 输入框
+     */
+
+    public static void openKeybord(EditText mEditText) {
+        InputMethodManager imm = (InputMethodManager) FrameLibBaseApplication.getInstance().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            mEditText.requestFocus();
+            imm.showSoftInput(mEditText, 0);
+        }
+    }
+
+    public static void openKeybord2(EditText mEditText) {
+        InputMethodManager imm = (InputMethodManager) FrameLibBaseApplication.getInstance().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInput(mEditText, InputMethodManager.RESULT_SHOWN);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        }
+    }
+
+    /**
+     * 最方便的关闭软键盘
+     *
+     * @param view 任何一个存在布局中的view
+     */
+    public static void closeKeybord(View view) {
+        InputMethodManager imm = (InputMethodManager) FrameLibBaseApplication.getInstance().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public static void closeKeybord() {
+        InputMethodManager imm = (InputMethodManager) FrameLibBaseApplication.getInstance().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    /**
      * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时没必要隐藏
      *
      * @param v     view
@@ -82,7 +123,6 @@ public class KeyBoardUtils {
         }
     }
 
-
     public void showKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) FrameLibBaseApplication.getInstance().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         view.setFocusableInTouchMode(true);
@@ -90,46 +130,5 @@ public class KeyBoardUtils {
         view.requestFocus();
         if (imm != null)
             imm.showSoftInput(view, 0);
-    }
-
-    /**
-     * 最可靠的打开软键盘
-     *
-     * @param mEditText 输入框
-     */
-
-    public static void openKeybord(EditText mEditText) {
-        InputMethodManager imm = (InputMethodManager) FrameLibBaseApplication.getInstance().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            mEditText.requestFocus();
-            imm.showSoftInput(mEditText, 0);
-        }
-    }
-
-    public static void openKeybord2(EditText mEditText) {
-        InputMethodManager imm = (InputMethodManager) FrameLibBaseApplication.getInstance().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.showSoftInput(mEditText, InputMethodManager.RESULT_SHOWN);
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-        }
-    }
-
-    /**
-     * 最方便的关闭软键盘
-     *
-     * @param view 任何一个存在布局中的view
-     */
-    public static void closeKeybord(View view) {
-        InputMethodManager imm = (InputMethodManager) FrameLibBaseApplication.getInstance().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    public static void closeKeybord() {
-        InputMethodManager imm = (InputMethodManager) FrameLibBaseApplication.getInstance().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
-        }
     }
 }

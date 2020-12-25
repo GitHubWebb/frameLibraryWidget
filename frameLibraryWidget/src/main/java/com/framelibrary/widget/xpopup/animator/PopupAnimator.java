@@ -12,20 +12,26 @@ import com.framelibrary.widget.xpopup.XPopup;
 public abstract class PopupAnimator {
     public View targetView;
     public PopupAnimation popupAnimation; // 内置的动画
-    public PopupAnimator(){}
-    public PopupAnimator(View target){
+
+    public PopupAnimator() {
+    }
+
+    public PopupAnimator(View target) {
         this(target, null);
     }
 
-    public PopupAnimator(View target, PopupAnimation popupAnimation){
+    public PopupAnimator(View target, PopupAnimation popupAnimation) {
         this.targetView = target;
         this.popupAnimation = popupAnimation;
     }
 
     public abstract void initAnimator();
+
     public abstract void animateShow();
+
     public abstract void animateDismiss();
-    public int getDuration(){
+
+    public int getDuration() {
         return XPopup.getAnimationDuration();
     }
 }

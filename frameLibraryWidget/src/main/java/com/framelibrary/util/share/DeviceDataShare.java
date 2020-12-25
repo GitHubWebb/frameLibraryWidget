@@ -46,19 +46,24 @@ public class DeviceDataShare {
         return sharedPreferences;
     }
 
-    //设置启动状态  是否显示引导页
-    public void setStartStatus(boolean startStatus) {
-        getSharedPreferences().edit().putBoolean("startStatus", startStatus).apply();
-    }
-
     //获取启动状态  是否显示引导页
     public Boolean getStartStatus() {
         return getSharedPreferences().getBoolean("startStatus", true);
     }
 
+    //设置启动状态  是否显示引导页
+    public void setStartStatus(boolean startStatus) {
+        getSharedPreferences().edit().putBoolean("startStatus", startStatus).apply();
+    }
+
     //获取分享赠送课程ID
     public String getGiveCourseID() {
         return getSharedPreferences().getString("giveFriendsCourseID", "");
+    }
+
+    //获取是否为新用户状态
+    public boolean getAppNewUserStatus() {
+        return getSharedPreferences().getBoolean("newUserStatus", true);
     }
 
     //保存是否为新用户状态
@@ -69,12 +74,6 @@ public class DeviceDataShare {
             isNewUser = true;
         getSharedPreferences().edit().putBoolean("newUserStatus", isNewUser).apply();
     }
-
-    //获取是否为新用户状态
-    public boolean getAppNewUserStatus() {
-        return getSharedPreferences().getBoolean("newUserStatus", true);
-    }
-
 
     /**
      * 获取accessToken

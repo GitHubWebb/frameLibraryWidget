@@ -14,6 +14,9 @@ import androidx.viewpager.widget.ViewPager;
  */
 public class WrapContentHeightViewPager extends ViewPager {
 
+    private float mPointX;
+    private float mPointY;
+
     public WrapContentHeightViewPager(Context context) {
         super(context);
     }
@@ -44,9 +47,6 @@ public class WrapContentHeightViewPager extends ViewPager {
                 MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
-
-    private float mPointX;
-    private float mPointY;
 
     /**
      * 解决嵌套后滑动不灵敏问题

@@ -23,22 +23,26 @@ import com.lxj.xpopup.enums.PopupType;
 
 
 public class XPopup {
-    private XPopup() { }
-
+    public static int statusBarShadowColor = Color.parseColor("#55000000");
     /**
      * 全局弹窗的设置
      **/
     private static int primaryColor = Color.parseColor("#121212");
     private static int animationDuration = 350;
-    public static int statusBarShadowColor = Color.parseColor("#55000000");
     private static int shadowBgColor = Color.parseColor("#6F000000");
+    private XPopup() {
+    }
+
+    public static int getShadowBgColor() {
+        return shadowBgColor;
+    }
 
     public static void setShadowBgColor(int color) {
         shadowBgColor = color;
     }
 
-    public static int getShadowBgColor() {
-        return shadowBgColor;
+    public static int getPrimaryColor() {
+        return primaryColor;
     }
 
     /**
@@ -50,8 +54,8 @@ public class XPopup {
         primaryColor = color;
     }
 
-    public static int getPrimaryColor() {
-        return primaryColor;
+    public static int getAnimationDuration() {
+        return animationDuration;
     }
 
     public static void setAnimationDuration(int duration) {
@@ -60,8 +64,19 @@ public class XPopup {
         }
     }
 
-    public static int getAnimationDuration() {
-        return animationDuration;
+    /**
+     * 跳转申请悬浮窗权限界面
+     *
+     * @param context
+     * @param callback
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public static void requestOverlayPermission(Context context, XPermission.SimpleCallback callback) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            XPermission.create(context).requestDrawOverlays(callback);
+        } else {
+            callback.onGranted();
+        }
     }
 
     public static class Builder {
@@ -421,9 +436,9 @@ public class XPopup {
         /**
          * 是否已屏幕中心进行定位，默认是false，为false时根据Material范式进行定位，主要影响Attach系列弹窗
          * Material范式下是：
-         *      弹窗优先显示在目标下方，下方距离不够才显示在上方
+         * 弹窗优先显示在目标下方，下方距离不够才显示在上方
          * 已屏幕中心进行定位：
-         *      目标在屏幕上半方弹窗显示在目标下面，目标在屏幕下半方则弹窗显示在目标上面
+         * 目标在屏幕上半方弹窗显示在目标下面，目标在屏幕下半方则弹窗显示在目标上面
          *
          * @param positionByWindowCenter
          * @return
@@ -506,20 +521,5 @@ public class XPopup {
             return asLoading(null);
         }
 
-    }
-
-    /**
-     * 跳转申请悬浮窗权限界面
-     *
-     * @param context
-     * @param callback
-     */
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public static void requestOverlayPermission(Context context, XPermission.SimpleCallback callback) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            XPermission.create(context).requestDrawOverlays(callback);
-        } else {
-            callback.onGranted();
-        }
     }
 }

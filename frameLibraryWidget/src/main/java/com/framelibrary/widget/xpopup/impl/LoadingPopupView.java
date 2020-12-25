@@ -22,11 +22,11 @@ import com.framelibrary.widget.xpopup.core.CenterPopupView;
  */
 public class LoadingPopupView extends CenterPopupView {
     private TextView tv_title;
+    private CharSequence title;
 
     /**
-     *
      * @param context
-     * @param bindLayoutId  layoutId 如果要显示标题，则要求必须有id为tv_title的TextView，否则无任何要求
+     * @param bindLayoutId layoutId 如果要显示标题，则要求必须有id为tv_title的TextView，否则无任何要求
      */
     public LoadingPopupView(@NonNull Context context, int bindLayoutId) {
         super(context);
@@ -46,13 +46,14 @@ public class LoadingPopupView extends CenterPopupView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getPopupImplView().setElevation(10f);
         }
-        if(bindLayoutId==0){
+        if (bindLayoutId == 0) {
             getPopupImplView().setBackground(XPopupUtils.createDrawable(Color.parseColor("#1f1f1f"), popupInfo.borderRadius));
         }
         setup();
     }
+
     protected void setup() {
-        if (title != null && title.length()!=0 && tv_title != null) {
+        if (title != null && title.length() != 0 && tv_title != null) {
             post(new Runnable() {
                 @Override
                 public void run() {
@@ -67,8 +68,6 @@ public class LoadingPopupView extends CenterPopupView {
             });
         }
     }
-
-    private CharSequence title;
 
     public LoadingPopupView setTitle(CharSequence title) {
         this.title = title;

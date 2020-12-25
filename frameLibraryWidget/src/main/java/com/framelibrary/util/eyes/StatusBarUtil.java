@@ -33,13 +33,6 @@ public class StatusBarUtil {
     public final static int TYPE_FLYME = 1;
     public final static int TYPE_M = 3;//6.0
 
-    @IntDef({TYPE_MIUI,
-            TYPE_FLYME,
-            TYPE_M})
-    @Retention(RetentionPolicy.SOURCE)
-    @interface ViewType {
-    }
-
     /**
      * 修改状态栏颜色，支持4.4以上版本
      *
@@ -49,7 +42,7 @@ public class StatusBarUtil {
     public static void setStatusBarColor(Activity activity, int colorId) {
         if (activity == null || activity.isDestroyed())
             return;
-        
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
             window.setStatusBarColor(colorId);
@@ -93,7 +86,6 @@ public class StatusBarUtil {
         }
     }
 
-
     /**
      * 代码实现android:fitsSystemWindows
      *
@@ -101,7 +93,7 @@ public class StatusBarUtil {
      */
     public static void setRootViewFitsSystemWindows(Activity activity, boolean fitSystemWindows) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ViewGroup winContent = (ViewGroup) activity.findViewById(android.R.id.content);
+            ViewGroup winContent = activity.findViewById(android.R.id.content);
             if (winContent.getChildCount() > 0) {
                 View winContentChildAt = winContent.getChildAt(0);
                 if (winContentChildAt instanceof ViewGroup) {
@@ -114,7 +106,6 @@ public class StatusBarUtil {
         }
 
     }
-
 
     /**
      * 设置状态栏深色浅色切换
@@ -228,5 +219,12 @@ public class StatusBarUtil {
             result = context.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    @IntDef({TYPE_MIUI,
+            TYPE_FLYME,
+            TYPE_M})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface ViewType {
     }
 }

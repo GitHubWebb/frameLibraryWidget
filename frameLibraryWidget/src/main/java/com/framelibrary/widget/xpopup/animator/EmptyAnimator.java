@@ -10,9 +10,10 @@ import com.framelibrary.widget.xpopup.XPopup;
  * Create by dance, at 2019/6/6
  */
 public class EmptyAnimator extends PopupAnimator {
-    public EmptyAnimator(View target){
+    public EmptyAnimator(View target) {
         super(target, null);
     }
+
     @Override
     public void initAnimator() {
         targetView.setAlpha(0);

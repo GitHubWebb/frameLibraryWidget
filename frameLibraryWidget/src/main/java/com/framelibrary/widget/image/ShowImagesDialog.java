@@ -105,8 +105,8 @@ public class ShowImagesDialog extends Dialog {
 
     private void initView(int currentPositionItem) {
         mView = View.inflate(mContext, R.layout.dialog_images_brower, null);//通过inflate()方法找到我们写好的包含ViewPager的布局文件
-        mIndexText = (TextView) mView.findViewById(R.id.tv_image_index);
-        mViewPager = (ShowImagesViewPager) mView.findViewById(R.id.vp_images);//找到ViewPager控件并且实例化
+        mIndexText = mView.findViewById(R.id.tv_image_index);
+        mViewPager = mView.findViewById(R.id.vp_images);//找到ViewPager控件并且实例化
 
         mViews = new ArrayList<>();//创建一个控件的数组，我们可以在ViewPager中加入很多图片，滑动改变图片
         mTitles = new ArrayList<>();
@@ -199,6 +199,15 @@ public class ShowImagesDialog extends Dialog {
         });
     }
 
+    // 重新定义展示方法,避免数据异常时候调用
+    @Override
+    public void show() {
+        if (mContext == null || (mImgUrls == null || mImgUrls.isEmpty()))
+            return;
+
+        super.show();
+    }
+
     public class ShowImagesAdapter extends PagerAdapter {
 
 
@@ -233,22 +242,13 @@ public class ShowImagesDialog extends Dialog {
         // 当向右滑动，到第3页时，第1页的item会被调用到destroyitem
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            ((ViewPager) container).removeView(views.get(position));
+            container.removeView(views.get(position));
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            ((ViewPager) container).addView(views.get(position));
+            container.addView(views.get(position));
             return views.get(position);
         }
-    }
-
-    // 重新定义展示方法,避免数据异常时候调用
-    @Override
-    public void show() {
-        if (mContext == null || (mImgUrls == null || mImgUrls.isEmpty()))
-            return;
-
-        super.show();
     }
 }

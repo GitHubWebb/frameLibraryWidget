@@ -41,9 +41,9 @@ public class TestFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        btnShow = (Button) mView.findViewById(R.id.btn_show);
+        btnShow = mView.findViewById(R.id.btn_show);
         btnShow.setOnClickListener(this);
-        mFrameLayout = (FrameLayout) mView.findViewById(R.id.fragmen_fragment);
+        mFrameLayout = mView.findViewById(R.id.fragmen_fragment);
         initTimePicker();
     }
 
@@ -71,8 +71,8 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void customLayout(View v) {
-                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                        ImageView ivCancel = v.findViewById(R.id.iv_cancel);
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

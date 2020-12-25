@@ -74,13 +74,13 @@ public class MainSelectPopActivity extends AppCompatActivity implements View.OnC
         initCustomOptionPicker();
         initNoLinkOptionsPicker();
 
-        Button btn_Time = (Button) findViewById(R.id.btn_Time);
-        btn_Options = (Button) findViewById(R.id.btn_Options);
-        btn_CustomOptions = (Button) findViewById(R.id.btn_CustomOptions);
-        btn_CustomTime = (Button) findViewById(R.id.btn_CustomTime);
-        Button btn_no_linkage = (Button) findViewById(R.id.btn_no_linkage);
-        Button btn_to_Fragment = (Button) findViewById(R.id.btn_fragment);
-        Button btn_circle = (Button) findViewById(R.id.btn_circle);
+        Button btn_Time = findViewById(R.id.btn_Time);
+        btn_Options = findViewById(R.id.btn_Options);
+        btn_CustomOptions = findViewById(R.id.btn_CustomOptions);
+        btn_CustomTime = findViewById(R.id.btn_CustomTime);
+        Button btn_no_linkage = findViewById(R.id.btn_no_linkage);
+        Button btn_to_Fragment = findViewById(R.id.btn_fragment);
+        Button btn_circle = findViewById(R.id.btn_circle);
 
 
         btn_Time.setOnClickListener(this);
@@ -143,8 +143,8 @@ public class MainSelectPopActivity extends AppCompatActivity implements View.OnC
 
                     @Override
                     public void customLayout(final View v) {
-                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                        ImageView ivCancel = v.findViewById(R.id.iv_cancel);
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -159,7 +159,7 @@ public class MainSelectPopActivity extends AppCompatActivity implements View.OnC
                             }
                         });
                         //公农历切换
-                        CheckBox cb_lunar = (CheckBox) v.findViewById(R.id.cb_lunar);
+                        CheckBox cb_lunar = v.findViewById(R.id.cb_lunar);
                         cb_lunar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -178,7 +178,7 @@ public class MainSelectPopActivity extends AppCompatActivity implements View.OnC
                      * @param weight
                      */
                     private void setTimePickerChildWeight(View v, float yearWeight, float weight) {
-                        ViewGroup timePicker = (ViewGroup) v.findViewById(R.id.timepicker);
+                        ViewGroup timePicker = v.findViewById(R.id.timepicker);
                         View year = timePicker.getChildAt(0);
                         LinearLayout.LayoutParams lp = ((LinearLayout.LayoutParams) year.getLayoutParams());
                         lp.weight = yearWeight;
@@ -290,8 +290,8 @@ public class MainSelectPopActivity extends AppCompatActivity implements View.OnC
 
                     @Override
                     public void customLayout(View v) {
-                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                        ImageView ivCancel = v.findViewById(R.id.iv_cancel);
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -381,9 +381,9 @@ public class MainSelectPopActivity extends AppCompatActivity implements View.OnC
                 .setLayoutRes(R.layout.pickerview_custom_options, new CustomListener() {
                     @Override
                     public void customLayout(View v) {
-                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                        final TextView tvAdd = (TextView) v.findViewById(R.id.tv_add);
-                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                        final TextView tvAdd = v.findViewById(R.id.tv_add);
+                        ImageView ivCancel = v.findViewById(R.id.iv_cancel);
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

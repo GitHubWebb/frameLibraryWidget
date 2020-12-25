@@ -7,5 +7,6 @@ package com.framelibrary.listener;
 
 public interface CommonDialogInterface {
     void onBottonYesClick();
+
     void onBottonNoClick();
 }

@@ -21,9 +21,8 @@ public class DialogDoNet {
     private static final int START_DIALOG = 0;//开始对话框
     private static final int UPDATE_DIALOG = 1;//更新对话框
     private static final int STOP_DIALOG = 2;//销毁对话框
-    private static Context context = null;
     public static LoadingPopupView loadingPopupView = null;
-
+    private static Context context = null;
     /**
      * 多线程并行处理定时任务时，Timer运行多个TimeTask时，只要其中之一没有捕获抛出的异常，其它任务便会自动终止运行，使用ScheduledExecutorService则没有这个问题。
      * <p>

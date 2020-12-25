@@ -9,10 +9,11 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -214,7 +215,7 @@ public class PermissionCheckUtils {
         List<String> permissionList = getPermissionList(activity, strings);
         if (permissionList.isEmpty())
             return true;
-        String permissions[] = new String[permissionList.size()];
+        String[] permissions = new String[permissionList.size()];
         permissionList.toArray(permissions);
         if (permissionList.isEmpty())
             return true;
@@ -269,7 +270,8 @@ public class PermissionCheckUtils {
 
     /**
      * 确认所有的权限是否都已授权
-     * @param grantResults  PackageManager.PERMISSION_GRANTED 为允许
+     *
+     * @param grantResults PackageManager.PERMISSION_GRANTED 为允许
      * @return
      */
     public static boolean verifyPermissions(int[] grantResults) {

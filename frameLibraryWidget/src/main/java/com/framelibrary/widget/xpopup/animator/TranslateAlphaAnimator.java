@@ -15,6 +15,7 @@ public class TranslateAlphaAnimator extends PopupAnimator {
     //动画起始坐标
     private float startTranslationX, startTranslationY;
     private float defTranslationX, defTranslationY;
+
     public TranslateAlphaAnimator(View target, PopupAnimation popupAnimation) {
         super(target, popupAnimation);
     }
@@ -32,7 +33,7 @@ public class TranslateAlphaAnimator extends PopupAnimator {
     }
 
     private void applyTranslation() {
-        switch (popupAnimation){
+        switch (popupAnimation) {
             case TranslateAlphaFromLeft:
                 targetView.setTranslationX(-(targetView.getMeasuredWidth()/* + halfWidthOffset*/));
                 break;

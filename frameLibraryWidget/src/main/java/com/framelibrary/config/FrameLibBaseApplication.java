@@ -40,10 +40,18 @@ import java.lang.reflect.Method;
 public class FrameLibBaseApplication extends MultiDexApplication {
 
     protected static FrameLibBaseApplication instance;
+    private static AppManager appManager;
     private Context context;
     private DisplayMetrics displayMetrics;
     private SharedPreferences sharedPreferences;
-    private static AppManager appManager;
+
+    public static FrameLibBaseApplication getInstance() {
+        return instance;
+    }
+
+    public static AppManager getAppManager() {
+        return appManager;
+    }
 
     @Override
     public void onCreate() {
@@ -137,10 +145,6 @@ public class FrameLibBaseApplication extends MultiDexApplication {
         DeviceDataShare.getInstance().removeBySelectPopDataAll();
     }
 
-    public static FrameLibBaseApplication getInstance() {
-        return instance;
-    }
-
     public DisplayMetrics getDisplayMetrics() {
         return displayMetrics;
     }
@@ -154,9 +158,5 @@ public class FrameLibBaseApplication extends MultiDexApplication {
 
     public Context getContext() {
         return context;
-    }
-
-    public static AppManager getAppManager() {
-        return appManager;
     }
 }

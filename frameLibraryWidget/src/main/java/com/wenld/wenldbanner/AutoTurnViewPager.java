@@ -29,14 +29,12 @@ import java.util.List;
  */
 
 public class AutoTurnViewPager<T> extends LoopViewPager {
+    public int autoTurnTime = 5000;//间隔
+    public AutoTurnViewPager.TurnRunnable turnRunnable;
     boolean isRunning; //是否正在执行翻页中   如果是canLoop 到头了 那就不翻页
     boolean canTurn;   //能否能执行自动翻页
-    public int autoTurnTime = 5000;//间隔
     boolean reverse;
-
     ViewPagerScroller scroller;
-
-    public AutoTurnViewPager.TurnRunnable turnRunnable;
 
     public AutoTurnViewPager(Context context) {
         this(context, null);
@@ -92,33 +90,6 @@ public class AutoTurnViewPager<T> extends LoopViewPager {
         return this;
     }
 
-    static class TurnRunnable implements Runnable {
-
-        private final WeakReference<AutoTurnViewPager> reference;
-
-        TurnRunnable(AutoTurnViewPager autoTurnViewPager) {
-            this.reference = new WeakReference(autoTurnViewPager);
-        }
-
-        @Override
-        public void run() {
-            // 开始翻页
-            AutoTurnViewPager autoTurnViewPager = reference.get();
-
-            if (autoTurnViewPager != null) {
-                if (autoTurnViewPager.isRunning() && autoTurnViewPager.isCanTurn()) {
-                    int page = autoTurnViewPager.getCurrentItem() + (autoTurnViewPager.isReverse() ? -1 : 1);
-                    if (!autoTurnViewPager.getAdapter().isRealCanLoop() && (page >= autoTurnViewPager.getAdapter().getRealCount() || page < 0)) {
-                        autoTurnViewPager.setRunning(false);
-                        return;
-                    }
-                    autoTurnViewPager.setCurrentItem(page);
-                    autoTurnViewPager.startTurn();
-                }
-            }
-        }
-    }
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -155,6 +126,18 @@ public class AutoTurnViewPager<T> extends LoopViewPager {
 
     public boolean isCanTurn() {
         return canTurn;
+    }
+
+    public AutoTurnViewPager setCanTurn(boolean canTurn) {
+        if (this.canTurn == canTurn)
+            return this;
+        this.canTurn = canTurn;
+        if (canTurn) {
+            startTurn();
+        } else {
+            stopTurning();
+        }
+        return this;
     }
 
     private AutoTurnViewPager startTurn(int autoTurnTime) {
@@ -206,19 +189,6 @@ public class AutoTurnViewPager<T> extends LoopViewPager {
         return this;
     }
 
-
-    public AutoTurnViewPager setCanTurn(boolean canTurn) {
-        if (this.canTurn == canTurn)
-            return this;
-        this.canTurn = canTurn;
-        if (canTurn) {
-            startTurn();
-        } else {
-            stopTurning();
-        }
-        return this;
-    }
-
     @Override
     public void setCanLoop(boolean canLoop) {
         if (!isRunning()) {
@@ -236,20 +206,47 @@ public class AutoTurnViewPager<T> extends LoopViewPager {
         return this;
     }
 
+    public int getScrollDuration() {
+        return scroller.getScrollDuration();
+    }
+
     public AutoTurnViewPager setScrollDuration(int duration) {
         scroller.setScrollDuration(duration);
         return this;
     }
 
-    public int getScrollDuration() {
-        return scroller.getScrollDuration();
+    public boolean isReverse() {
+        return reverse;
     }
 
     public void setReverse(boolean reverse) {
         this.reverse = reverse;
     }
 
-    public boolean isReverse() {
-        return reverse;
+    static class TurnRunnable implements Runnable {
+
+        private final WeakReference<AutoTurnViewPager> reference;
+
+        TurnRunnable(AutoTurnViewPager autoTurnViewPager) {
+            this.reference = new WeakReference(autoTurnViewPager);
+        }
+
+        @Override
+        public void run() {
+            // 开始翻页
+            AutoTurnViewPager autoTurnViewPager = reference.get();
+
+            if (autoTurnViewPager != null) {
+                if (autoTurnViewPager.isRunning() && autoTurnViewPager.isCanTurn()) {
+                    int page = autoTurnViewPager.getCurrentItem() + (autoTurnViewPager.isReverse() ? -1 : 1);
+                    if (!autoTurnViewPager.getAdapter().isRealCanLoop() && (page >= autoTurnViewPager.getAdapter().getRealCount() || page < 0)) {
+                        autoTurnViewPager.setRunning(false);
+                        return;
+                    }
+                    autoTurnViewPager.setCurrentItem(page);
+                    autoTurnViewPager.startTurn();
+                }
+            }
+        }
     }
 }

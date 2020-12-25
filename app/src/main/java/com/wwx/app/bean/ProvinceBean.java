@@ -12,7 +12,7 @@ public class ProvinceBean implements IPickerViewData {
     private String description;
     private String others;
 
-    public ProvinceBean(long id,String name,String description,String others){
+    public ProvinceBean(long id, String name, String description, String others) {
         this.id = id;
         this.name = name;
         this.description = description;

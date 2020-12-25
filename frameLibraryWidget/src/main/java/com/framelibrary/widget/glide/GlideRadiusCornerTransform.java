@@ -27,12 +27,7 @@ public class GlideRadiusCornerTransform extends BitmapTransformation {
 
     public GlideRadiusCornerTransform(Context context, int dp) {
         super(context);
-        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
-    }
-
-    @Override
-    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-        return roundCrop(pool, toTransform);
+        radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 
     private static Bitmap roundCrop(BitmapPool pool, Bitmap source) {
@@ -50,6 +45,11 @@ public class GlideRadiusCornerTransform extends BitmapTransformation {
         RectF rectF = new RectF(0f, 0f, source.getWidth(), source.getHeight());
         canvas.drawRoundRect(rectF, radius, radius, paint);
         return result;
+    }
+
+    @Override
+    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+        return roundCrop(pool, toTransform);
     }
 
     @Override

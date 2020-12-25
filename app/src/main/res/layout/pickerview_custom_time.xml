@@ -45,11 +45,11 @@
     <!--此部分需要完整复制过去，删减或者更改ID会导致初始化找不到内容而报空-->
     <LinearLayout
         android:id="@+id/timepicker"
-        android:minHeight="150dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:gravity="center"
+        android:minHeight="150dp"
         android:orientation="horizontal">
 
         <com.contrarywind.view.WheelView

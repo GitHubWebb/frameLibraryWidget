@@ -30,15 +30,29 @@ import java.util.List;
 
 public class WenldPagerAdapter<T> extends PagerAdapter {
     final String TAG = "WenldPagerAdapter";
-    DataSetObservable mRealCanLoopObservable = new DataSetObservable(); //realCanLoop变化模式
+    public boolean myNotify = false;
     protected List<T> mDatas;
+    DataSetObservable mRealCanLoopObservable = new DataSetObservable(); //realCanLoop变化模式
     Holder holderCreator;
+    ViewPager wenldViewPager;
     private boolean canLoop;
     private boolean realCanLoop = true;
-    ViewPager wenldViewPager;
     private LinkedList<ViewHolder> mViewHolderCache = null;
     private LinkedList<ViewHolder> mViewHolderUsedCache = null;
     private OnPageClickListener onItemClickListener;
+
+    public WenldPagerAdapter(Holder holderCreator) {
+        this.holderCreator = holderCreator;
+        mViewHolderCache = new LinkedList<>();
+        mViewHolderUsedCache = new LinkedList<>();
+        setCanLoop(true);
+    }
+
+    private WenldPagerAdapter(Holder holderCreator, List<T> datas) {
+        this.holderCreator = holderCreator;
+        this.mDatas = datas;
+        setCanLoop(true);
+    }
 
     @Override
     public int getCount() {
@@ -55,8 +69,6 @@ public class WenldPagerAdapter<T> extends PagerAdapter {
         container.addView(view);
         return view;
     }
-
-    public boolean myNotify = false;
 
     public void notifyDataSetChanged(boolean isRefresh) {
         myNotify = isRefresh;
@@ -145,7 +157,7 @@ public class WenldPagerAdapter<T> extends PagerAdapter {
 
     public void setCanLoop(boolean canLoop) {
         this.canLoop = canLoop;
-        boolean loop = canLoop ? (getRealCount() > 1 ? true : false) : false;
+        boolean loop = canLoop && (getRealCount() > 1);
         if (realCanLoop ^ loop) {
             realCanLoop = loop;
             mRealCanLoopObservable.notifyChanged();
@@ -160,26 +172,13 @@ public class WenldPagerAdapter<T> extends PagerAdapter {
         this.wenldViewPager = viewPager;
     }
 
-    public WenldPagerAdapter(Holder holderCreator) {
-        this.holderCreator = holderCreator;
-        mViewHolderCache = new LinkedList<>();
-        mViewHolderUsedCache = new LinkedList<>();
-        setCanLoop(true);
-    }
-
-    private WenldPagerAdapter(Holder holderCreator, List<T> datas) {
-        this.holderCreator = holderCreator;
-        this.mDatas = datas;
-        setCanLoop(true);
+    public List<T> getmDatas() {
+        return mDatas;
     }
 
     public void setmDatas(List<T> mDatas) {
         this.mDatas = mDatas;
         setCanLoop(canLoop);
-    }
-
-    public List<T> getmDatas() {
-        return mDatas;
     }
 
     public View getView(int position, ViewGroup container) {

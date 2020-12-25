@@ -15,19 +15,22 @@ import com.framelibrary.widget.xpopup.XPopup;
  */
 public class BlurAnimator extends PopupAnimator {
 
+    public Bitmap decorBitmap;
+    public boolean hasShadowBg = false;
     private FloatEvaluator evaluate = new FloatEvaluator();
     public BlurAnimator(View target) {
         super(target);
     }
-    public Bitmap decorBitmap;
-    public boolean hasShadowBg = false;
 
-    public BlurAnimator() {}
+    public BlurAnimator() {
+    }
+
     @Override
     public void initAnimator() {
-        Bitmap blurBmp = XPopupUtils.renderScriptBlur(targetView.getContext(), decorBitmap,  25, true);
+        Bitmap blurBmp = XPopupUtils.renderScriptBlur(targetView.getContext(), decorBitmap, 25, true);
         BitmapDrawable drawable = new BitmapDrawable(targetView.getResources(), blurBmp);
-        if(hasShadowBg) drawable.setColorFilter(XPopup.getShadowBgColor(), PorterDuff.Mode.SRC_OVER);
+        if (hasShadowBg)
+            drawable.setColorFilter(XPopup.getShadowBgColor(), PorterDuff.Mode.SRC_OVER);
         targetView.setBackground(drawable);
     }
 

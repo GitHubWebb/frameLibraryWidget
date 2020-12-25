@@ -47,7 +47,7 @@ public class WenldBanner<T> extends RelativeLayout {
     private void init(Context context) {
         View hView = LayoutInflater.from(context).inflate(
                 R.layout.wenld_banner, this, true);
-        viewPager = (AutoTurnViewPager) hView.findViewById(R.id.vp_wenld_banner);
+        viewPager = hView.findViewById(R.id.vp_wenld_banner);
     }
 
     public WenldBanner setPages(Holder<T> holer, List<T> data) {
@@ -133,6 +133,11 @@ public class WenldBanner<T> extends RelativeLayout {
         return viewPager.isCanTurn();
     }
 
+    public WenldBanner setCanTurn(boolean canTurn) {
+        viewPager.setCanTurn(canTurn);
+        return this;
+    }
+
     public WenldBanner startTurn() {
         viewPager.startTurn();
         return this;
@@ -159,13 +164,13 @@ public class WenldBanner<T> extends RelativeLayout {
         return this;
     }
 
+    public int getScrollDuration() {
+        return viewPager.getScrollDuration();
+    }
+
     public WenldBanner setScrollDuration(int duration) {
         viewPager.setScrollDuration(duration);
         return this;
-    }
-
-    public int getScrollDuration() {
-        return viewPager.getScrollDuration();
     }
 
     public void setCurrentItem(int page) {
@@ -192,11 +197,6 @@ public class WenldBanner<T> extends RelativeLayout {
         return this;
     }
 
-    public WenldBanner setCanTurn(boolean canTurn) {
-        viewPager.setCanTurn(canTurn);
-        return this;
-    }
-
     public void setTouchScroll(boolean isCanScroll) {
         viewPager.setTouchScroll(isCanScroll);
     }
@@ -210,12 +210,12 @@ public class WenldBanner<T> extends RelativeLayout {
         return this;
     }
 
-    public void setReverse(boolean reverse) {
-        viewPager.setReverse(reverse);
-    }
-
     public boolean isReverse() {
         return viewPager.isReverse();
+    }
+
+    public void setReverse(boolean reverse) {
+        viewPager.setReverse(reverse);
     }
 
     public void setOnItemClickListener(OnPageClickListener onItemClickListener) {

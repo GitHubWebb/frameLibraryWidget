@@ -19,6 +19,10 @@ import java.util.regex.Pattern;
 public class StringUtils {
     private static String TAG = Class.class.getName();
 
+    private StringUtils() {
+        throw new AssertionError();
+    }
+
     /**
      * (这里的100就是2位小数点,如果要其它位,如4位,这里两个100改成10000)
      * float 四舍五入 小数点后两位
@@ -74,7 +78,6 @@ public class StringUtils {
         return retValue;
     }
 
-
     /**
      * 方法名:         calcDoubleValue
      * 方法功能描述:   double类型的加减乘除，避免Java 直接计算错误
@@ -99,10 +102,6 @@ public class StringUtils {
                 break;
         }
         return retValue;
-    }
-
-    private StringUtils() {
-        throw new AssertionError();
     }
 
     /**
@@ -484,12 +483,12 @@ public class StringUtils {
      * @param str 如果都是数字，返回true，否则返回false
      */
     public static boolean isNumeric(String str) {
+        if (StringUtils.isBlank(str))
+            return false;
+
         Pattern pattern = Pattern.compile("[0-9]*");
         Matcher isNum = pattern.matcher(str);
-        if (!isNum.matches()) {
-            return false;
-        }
-        return true;
+        return isNum.matches();
     }
 
     /**
@@ -525,7 +524,7 @@ public class StringUtils {
                 num--;
             }
             letter = ((char) (num % 26 + (int) 'A')) + letter;
-            num = (int) ((num - num % 26) / 26);
+            num = (num - num % 26) / 26;
         } while (num > 0);
 
         return letter;
@@ -538,7 +537,7 @@ public class StringUtils {
         int number = 0;
         for (int i = 0; i < length; i++) {
             char ch = letter.charAt(length - i - 1);
-            num = (int) (ch - 'A' + 1);
+            num = ch - 'A' + 1;
             num *= Math.pow(26, i);
             number += num;
         }

@@ -15,16 +15,16 @@ public class CustomerSlideViewPager extends ViewPager {
     //是否可以进行滑动
     private boolean isSlide = false;
 
-    public void setSlide(boolean slide) {
-        isSlide = slide;
-    }
-
     public CustomerSlideViewPager(Context context) {
         super(context);
     }
 
     public CustomerSlideViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public void setSlide(boolean slide) {
+        isSlide = slide;
     }
 
     @Override

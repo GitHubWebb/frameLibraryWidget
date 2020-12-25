@@ -22,12 +22,12 @@ public final class KeyboardUtils {
 
     public static int sDecorViewInvisibleHeightPre;
     private static ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener;
-    private static HashMap<View,OnSoftInputChangedListener> listenerMap = new HashMap<>();
+    private static HashMap<View, OnSoftInputChangedListener> listenerMap = new HashMap<>();
+    private static int sDecorViewDelta = 0;
+
     private KeyboardUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
-
-    private static int sDecorViewDelta = 0;
 
     private static int getDecorViewInvisibleHeight(final Window window) {
         final View decorView = window.getDecorView();
@@ -45,7 +45,7 @@ public final class KeyboardUtils {
     /**
      * Register soft input changed listener.
      *
-     * @param window The activity.
+     * @param window   The activity.
      * @param listener The soft input changed listener.
      */
     public static void registerSoftInputChangedListener(final Window window, final BasePopupView popupView, final OnSoftInputChangedListener listener) {
@@ -59,25 +59,25 @@ public final class KeyboardUtils {
         ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                    int height = getDecorViewInvisibleHeight(window);
-                    if (sDecorViewInvisibleHeightPre != height) {
-                        //通知所有弹窗的监听器输入法高度变化了
-                        for (OnSoftInputChangedListener  changedListener: listenerMap.values()) {
-                            changedListener.onSoftInputChanged(height);
-                        }
-                        sDecorViewInvisibleHeightPre = height;
+                int height = getDecorViewInvisibleHeight(window);
+                if (sDecorViewInvisibleHeightPre != height) {
+                    //通知所有弹窗的监听器输入法高度变化了
+                    for (OnSoftInputChangedListener changedListener : listenerMap.values()) {
+                        changedListener.onSoftInputChanged(height);
                     }
+                    sDecorViewInvisibleHeightPre = height;
+                }
             }
         };
         contentView.getViewTreeObserver()
                 .addOnGlobalLayoutListener(onGlobalLayoutListener);
     }
 
-    public static void removeLayoutChangeListener(View decorView, BasePopupView popupView){
+    public static void removeLayoutChangeListener(View decorView, BasePopupView popupView) {
         onGlobalLayoutListener = null;
-        if(decorView==null)return;
+        if (decorView == null) return;
         View contentView = decorView.findViewById(android.R.id.content);
-        if(contentView==null)return;
+        if (contentView == null) return;
         contentView.getViewTreeObserver().removeGlobalOnLayoutListener(onGlobalLayoutListener);
         listenerMap.remove(popupView);
     }

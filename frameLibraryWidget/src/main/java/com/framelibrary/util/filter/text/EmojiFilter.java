@@ -16,46 +16,6 @@ public class EmojiFilter implements InputFilter {
     private static Set<String> filterSet = null;
     private static Set<Scope> scopeSet = null;
 
-    /**
-     * 区间类模型
-     */
-    private class Scope {
-        int start;
-        int end;
-
-        @Override
-        public boolean equals(Object o) {
-            if (o instanceof Scope) {
-                Scope scope = (Scope) o;
-                if (scope.start == start && scope.end == end) {
-                    return true;
-                }
-            }
-            return super.equals(o);
-        }
-    }
-
-    private static void addUnicodeRangeToSet(Set<String> set, int start, int end) {
-        if (set == null) {
-            return;
-        }
-        if (start > end) {
-            return;
-        }
-
-
-        for (int i = start; i <= end; i++) {
-            filterSet.add(new String(new int[]{i}, 0, 1));
-        }
-    }
-
-    private static void addUnicodeRangeToSet(Set<String> set, int code) {
-        if (set == null) {
-            return;
-        }
-        filterSet.add(new String(new int[]{code}, 0, 1));
-    }
-
     static {
         filterSet = new HashSet<String>();
         scopeSet = new HashSet<>();
@@ -130,14 +90,35 @@ public class EmojiFilter implements InputFilter {
         super();
     }
 
+    private static void addUnicodeRangeToSet(Set<String> set, int start, int end) {
+        if (set == null) {
+            return;
+        }
+        if (start > end) {
+            return;
+        }
+
+
+        for (int i = start; i <= end; i++) {
+            filterSet.add(new String(new int[]{i}, 0, 1));
+        }
+    }
+
+    private static void addUnicodeRangeToSet(Set<String> set, int code) {
+        if (set == null) {
+            return;
+        }
+        filterSet.add(new String(new int[]{code}, 0, 1));
+    }
+
     @Override
     public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart,
                                int dend) {
         // check black-list set
         for (int i = 0; i < source.length(); i++) {
-            Log.e(TAG,Integer.toHexString(source.charAt(i)));
+            Log.e(TAG, Integer.toHexString(source.charAt(i)));
         }
-        Log.e(TAG,source.toString() + " length： " + source.toString().length() +
+        Log.e(TAG, source.toString() + " length： " + source.toString().length() +
                 " ；bytes length： " + source.toString().getBytes().length);
 //        Iterator<String> iterator = filterSet.iterator();
 //        while (iterator.hasNext()) {
@@ -155,6 +136,25 @@ public class EmojiFilter implements InputFilter {
             return "";
         }
         return source;
+    }
+
+    /**
+     * 区间类模型
+     */
+    private class Scope {
+        int start;
+        int end;
+
+        @Override
+        public boolean equals(Object o) {
+            if (o instanceof Scope) {
+                Scope scope = (Scope) o;
+                if (scope.start == start && scope.end == end) {
+                    return true;
+                }
+            }
+            return super.equals(o);
+        }
     }
 
 }

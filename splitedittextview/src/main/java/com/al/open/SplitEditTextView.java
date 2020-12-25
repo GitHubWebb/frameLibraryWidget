@@ -480,6 +480,13 @@ public class SplitEditTextView extends AppCompatEditText {
     }
 
     /**
+     * 获取密码显示模式
+     */
+    public int getContentShowMode() {
+        return mContentShowMode;
+    }
+
+    /**
      * 设置密码是否可见
      */
     public void setContentShowMode(int mode) {
@@ -492,36 +499,6 @@ public class SplitEditTextView extends AppCompatEditText {
         }
         mContentShowMode = mode;
         invalidate();
-    }
-
-    /**
-     * 获取密码显示模式
-     */
-    public int getContentShowMode() {
-        return mContentShowMode;
-    }
-
-    /**
-     * 设置输入框样式
-     */
-    public void setInputBoxStyle(int inputBoxStyle) {
-        if (inputBoxStyle != INPUT_BOX_STYLE_CONNECT
-                && inputBoxStyle != INPUT_BOX_STYLE_SINGLE
-                && inputBoxStyle != INPUT_BOX_STYLE_UNDERLINE
-        ) {
-            throw new IllegalArgumentException(
-                    "the value of the parameter must be one of" +
-                            "{1:INPUT_BOX_STYLE_CONNECT}, " +
-                            "{2:INPUT_BOX_STYLE_SINGLE} or " +
-                            "{3:INPUT_BOX_STYLE_UNDERLINE}"
-            );
-        }
-        mInputBoxStyle = inputBoxStyle;
-        // 这里没有调用invalidate因为会存在问题
-        // invalidate会重绘,但是不会去重新测量,当输入框样式切换的之后,item的宽度其实是有变化的,所以此时需要重新测量
-        // requestLayout,调用onMeasure和onLayout,不一定会调用onDraw,当view的l,t,r,b发生改变时会调用onDraw
-        requestLayout();
-        //invalidate();
     }
 
     public void setOnInputListener(OnInputListener listener) {
@@ -551,6 +528,29 @@ public class SplitEditTextView extends AppCompatEditText {
      */
     public int getInputBoxStyle() {
         return mInputBoxStyle;
+    }
+
+    /**
+     * 设置输入框样式
+     */
+    public void setInputBoxStyle(int inputBoxStyle) {
+        if (inputBoxStyle != INPUT_BOX_STYLE_CONNECT
+                && inputBoxStyle != INPUT_BOX_STYLE_SINGLE
+                && inputBoxStyle != INPUT_BOX_STYLE_UNDERLINE
+        ) {
+            throw new IllegalArgumentException(
+                    "the value of the parameter must be one of" +
+                            "{1:INPUT_BOX_STYLE_CONNECT}, " +
+                            "{2:INPUT_BOX_STYLE_SINGLE} or " +
+                            "{3:INPUT_BOX_STYLE_UNDERLINE}"
+            );
+        }
+        mInputBoxStyle = inputBoxStyle;
+        // 这里没有调用invalidate因为会存在问题
+        // invalidate会重绘,但是不会去重新测量,当输入框样式切换的之后,item的宽度其实是有变化的,所以此时需要重新测量
+        // requestLayout,调用onMeasure和onLayout,不一定会调用onDraw,当view的l,t,r,b发生改变时会调用onDraw
+        requestLayout();
+        //invalidate();
     }
 
     private float dp2px(float dpValue) {

@@ -12,6 +12,7 @@ public class SimpleCallback implements XPopupCallback {
     public void onCreated(BasePopupView popupView) {
 
     }
+
     @Override
     public void beforeShow(BasePopupView popupView) {
 
@@ -21,6 +22,7 @@ public class SimpleCallback implements XPopupCallback {
     public void onShow(BasePopupView popupView) {
 
     }
+
     @Override
     public void onDismiss(BasePopupView popupView) {
 
@@ -37,7 +39,8 @@ public class SimpleCallback implements XPopupCallback {
     }
 
     @Override
-    public void onKeyBoardStateChanged(BasePopupView popupView, int height){}
+    public void onKeyBoardStateChanged(BasePopupView popupView, int height) {
+    }
 
     @Override
     public void onDrag(BasePopupView popupView, int value, float percent, boolean upOrLeft) {

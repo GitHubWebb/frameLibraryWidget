@@ -17,10 +17,13 @@ import androidx.annotation.NonNull;
 import com.framelibrary.R;
 import com.framelibrary.util.dialog.xpopup.FuckRomUtils;
 import com.framelibrary.util.dialog.xpopup.XPopupUtils;
+
 /**
  * 所有弹窗的宿主
  */
 public class FullScreenDialog extends Dialog {
+    BasePopupView contentView;
+
     public FullScreenDialog(@NonNull Context context) {
         super(context, R.style._XPopup_TransparentDialog);
     }
@@ -45,11 +48,11 @@ public class FullScreenDialog extends Dialog {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         //处理VIVO手机8.0以上系统部分机型的状态栏问题和弹窗下移问题
-        if(isFuckVIVORoom()){
+        if (isFuckVIVORoom()) {
             getWindow().getDecorView().setTranslationY(-XPopupUtils.getStatusBarHeight());
             getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, Math.max(XPopupUtils.getPhoneScreenHeight(getWindow()),
                     XPopupUtils.getWindowHeight(getContext())));
-        }else {
+        } else {
             getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, Math.max(XPopupUtils.getPhoneScreenHeight(getWindow()),
                     XPopupUtils.getWindowHeight(getContext())));
         }
@@ -57,7 +60,7 @@ public class FullScreenDialog extends Dialog {
         int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
         getWindow().getDecorView().setSystemUiVisibility(option);
 
-        if(!contentView.popupInfo.isRequestFocus){
+        if (!contentView.popupInfo.isRequestFocus) {
             //不获取焦点
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         }
@@ -75,7 +78,7 @@ public class FullScreenDialog extends Dialog {
             getWindow().setNavigationBarColor(contentView.popupInfo.navigationBarColor);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); //尝试兼容部分手机上的状态栏空白问题
         }
-        if(Build.VERSION.SDK_INT == 19){ //解决4.4上状态栏闪烁的问题
+        if (Build.VERSION.SDK_INT == 19) { //解决4.4上状态栏闪烁的问题
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
@@ -89,9 +92,9 @@ public class FullScreenDialog extends Dialog {
 
     }
 
-    public boolean isFuckVIVORoom(){
+    public boolean isFuckVIVORoom() {
         //vivo的X开头的8.0和8.1系统特殊，不需要处理
-        boolean isXModel = Build.MODEL.contains("X") || Build.MODEL.contains("x") ;
+        boolean isXModel = Build.MODEL.contains("X") || Build.MODEL.contains("x");
         return FuckRomUtils.isVivo() && (Build.VERSION.SDK_INT == 26 || Build.VERSION.SDK_INT == 27) && !isXModel;
     }
 
@@ -154,25 +157,24 @@ public class FullScreenDialog extends Dialog {
             }
         }
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE ,
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         final int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
                 View.SYSTEM_UI_FLAG_FULLSCREEN |
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                 View.SYSTEM_UI_FLAG_IMMERSIVE |
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN ;
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
         decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | uiOptions);
     }
-    private  String getResNameById(int id) {
+
+    private String getResNameById(int id) {
         try {
             return getContext().getResources().getResourceEntryName(id);
         } catch (Exception ignore) {
             return "";
         }
     }
-
-    BasePopupView contentView;
 
     public FullScreenDialog setContent(BasePopupView view) {
         this.contentView = view;
@@ -184,8 +186,8 @@ public class FullScreenDialog extends Dialog {
 //        if (contentView!=null && contentView.getContext() instanceof Activity){
 //            ((Activity) contentView.getContext()).dispatchTouchEvent(event);
 //        }
-        if(isFuckVIVORoom()){
-            event.setLocation(event.getX(), event.getY()+ XPopupUtils.getStatusBarHeight());
+        if (isFuckVIVORoom()) {
+            event.setLocation(event.getX(), event.getY() + XPopupUtils.getStatusBarHeight());
         }
         return super.dispatchTouchEvent(event);
     }

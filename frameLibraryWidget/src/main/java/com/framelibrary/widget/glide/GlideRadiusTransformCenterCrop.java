@@ -25,14 +25,7 @@ public class GlideRadiusTransformCenterCrop extends CenterCrop {
 
     public GlideRadiusTransformCenterCrop(Context context, int dp) {
         super(context);
-        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
-    }
-
-    @Override
-    protected Bitmap transform(BitmapPool pool, Bitmap toTransform,
-                               int outWidth, int outHeight) {
-        Bitmap transform = super.transform(pool, toTransform, outWidth, outHeight);
-        return roundCrop(pool, transform);
+        radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 
     private static Bitmap roundCrop(BitmapPool pool, Bitmap source) {
@@ -50,6 +43,13 @@ public class GlideRadiusTransformCenterCrop extends CenterCrop {
         RectF rectF = new RectF(0f, 0f, source.getWidth(), source.getHeight());
         canvas.drawRoundRect(rectF, radius, radius, paint);
         return result;
+    }
+
+    @Override
+    protected Bitmap transform(BitmapPool pool, Bitmap toTransform,
+                               int outWidth, int outHeight) {
+        Bitmap transform = super.transform(pool, toTransform, outWidth, outHeight);
+        return roundCrop(pool, transform);
     }
 
 }

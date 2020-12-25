@@ -20,6 +20,10 @@ import com.lxj.xpopup.util.XPopupUtils;
  */
 public class InputConfirmPopupView extends ConfirmPopupView implements View.OnClickListener {
 
+    public CharSequence inputContent;
+    OnCancelListener cancelListener;
+    OnInputConfirmListener inputConfirmListener;
+
     /**
      * @param context
      * @param bindLayoutId 在Confirm弹窗基础上需要增加一个id为et_input的EditText
@@ -27,8 +31,6 @@ public class InputConfirmPopupView extends ConfirmPopupView implements View.OnCl
     public InputConfirmPopupView(@NonNull Context context, int bindLayoutId) {
         super(context, bindLayoutId);
     }
-
-    public CharSequence inputContent;
 
     @Override
     protected void initPopupContent() {
@@ -62,14 +64,12 @@ public class InputConfirmPopupView extends ConfirmPopupView implements View.OnCl
         et_input.setHintTextColor(Color.parseColor("#888888"));
         et_input.setTextColor(Color.parseColor("#333333"));
     }
+
     protected void applyDarkTheme() {
         super.applyDarkTheme();
         et_input.setHintTextColor(Color.parseColor("#888888"));
         et_input.setTextColor(Color.parseColor("#dddddd"));
     }
-
-    OnCancelListener cancelListener;
-    OnInputConfirmListener inputConfirmListener;
 
     public void setListener(OnInputConfirmListener inputConfirmListener, OnCancelListener cancelListener) {
         this.cancelListener = cancelListener;

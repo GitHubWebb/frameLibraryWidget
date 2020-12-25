@@ -83,7 +83,7 @@ public class UrlProtocolUtil {
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         try {
             JsonObject jsonObject = executorService.submit(new UrlTask(url)).get();
-            return jsonObject.has("connectStatus") ? jsonObject.get("connectStatus").getAsBoolean() : false;
+            return jsonObject.has("connectStatus") && jsonObject.get("connectStatus").getAsBoolean();
         } catch (ExecutionException e) {
 //            e.printStackTrace();
             LoggerUtils.printStackToLog(e, "startFutureCheckUrl");

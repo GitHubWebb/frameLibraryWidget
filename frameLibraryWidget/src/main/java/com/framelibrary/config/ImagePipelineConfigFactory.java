@@ -19,15 +19,28 @@ import java.util.Set;
 
 /**
  * 图片缓存配置
+ *
  * @author:wangwx
  * @Date:2018/5/3 16:51
  * @Description
  */
 public class ImagePipelineConfigFactory {
-    private static final int MAX_HEAP_SIZE = (int) Runtime.getRuntime().maxMemory();
     public static final int MAX_DISK_CACHE_SIZE = 20 * ByteConstants.MB;
+    private static final int MAX_HEAP_SIZE = (int) Runtime.getRuntime().maxMemory();
     public static final int MAX_MEMORY_CACHE_SIZE = MAX_HEAP_SIZE / 4;
     private static final String IMAGE_PIPELINE_CACHE_DIR = "imagepipeline_cache";
+    //渐进式图片
+    static ProgressiveJpegConfig mProgressiveJpegConfig = new ProgressiveJpegConfig() {
+        @Override
+        public int getNextScanNumberToDecode(int scanNumber) {
+            return scanNumber + 2;
+        }
+
+        public QualityInfo getQualityInfo(int scanNumber) {
+            boolean isGoodEnough = (scanNumber >= 5);
+            return ImmutableQualityInfo.of(scanNumber, isGoodEnough, false);
+        }
+    };
     private static ImagePipelineConfig sImagePipelineConfig;
     private static ImagePipelineConfig sOkHttpImagePipelineConfig;
 
@@ -46,7 +59,6 @@ public class ImagePipelineConfigFactory {
         }
         return sImagePipelineConfig;
     }
-
 
     /**
      * 配置内存缓存和磁盘缓存
@@ -84,17 +96,4 @@ public class ImagePipelineConfigFactory {
     private static void configureOptions(ImagePipelineConfig.Builder configBuilder) {
         configBuilder.setDownsampleEnabled(true);
     }
-
-    //渐进式图片
-    static ProgressiveJpegConfig mProgressiveJpegConfig = new ProgressiveJpegConfig() {
-        @Override
-        public int getNextScanNumberToDecode(int scanNumber) {
-            return scanNumber + 2;
-        }
-
-        public QualityInfo getQualityInfo(int scanNumber) {
-            boolean isGoodEnough = (scanNumber >= 5);
-            return ImmutableQualityInfo.of(scanNumber, isGoodEnough, false);
-        }
-    };
 }

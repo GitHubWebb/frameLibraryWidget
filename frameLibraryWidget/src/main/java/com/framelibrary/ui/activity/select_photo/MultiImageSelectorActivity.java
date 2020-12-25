@@ -89,7 +89,7 @@ public class MultiImageSelectorActivity extends FragmentActivity implements Mult
         });
 
         // 完成按钮
-        mSubmitButton = (Button) findViewById(R.id.commit);
+        mSubmitButton = findViewById(R.id.commit);
         if (resultList == null || resultList.size() <= 0) {
             mSubmitButton.setText("完成");
             mSubmitButton.setEnabled(false);

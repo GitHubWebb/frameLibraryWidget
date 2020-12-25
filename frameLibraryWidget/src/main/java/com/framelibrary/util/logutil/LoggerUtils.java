@@ -19,9 +19,9 @@ import java.util.Arrays;
  * @see "https://www.cnblogs.com/bdsdkrb/p/10038732.html"
  */
 public class LoggerUtils {
+    private final static int I = 1, D = 2, E = 3, JSON = 4, XML = 5;
     private static boolean isHideAllLog = false;
     private static boolean isRelease = false;
-    private final static int I = 1, D = 2, E = 3, JSON = 4, XML = 5;
 
     private static void print(int mod, String tag, String msg) {
         if (isHideAllLog) {
@@ -172,7 +172,7 @@ public class LoggerUtils {
         String callerClazzName = stackTraceElement.getClassName();
         callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
         String tag = "%s.%s(L:%d)";
-        tag = String.format(tag, new Object[]{callerClazzName, stackTraceElement.getMethodName(), Integer.valueOf(stackTraceElement.getLineNumber())});
+        tag = String.format(tag, callerClazzName, stackTraceElement.getMethodName(), Integer.valueOf(stackTraceElement.getLineNumber()));
         //给tag设置前缀
         tag = TextUtils.isEmpty(Constant.LOG_TAG_PREFIX) ? tag : Constant.LOG_TAG_PREFIX + ":" + tag;
         return tag;
@@ -226,12 +226,9 @@ public class LoggerUtils {
 
 
     private static boolean ignorable(StackTraceElement ste) {
-        if (ste.isNativeMethod() ||
+        return ste.isNativeMethod() ||
                 ste.getClassName().equals(Thread.class.getName()) ||
-                ste.getClassName().equals(Logger.class.getName())) {
-            return true;
-        }
-        return false;
+                ste.getClassName().equals(Logger.class.getName());
     }
 
 }

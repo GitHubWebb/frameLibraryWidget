@@ -56,6 +56,9 @@ import java.util.Locale;
  * Create by lxj, at 2018/12/7
  */
 public class XPopupUtils {
+    private static int sDecorViewDelta = 0;
+    private static Context mContext;
+
     public static int getWindowWidth(Context context) {
         return ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
     }
@@ -183,8 +186,6 @@ public class XPopupUtils {
         return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
     }
 
-    private static int sDecorViewDelta = 0;
-
     public static int getDecorViewInvisibleHeight(final Window window) {
         final View decorView = window.getDecorView();
         final Rect outRect = new Rect();
@@ -302,7 +303,6 @@ public class XPopupUtils {
         }
     }
 
-
     /**
      * Return whether the navigation bar visible.
      * <p>Call it in onWindowFocusChanged will get right result.</p>
@@ -344,8 +344,6 @@ public class XPopupUtils {
         }
     }
 
-    private static Context mContext;
-
     private static String getFileExt(ImageType type) {
         switch (type) {
             case GIF:
@@ -366,7 +364,7 @@ public class XPopupUtils {
         OutputStream os = null;
         try {
             os = new BufferedOutputStream(new FileOutputStream(file));
-            byte data[] = new byte[8192];
+            byte[] data = new byte[8192];
             int len;
             while ((len = is.read(data, 0, 8192)) != -1) {
                 os.write(data, 0, len);

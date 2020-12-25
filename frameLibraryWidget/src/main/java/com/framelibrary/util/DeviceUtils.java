@@ -63,6 +63,9 @@ import java.util.Map;
 public class DeviceUtils {
 
     private static final String fileAddressMac = "/sys/class/net/wlan0/address";
+    private static final String TAG = "DeviceUtil";
+    private static long lastTimeStamp;
+    private static long lastTotalRxBytes;
 
     public static int getColorRes(String colorString) {
         try {
@@ -96,34 +99,6 @@ public class DeviceUtils {
         return (T) v.findViewById(id);
     }
 
-
-    /**
-     * 判断是否存在虚拟按键
-     *
-     * @return
-     */
-    public boolean checkDeviceHasNavigationBar() {
-        boolean hasNavigationBar = false;
-        Resources rs = FrameLibBaseApplication.getInstance().getContext().getResources();
-        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
-        if (id > 0) {
-            hasNavigationBar = rs.getBoolean(id);
-        }
-        try {
-            Class<?> systemPropertiesClass = Class.forName("android.os.SystemProperties");
-            Method m = systemPropertiesClass.getMethod("get", String.class);
-            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
-            if ("1".equals(navBarOverride)) {
-                hasNavigationBar = false;
-            } else if ("0".equals(navBarOverride)) {
-                hasNavigationBar = true;
-            }
-        } catch (Exception e) {
-            LoggerUtils.printStackToLog(e);
-        }
-        return hasNavigationBar;
-    }
-
     /**
      * 判定是不是竖屏
      *
@@ -131,11 +106,7 @@ public class DeviceUtils {
      */
     public static boolean isPortrait() {
         int mOrientation = FrameLibBaseApplication.getInstance().getContext().getResources().getConfiguration().orientation;
-        if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            return false;
-        } else {
-            return true;
-        }
+        return mOrientation != Configuration.ORIENTATION_LANDSCAPE;
     }
 
     //Drawable --> Bitmap
@@ -191,8 +162,8 @@ public class DeviceUtils {
     public static Bitmap setImgSize(Bitmap bm, float newWidth, float newHeight) {
         int w = bm.getWidth();
         int h = bm.getHeight();
-        float sx = (float) newWidth / w;//要强制转换，不转换我的在这总是死掉。
-        float sy = (float) newHeight / h;
+        float sx = newWidth / w;//要强制转换，不转换我的在这总是死掉。
+        float sy = newHeight / h;
         Matrix matrix = new Matrix();
         matrix.postScale(sx, sy); // 长和宽放大缩小的比例
         Bitmap resizeBmp = Bitmap.createBitmap(bm, 0, 0, w,
@@ -309,7 +280,6 @@ public class DeviceUtils {
         return null;
     }
 
-
     /**
      * 获取图标 bitmap
      *
@@ -339,14 +309,9 @@ public class DeviceUtils {
         Rect rect = new Rect(0, 0, screenWidth, screenHeight);
         int[] location = new int[2];
         view.getLocationInWindow(location);
-        if (view.getLocalVisibleRect(rect)) {
-            return true;
-        } else {
-            //view已不在屏幕可见区域;
-            return false;
-        }
+        //view已不在屏幕可见区域;
+        return view.getLocalVisibleRect(rect);
     }
-
 
     /**
      * 获取屏幕宽度和高度，单位为px
@@ -397,9 +362,6 @@ public class DeviceUtils {
         return resultData;
     }
 
-
-    private static final String TAG = "DeviceUtil";
-
     /**
      * 将传入的数字转换为百分比
      *
@@ -418,7 +380,6 @@ public class DeviceUtils {
         String progressStr = numberFormat.format(progress);
         return Integer.parseInt(progressStr.replace("%", ""));
     }
-
 
     /**
      * 根据列名获取列号
@@ -546,7 +507,6 @@ public class DeviceUtils {
         return false;
     }
 
-
     /**
      * 返回版本号
      * 对应build.gradle中的versionCode
@@ -626,7 +586,6 @@ public class DeviceUtils {
     public static int getAppProcessId() {
         return android.os.Process.myPid();
     }
-
 
     /**
      * 创建App文件夹
@@ -757,9 +716,6 @@ public class DeviceUtils {
         activity.startActivity(intent);
     }
 
-    private static long lastTimeStamp;
-    private static long lastTotalRxBytes;
-
     /**
      * 单位为kb/s
      *
@@ -779,6 +735,33 @@ public class DeviceUtils {
         if (context == null)
             return 0;
         return TrafficStats.getUidRxBytes(context.getApplicationInfo().uid) == TrafficStats.UNSUPPORTED ? 0 : (TrafficStats.getTotalRxBytes() / 1024);//转为KB
+    }
+
+    /**
+     * 判断是否存在虚拟按键
+     *
+     * @return
+     */
+    public boolean checkDeviceHasNavigationBar() {
+        boolean hasNavigationBar = false;
+        Resources rs = FrameLibBaseApplication.getInstance().getContext().getResources();
+        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id);
+        }
+        try {
+            Class<?> systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            Method m = systemPropertiesClass.getMethod("get", String.class);
+            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
+            if ("1".equals(navBarOverride)) {
+                hasNavigationBar = false;
+            } else if ("0".equals(navBarOverride)) {
+                hasNavigationBar = true;
+            }
+        } catch (Exception e) {
+            LoggerUtils.printStackToLog(e);
+        }
+        return hasNavigationBar;
     }
 
 /*	private static PowerManager pm;
