@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">WenldBanner</string>
 
     <string name="permission_open_tip_title">权限开启提示</string>
     <string name="permission_open_write_tip_msg">请进入系统设置开启追追的存储权限</string>

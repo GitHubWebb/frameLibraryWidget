@@ -8,7 +8,10 @@ import com.framelibrary.util.Constant;
  */
 public class Constants {
 
-    public static final String jumpPackageName = "com.zqcm.ysp";
+    // 主工程编译的appName
+    public static String MAIN_PROJECT_BUILD_APP_NAME = "frameLibrary";
+
+    public static String jumpPackageName = "com.zqcm.ysp";
     public static final String CONNECT_MESSAGE_FAIL = "网络连接失败，请稍后重试";
     public static final String PARSE_DATA_EXCEPTION = "解析数据异常";
     public static final String DATA_EXCEPTION = "数据异常";
