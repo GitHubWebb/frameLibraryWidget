@@ -1,5 +1,6 @@
 package com.framelibrary.config;
 
+import com.framelibrary.R;
 import com.framelibrary.util.Constant;
 
 /**
@@ -10,6 +11,8 @@ public class Constants {
 
     // 主工程编译的appName
     public static String MAIN_PROJECT_BUILD_APP_NAME = "frameLibrary";
+    // 主工程编译的appIcon
+    public static int MAIN_PROJECT_BUILD_IC_LAUNCHER = R.drawable.icon_loading_dialog;
 
     public static String jumpPackageName = "com.zqcm.ysp";
     public static final String CONNECT_MESSAGE_FAIL = "网络连接失败，请稍后重试";
