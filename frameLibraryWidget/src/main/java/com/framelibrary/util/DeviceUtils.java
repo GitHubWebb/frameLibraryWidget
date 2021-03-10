@@ -1,6 +1,5 @@
 package com.framelibrary.util;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -26,11 +25,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -48,8 +48,13 @@ import com.framelibrary.util.logutil.LoggerUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Method;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -527,22 +532,6 @@ public class DeviceUtils {
     }
 
     /**
-     * 获取设备的唯一标识，deviceId
-     *
-     * @param context
-     * @return
-     */
-    public static String getDeviceId(Context context) {
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        @SuppressLint({"HardwareIds", "MissingPermission"}) String deviceId = tm.getDeviceId();
-        if (deviceId == null) {
-            return "";
-        } else {
-            return deviceId;
-        }
-    }
-
-    /**
      * 获取手机品牌
      *
      * @return
@@ -701,6 +690,88 @@ public class DeviceUtils {
         }
 
     }
+
+    // 从Ip获取Mac地址
+    public static String getMacAddressFromIp(Context context) {
+        String mac_s = "";
+        StringBuilder buf = new StringBuilder();
+        try {
+            byte[] mac;
+            NetworkInterface ne = NetworkInterface.getByInetAddress(InetAddress.getByName(getIpAddress(context)));
+            mac = ne.getHardwareAddress();
+            for (byte b : mac) {
+                buf.append(String.format("%02X:", b));
+            }
+            if (buf.length() > 0) {
+                buf.deleteCharAt(buf.length() - 1);
+            }
+            mac_s = buf.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mac_s;
+    }
+
+    // 获取IP地址
+    public static String getIpAddress(Context context) {
+        NetworkInfo info = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if (info != null && info.isConnected()) {
+            // 3/4g网络
+            if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
+                try {
+                    for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                        NetworkInterface intf = en.nextElement();
+                        for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                            InetAddress inetAddress = enumIpAddr.nextElement();
+                            if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                                return inetAddress.getHostAddress();
+                            }
+                        }
+                    }
+                } catch (SocketException e) {
+                    e.printStackTrace();
+                }
+            } else if (info.getType() == ConnectivityManager.TYPE_WIFI) {
+                //  wifi网络
+                WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+                String ipAddress = intIP2StringIP(wifiInfo.getIpAddress());
+                return ipAddress;
+            } else if (info.getType() == ConnectivityManager.TYPE_ETHERNET) {
+                // 有限网络
+                return getLocalIp();
+            }
+        }
+        return null;
+    }
+
+    // int IP 转字符串IP
+    private static String intIP2StringIP(int ip) {
+        return (ip & 0xFF) + "." +
+                ((ip >> 8) & 0xFF) + "." +
+                ((ip >> 16) & 0xFF) + "." +
+                (ip >> 24 & 0xFF);
+    }
+
+
+    // 获取有限网IP
+    private static String getLocalIp() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                        return inetAddress.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            LoggerUtils.printStackToLog(ex);
+        }
+        return "0.0.0.0";
+    }
+
 
     /**
      * 启动系统的WIFI连接界面
