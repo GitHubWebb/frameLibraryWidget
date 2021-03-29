@@ -24,7 +24,6 @@ import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
-import com.simple.spiderman.SpiderMan;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -67,8 +66,8 @@ public class FrameLibBaseApplication extends MultiDexApplication {
             Constant.LOG_PRINT = BuildConfig.DEBUG;
 
         //放在其他库初始化前
-        if (Constant.LOG_PRINT)
-            SpiderMan.init(this);
+        /*if (Constant.LOG_PRINT)
+            SpiderMan.init(this);*/
 
 
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()

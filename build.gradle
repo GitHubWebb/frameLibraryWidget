@@ -6,9 +6,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-
-        maven { url 'https://maven.google.com' }  //添加此行
-
+        
         maven { url 'https://www.jitpack.io' }
 
         jcenter()
@@ -47,8 +45,6 @@ allprojects {
 //        maven { url "http://lib.gcssloop.com:8081/repository/gcssloop-central/" }
         mavenCentral()
 
-        maven { url 'https://maven.google.com' }  //添加此行
-
         maven { url 'https://www.jitpack.io' }
 
         jcenter()
@@ -63,7 +59,6 @@ allprojects {
         //butterKnife
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 
-        mavenCentral()
 
     }
 

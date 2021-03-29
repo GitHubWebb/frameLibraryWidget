@@ -177,8 +177,8 @@ dependencies {
     api 'com.contrarywind:Android-PickerView:4.1.9'
 
     // http://p.codekk.com/detail/Android/simplepeng/SpiderMan debug 模式崩溃日志抓取
-    api 'com.simple:spiderman:1.1.6'
-    debugImplementation('com.simple:spiderman:1.1.6') {
+    api 'com.simple:spiderman:1.1.7'
+    debugImplementation('com.simple:spiderman:1.1.7') {
         exclude group: "com.android.support"
     }
 

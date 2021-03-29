@@ -16,6 +16,7 @@ import com.framelibrary.bean.select.select_popdata.SelectPopDataBean;
 import com.framelibrary.config.DaemonThreadFactory;
 import com.framelibrary.config.FrameLibBaseApplication;
 import com.framelibrary.ui.activity.select_photo.MultiImageSelectorActivity;
+import com.framelibrary.util.EncryptUtils;
 import com.framelibrary.util.PermissionCheckUtils;
 import com.framelibrary.util.StringUtils;
 import com.framelibrary.util.UIUtils;
@@ -50,6 +51,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mActivity = this;
         tvTest = findViewById(R.id.et_test);
         TextView tvTest1 = findViewById(R.id.et_test1);
+
+        /**
+         * sdk加密密钥
+         */
+        String key = "/w0z~ E3Nwc*z#,=";
+//        key = "11111111111111111111111111111111";
+        /**
+         * sdk加密向量
+         */
+        String iv = "OlFqp0I@`[Z>BEf!";
+        String resAes = "9EgtWcCVtgBLX5lE0p8Zpy+zQMEh6qfUfMwikT5J9C0AGURSqcpcpPjFZYXK2jOPk1l7Ockq7vLWfQ80BV+Jl4gb+FanDcUPff3WYtd3WSA=";
+//        resAes = "393FBBBC2C774BE50A106A50393E623AC3790781D015BB854359587256581F6D";
+        EncryptUtils.decryptAESTest(resAes, key, iv);
 
         InputFilter[] inputFilters = {TextChangedListener.allowEnglishNumWrap, new EmojiFilter()};
         TextChangedListener.inputLimitSpaceWrap(18, inputFilters, (EditText) tvTest1);

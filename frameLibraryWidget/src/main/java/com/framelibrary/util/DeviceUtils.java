@@ -11,16 +11,11 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.NinePatchDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
@@ -37,7 +32,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -45,7 +39,6 @@ import androidx.core.content.ContextCompat;
 import com.framelibrary.config.FrameLibBaseApplication;
 import com.framelibrary.util.logutil.LoggerUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
@@ -112,85 +105,6 @@ public class DeviceUtils {
     public static boolean isPortrait() {
         int mOrientation = FrameLibBaseApplication.getInstance().getContext().getResources().getConfiguration().orientation;
         return mOrientation != Configuration.ORIENTATION_LANDSCAPE;
-    }
-
-    //Drawable --> Bitmap
-    public static Bitmap drawable2Bitmap(Drawable drawable) {
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable) drawable).getBitmap();
-        } else if (drawable instanceof NinePatchDrawable) {
-            Bitmap bitmap = Bitmap
-                    .createBitmap(
-                            drawable.getIntrinsicWidth(),
-                            drawable.getIntrinsicHeight(),
-                            drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-                                    : Bitmap.Config.RGB_565);
-            Canvas canvas = new Canvas(bitmap);
-            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-                    drawable.getIntrinsicHeight());
-            drawable.draw(canvas);
-            return bitmap;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * 重新设置Bitmap 大小 并放置在iv中
-     *
-     * @param urlBitmap
-     * @param width     固定高度 可以是屏幕高度
-     * @param imageView
-     */
-    public static Bitmap resetImageViewSize(Bitmap urlBitmap, float width, ImageView imageView) {
-        float urlWidth = urlBitmap.getWidth();
-        float urlHeight = urlBitmap.getHeight();
-        float deviceWidth = width;
-        float newBitMapHeight = deviceWidth / (urlWidth / urlHeight);
-        return resetImageViewSize(urlBitmap, deviceWidth, imageView, newBitMapHeight);
-    }
-
-    public static Bitmap resetImageViewSize(Bitmap urlBitmap, float deviceWidth, ImageView imageView, float newBitMapHeight) {
-        Bitmap updateSizeBitmap = setImgSize(urlBitmap, deviceWidth, newBitMapHeight);
-        imageView.setImageBitmap(updateSizeBitmap);
-        return updateSizeBitmap;
-    }
-
-    /**
-     * 根据尺寸重新设置Bitmap
-     *
-     * @param bm
-     * @param newWidth
-     * @param newHeight
-     * @return
-     */
-    public static Bitmap setImgSize(Bitmap bm, float newWidth, float newHeight) {
-        int w = bm.getWidth();
-        int h = bm.getHeight();
-        float sx = newWidth / w;//要强制转换，不转换我的在这总是死掉。
-        float sy = newHeight / h;
-        Matrix matrix = new Matrix();
-        matrix.postScale(sx, sy); // 长和宽放大缩小的比例
-        Bitmap resizeBmp = Bitmap.createBitmap(bm, 0, 0, w,
-                h, matrix, true);
-        return resizeBmp;
-    }
-
-    //Bitmap  转换byte[]
-    public static byte[] Bitmap2Bytes(Bitmap bm) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        return baos.toByteArray();
-
-    }
-
-    //byte[] 转换 Bitmap
-    public static Bitmap Bytes2Bimap(byte[] b) {
-        if (b.length != 0) {
-            return BitmapFactory.decodeByteArray(b, 0, b.length);
-        } else {
-            return null;
-        }
     }
 
     /**
@@ -411,16 +325,36 @@ public class DeviceUtils {
     /**
      * dp 转化为 px
      *
+     * @param dpValue
+     * @return
+     */
+    public static int dp2px(float dpValue) {
+        return dp2px(FrameLibBaseApplication.getInstance(), dpValue);
+    }
+
+    /**
+     * dp 转化为 px
+     *
      * @param context
      * @param dpValue
      * @return
      */
     public static int dp2px(Context context, float dpValue) {
-        if (context != null) {
-            final float scale = context.getResources().getDisplayMetrics().density;
-            return (int) (dpValue * scale + 0.5f);
-        }
-        return 0;
+        if (context == null)
+            return 0;
+
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    /**
+     * px 转化为 dp
+     *
+     * @param pxValue
+     * @return
+     */
+    public static int px2dp(float pxValue) {
+        return px2dp(FrameLibBaseApplication.getInstance(), pxValue);
     }
 
     /**
@@ -431,8 +365,21 @@ public class DeviceUtils {
      * @return
      */
     public static int px2dp(Context context, float pxValue) {
+        if (context == null)
+            return 0;
+
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
+    }
+
+    /**
+     * px转sp
+     *
+     * @param pxVal
+     * @return
+     */
+    public static float px2sp(float pxVal) {
+        return px2sp(FrameLibBaseApplication.getInstance(), pxVal);
     }
 
     /**
@@ -443,7 +390,18 @@ public class DeviceUtils {
      * @return
      */
     public static float px2sp(Context context, float pxVal) {
+        if (context == null) return 0;
         return (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
+    }
+
+    /**
+     * sp转px
+     *
+     * @param spVal
+     * @return
+     */
+    public static int sp2px(float spVal) {
+        return sp2px(FrameLibBaseApplication.getInstance(), spVal);
     }
 
     /**
@@ -454,6 +412,7 @@ public class DeviceUtils {
      * @return
      */
     public static int sp2px(Context context, float spVal) {
+        if (context == null) return 0;
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
                 spVal, context.getResources().getDisplayMetrics());
     }
