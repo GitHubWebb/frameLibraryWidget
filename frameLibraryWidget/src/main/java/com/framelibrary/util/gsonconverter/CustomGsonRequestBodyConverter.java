@@ -29,14 +29,20 @@ import okhttp3.RequestBody;
 import okio.Buffer;
 import retrofit2.Converter;
 
-final class CustomGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
+/**
+ * @Author:         wangweixu
+ * @Date:           2021/04/23 16:24:18
+ * @Description:    GsonRequest转换类
+ * @Version:        v1.0
+ */
+public class CustomGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
 
     private final Gson gson;
     private final TypeAdapter<T> adapter;
 
-    CustomGsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+    public CustomGsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }
