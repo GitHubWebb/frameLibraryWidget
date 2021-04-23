@@ -33,7 +33,14 @@ import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
-final class CustomGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
+
+/**
+ * @Author:         wangweixu
+ * @Date:           2021/04/23 16:24:18
+ * @Description:    GsonResponse转换类
+ * @Version:        v1.0
+ */
+public class CustomGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private static final Charset UTF_8 = Charset.forName("UTF-8");
     private final Gson gson;
     private final TypeAdapter<T> adapter;
