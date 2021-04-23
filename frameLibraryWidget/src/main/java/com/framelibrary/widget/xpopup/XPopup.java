@@ -30,6 +30,7 @@ public class XPopup {
     private static int primaryColor = Color.parseColor("#121212");
     private static int animationDuration = 350;
     private static int shadowBgColor = Color.parseColor("#6F000000");
+
     private XPopup() {
     }
 

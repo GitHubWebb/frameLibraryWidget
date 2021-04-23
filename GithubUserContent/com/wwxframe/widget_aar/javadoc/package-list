@@ -1,5 +1,6 @@
 com.framelibrary.adapter.photoselect
 com.framelibrary.bean
+com.framelibrary.bean.event
 com.framelibrary.bean.select.select_photo
 com.framelibrary.bean.select.select_popdata
 com.framelibrary.config

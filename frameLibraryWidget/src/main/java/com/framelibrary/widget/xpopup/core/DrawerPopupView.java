@@ -35,6 +35,7 @@ public abstract class DrawerPopupView extends BasePopupView {
     Rect shadowRect;
     int currColor = Color.TRANSPARENT;
     int defaultColor = Color.TRANSPARENT;
+
     public DrawerPopupView(@NonNull Context context) {
         super(context);
         drawerLayout = findViewById(R.id.drawerLayout);

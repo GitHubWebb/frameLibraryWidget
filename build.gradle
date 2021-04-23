@@ -6,11 +6,10 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        
+
         maven { url 'https://www.jitpack.io' }
 
         jcenter()
-
 
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }  //阿里镜像
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }  //阿里镜像
@@ -48,6 +47,24 @@ allprojects {
         maven { url 'https://www.jitpack.io' }
 
         jcenter()
+
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username '606403ac32feb31748ed9f68'
+                password ']-LFPl1PRjPT'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2090728-release-CFbIsz/'
+        }
+        maven {
+            credentials {
+                username '606403ac32feb31748ed9f68'
+                password ']-LFPl1PRjPT'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2090728-snapshot-PwCUCP/'
+        }
 
         maven { url "https://raw.githubusercontent.com/mvn-repo-aar/framework/master" }
 //        maven { url "https://github.com/mvn-repo-aar/framework" }

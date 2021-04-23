@@ -18,6 +18,7 @@ public class BlurAnimator extends PopupAnimator {
     public Bitmap decorBitmap;
     public boolean hasShadowBg = false;
     private FloatEvaluator evaluate = new FloatEvaluator();
+
     public BlurAnimator(View target) {
         super(target);
     }

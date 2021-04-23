@@ -58,44 +58,6 @@ public abstract class BasePopupView extends FrameLayout implements OnNavigationB
     private int touchSlop;
     private Handler handler = new Handler(Looper.getMainLooper());
     private boolean hasMoveUp = false;
-    private Runnable attachTask = new Runnable() {
-        @Override
-        public void run() {
-            // 1. add PopupView to its dialog.
-            attachDialog();
-            if (getContext() instanceof FragmentActivity) {
-                ((FragmentActivity) getContext()).getLifecycle().addObserver(BasePopupView.this);
-            }
-            //2. 注册对话框监听器
-            popupInfo.decorView = (ViewGroup) dialog.getWindow().getDecorView();
-            KeyboardUtils.registerSoftInputChangedListener(dialog.getWindow(), BasePopupView.this, new KeyboardUtils.OnSoftInputChangedListener() {
-                @Override
-                public void onSoftInputChanged(int height) {
-                    if (popupInfo != null && popupInfo.xPopupCallback != null) {
-                        popupInfo.xPopupCallback.onKeyBoardStateChanged(BasePopupView.this, height);
-                    }
-                    if (height == 0) { // 说明对话框隐藏
-                        XPopupUtils.moveDown(BasePopupView.this);
-                        hasMoveUp = false;
-                    } else {
-                        //when show keyboard, move up
-                        //全屏弹窗特殊处理，等show之后再移动
-                        if (BasePopupView.this instanceof FullScreenPopupView && popupStatus == PopupStatus.Showing) {
-                            return;
-                        }
-                        if (BasePopupView.this instanceof PartShadowPopupView && popupStatus == PopupStatus.Showing) {
-                            return;
-                        }
-                        XPopupUtils.moveUpToKeyboard(height, BasePopupView.this);
-                        hasMoveUp = true;
-                    }
-                }
-            });
-
-            // 3. do init，game start.
-            init();
-        }
-    };
     private Runnable doAfterShowTask = new Runnable() {
         @Override
         public void run() {
@@ -132,6 +94,44 @@ public abstract class BasePopupView extends FrameLayout implements OnNavigationB
             doShowAnimation();
 
             doAfterShow();
+        }
+    };
+    private Runnable attachTask = new Runnable() {
+        @Override
+        public void run() {
+            // 1. add PopupView to its dialog.
+            attachDialog();
+            if (getContext() instanceof FragmentActivity) {
+                ((FragmentActivity) getContext()).getLifecycle().addObserver(BasePopupView.this);
+            }
+            //2. 注册对话框监听器
+            popupInfo.decorView = (ViewGroup) dialog.getWindow().getDecorView();
+            KeyboardUtils.registerSoftInputChangedListener(dialog.getWindow(), BasePopupView.this, new KeyboardUtils.OnSoftInputChangedListener() {
+                @Override
+                public void onSoftInputChanged(int height) {
+                    if (popupInfo != null && popupInfo.xPopupCallback != null) {
+                        popupInfo.xPopupCallback.onKeyBoardStateChanged(BasePopupView.this, height);
+                    }
+                    if (height == 0) { // 说明对话框隐藏
+                        XPopupUtils.moveDown(BasePopupView.this);
+                        hasMoveUp = false;
+                    } else {
+                        //when show keyboard, move up
+                        //全屏弹窗特殊处理，等show之后再移动
+                        if (BasePopupView.this instanceof FullScreenPopupView && popupStatus == PopupStatus.Showing) {
+                            return;
+                        }
+                        if (BasePopupView.this instanceof PartShadowPopupView && popupStatus == PopupStatus.Showing) {
+                            return;
+                        }
+                        XPopupUtils.moveUpToKeyboard(height, BasePopupView.this);
+                        hasMoveUp = true;
+                    }
+                }
+            });
+
+            // 3. do init，game start.
+            init();
         }
     };
     private Runnable doAfterDismissTask = new Runnable() {

@@ -3,22 +3,38 @@ apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
 
 apply plugin: 'maven'
 
-
 apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.GitHubWebb'
 
 ext {
     //记住一下规则,等会导入时注意, 举例compile 'com.dz.bleota:bleota:1.0.0'
-
     GITHUB_REPO_PATH = "../GithubUserContent"
     PUBLISH_GROUP_ID = 'com.wwxframe'
     PUBLISH_ARTIFACT_ID = 'widget_aar'
-    PUBLISH_VERSION = '0.1.2'
+    PUBLISH_VERSION = '0.1.2-SNAPSHOT'
 }
 
 uploadArchives {
     repositories {
         mavenDeployer {
+            repository(url: 'https://packages.aliyun.com/maven/repository/2090728-release-CFbIsz/') {
+                authentication(
+                        userName: '606403ac32feb31748ed9f68',
+                        password: ']-LFPl1PRjPT'
+                )
+            }
+            snapshotRepository(url: 'https://packages.aliyun.com/maven/repository/2090728-snapshot-PwCUCP/') {
+                authentication(
+                        userName: '606403ac32feb31748ed9f68',
+                        password: ']-LFPl1PRjPT'
+                )
+            }
+            pom.version = project.PUBLISH_VERSION
+            pom.artifactId = project.PUBLISH_ARTIFACT_ID
+            pom.groupId = project.PUBLISH_GROUP_ID
+        }
+
+        /*mavenDeployer {
             //本地maven仓库地址,也可以使用远程maven仓库
             def deployPath = file(project.GITHUB_REPO_PATH)
             repository(url: "file://${deployPath.absolutePath}")
@@ -27,7 +43,7 @@ uploadArchives {
                 artifactId project.PUBLISH_ARTIFACT_ID
                 version project.PUBLISH_VERSION
             }
-        }
+        }*/
     }
 }
 
@@ -93,7 +109,7 @@ android {
         minSdkVersion 18
         targetSdkVersion 26
 
-        multiDexEnabled true
+//        multiDexEnabled true
 
         javaCompileOptions {
 
@@ -147,7 +163,25 @@ dependencies {
 
     api 'com.squareup.okhttp3:okhttp:3.9.1'
 
-    api 'com.google.code.gson:gson:2.8.0'
+    /*Network*/
+    api 'com.google.code.gson:gson:2.8.6'
+
+    api('com.squareup.retrofit2:retrofit:2.3.0') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
+
+    // 标准转换器,去掉 Retrofit上传参数时，String参数会多一对双引号
+    api 'com.squareup.retrofit2:converter-scalars:2.3.0'
+
+    api('com.squareup.retrofit2:converter-gson:2.3.0') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.google.code.gson', module: 'gson'
+
+    }
+    api('com.squareup.retrofit2:adapter-rxjava:2.3.0') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
+
     api 'com.github.bumptech.glide:glide:3.7.0'
 
     //SingleClick单击防重

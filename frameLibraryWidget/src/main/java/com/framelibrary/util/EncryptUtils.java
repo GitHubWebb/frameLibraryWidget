@@ -2,8 +2,6 @@ package com.framelibrary.util;
 
 import android.os.Build;
 
-import com.framelibrary.util.logutil.LoggerUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

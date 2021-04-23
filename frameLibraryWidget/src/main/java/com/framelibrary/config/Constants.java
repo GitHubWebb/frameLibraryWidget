@@ -9,12 +9,6 @@ import com.framelibrary.util.Constant;
  */
 public class Constants {
 
-    // 主工程编译的appName
-    public static String MAIN_PROJECT_BUILD_APP_NAME = "frameLibrary";
-    // 主工程编译的appIcon
-    public static int MAIN_PROJECT_BUILD_IC_LAUNCHER = R.drawable.icon_loading_dialog;
-
-    public static String jumpPackageName = "com.zqcm.ysp";
     public static final String CONNECT_MESSAGE_FAIL = "网络连接失败，请稍后重试";
     public static final String PARSE_DATA_EXCEPTION = "解析数据异常";
     public static final String DATA_EXCEPTION = "数据异常";
@@ -76,6 +70,11 @@ public class Constants {
     //JS native name
     public static final String js_native_name = "__zqcmyj_jsapi";
     public static final long PLAYTIMEMINITIME = 5000;////单位毫秒---上传小课播放时长的最小限时
+    // 主工程编译的appName
+    public static String MAIN_PROJECT_BUILD_APP_NAME = "frameLibrary";
+    // 主工程编译的appIcon
+    public static int MAIN_PROJECT_BUILD_IC_LAUNCHER = R.drawable.icon_loading_dialog;
+    public static String jumpPackageName = "com.zqcm.ysp";
     // com.kx.bapp 调起应用包名  type为类型 1 授权登陆    user_package_name:使用者包名
     public static String mJumpLisenceUri = "zqcm://" + jumpPackageName + "/sign?type=1&user_package_name=com.zqcm.yj";
 

@@ -138,6 +138,7 @@ public class PopupDrawerLayout extends FrameLayout {
     public PopupDrawerLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
+
     public PopupDrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         dragHelper = ViewDragHelper.create(this, callback);
