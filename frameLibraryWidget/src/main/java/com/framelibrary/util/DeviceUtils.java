@@ -253,35 +253,6 @@ public class DeviceUtils {
     }
 
     /**
-     * 获取application中指定的meta-data。本例中，调用方法时key就是UMENG_CHANNEL
-     *
-     * @return 如果没有获取成功(没有对应值 ， 或者异常)，则返回值为空
-     */
-    public static String getAppMetaData(Context ctx, String key) {
-        if (ctx == null || TextUtils.isEmpty(key)) {
-            return null;
-        }
-        String resultData = null;
-        try {
-            PackageManager packageManager = ctx.getPackageManager();
-            if (packageManager != null) {
-                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
-                if (applicationInfo != null) {
-                    if (applicationInfo.metaData != null) {
-                        Bundle bundle = applicationInfo.metaData;
-                        if (bundle != null) {
-                            resultData = StringUtils.isBlank(bundle.get(key).toString()) ? null : bundle.get(key).toString();
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return resultData;
-    }
-
-    /**
      * 将传入的数字转换为百分比
      *
      * @param totalNumber
@@ -609,22 +580,67 @@ public class DeviceUtils {
         return file;
     }
 
+
     /**
-     * 获取AndroidManifest.xml里 的值
+     * 获取application中指定的meta-data。本例中，调用方法时key就是UMENG_CHANNEL
      *
-     * @param context
-     * @param name
-     * @return
+     * @return 如果没有获取成功(没有对应值 ， 或者异常)，则返回值为空
      */
-    public static String getMetaData(Context context, String name) {
-        String value = null;
+    public static String getMetaData(Context ctx, String key) {
+        if (ctx == null || TextUtils.isEmpty(key)) {
+            return null;
+        }
+        String resultData = null;
         try {
-            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            value = appInfo.metaData.getString(name);
-        } catch (PackageManager.NameNotFoundException e) {
+            PackageManager packageManager = ctx.getPackageManager();
+            if (packageManager == null)
+                return null;
+
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
+            if (applicationInfo == null)
+                return null;
+
+            if (applicationInfo.metaData == null)
+                return null;
+
+            Bundle bundle = applicationInfo.metaData;
+
+            resultData = StringUtils.isBlank(bundle.get(key).toString()) ? null : bundle.get(key).toString();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return value;
+        return resultData;
+    }
+
+    /**
+     * 设置application中指定的meta-data。本例中，调用方法时key就是UMENG_CHANNEL
+     *
+     * @return 如果没有获取成功(没有对应值 ， 或者异常)，则返回值为空
+     */
+    public static void setMetaData(Context ctx, String key, String value) {
+        if (ctx == null || TextUtils.isEmpty(key)) {
+            return;
+        }
+
+        try {
+            PackageManager packageManager = ctx.getPackageManager();
+            if (packageManager == null)
+                return;
+
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
+            if (applicationInfo == null)
+                return;
+
+            if (applicationInfo.metaData == null)
+                return;
+
+            Bundle bundle = applicationInfo.metaData;
+
+            bundle.putString(key, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -634,18 +650,9 @@ public class DeviceUtils {
      * @return
      */
     public static void setMetaData(Context context, Map<String, Object> appMetaMap) {
-        ApplicationInfo appi;
-        try {
-            appi = context.getPackageManager().getApplicationInfo(
-                    context.getPackageName(), PackageManager.GET_META_DATA);
-
-            Iterator<Map.Entry<String, Object>> iterator = appMetaMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                appi.metaData.putString(String.valueOf(iterator.next()), appMetaMap.get(iterator.next()).toString());
-            }
-
-        } catch (PackageManager.NameNotFoundException e1) {
-            e1.printStackTrace();
+        Iterator<Map.Entry<String, Object>> iterator = appMetaMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            setMetaData(context, String.valueOf(iterator.next()), appMetaMap.get(iterator.next()).toString());
         }
 
     }
