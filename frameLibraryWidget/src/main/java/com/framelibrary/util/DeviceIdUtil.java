@@ -9,9 +9,14 @@ import android.telephony.TelephonyManager;
 
 import androidx.core.app.ActivityCompat;
 
+import com.framelibrary.util.gsonconverter.GsonUtil;
+import com.github.gzuliyujiang.oaid.DeviceID;
+
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -21,6 +26,19 @@ import java.util.UUID;
  * @Date 2021年03月10日15:47:27
  */
 public class DeviceIdUtil {
+
+    /**
+     * 获得设备硬件标识
+     *
+     * @return 设备硬件标识
+     */
+    public static String getDeviceId() {
+        Map<String, String> deviceMap = new HashMap<>();
+        deviceMap.put("clientId", DeviceID.getClientId());
+        deviceMap.put("clientIdMD5", DeviceID.getClientIdMD5());
+        deviceMap.put("clientIdSHA1", DeviceID.getClientIdSHA1());
+        return GsonUtil.getGson().toJson(deviceMap);
+    }
 
     /**
      * 获得设备硬件标识

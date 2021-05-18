@@ -17,6 +17,7 @@ import com.framelibrary.util.DateUtils;
 import com.framelibrary.util.logutil.AppDiskLogStrategy;
 import com.framelibrary.util.share.DeviceDataShare;
 import com.github.anzewei.parallaxbacklayout.ParallaxHelper;
+import com.github.gzuliyujiang.oaid.DeviceID;
 import com.hjq.toast.ToastUtils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.CsvFormatStrategy;
@@ -142,6 +143,15 @@ public class FrameLibBaseApplication extends MultiDexApplication {
 
         // 每次重新启动都删除SP中已缓存的SelectPopData选中数据
         DeviceDataShare.getInstance().removeBySelectPopDataAll();
+
+        // 在 Application#onCreate 里调用预取。注意：如果不需要调用`getClientId()`及`getOAID()`，请不要调用这个方法
+        DeviceID.register(instance);
+        // 在需要用到设备标识的地方获取
+        // 客户端标识原始值：DeviceID.getClientId()
+        // 客户端标识统一格式为MD5：DeviceID.getClientIdMD5()
+        // 客户端标识统一格式为SHA1：DeviceID.getClientIdSHA1()
+        // 开放匿名设备标识原始值：DeviceID.getOAID()
+//        tvDeviceIdResult.setText(String.format("ClientID: %s", DeviceID.getClientIdMD5()));
     }
 
     public DisplayMetrics getDisplayMetrics() {
@@ -150,7 +160,7 @@ public class FrameLibBaseApplication extends MultiDexApplication {
 
     public SharedPreferences getSharedPreferences() {
         if (sharedPreferences == null) {
-            sharedPreferences = getSharedPreferences(BuildConfig.APPLICATION_ID + "unlock_date", MODE_MULTI_PROCESS);
+            sharedPreferences = getSharedPreferences(instance.getPackageName() + "unlock_date", MODE_MULTI_PROCESS);
         }
         return sharedPreferences;
     }

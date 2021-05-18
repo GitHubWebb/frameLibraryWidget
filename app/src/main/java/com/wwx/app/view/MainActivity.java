@@ -16,6 +16,7 @@ import com.framelibrary.bean.select.select_popdata.SelectPopDataBean;
 import com.framelibrary.config.DaemonThreadFactory;
 import com.framelibrary.config.FrameLibBaseApplication;
 import com.framelibrary.ui.activity.select_photo.MultiImageSelectorActivity;
+import com.framelibrary.util.DeviceIdUtil;
 import com.framelibrary.util.EncryptUtils;
 import com.framelibrary.util.PermissionCheckUtils;
 import com.framelibrary.util.StringUtils;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvTest = findViewById(R.id.et_test);
         TextView tvTest1 = findViewById(R.id.et_test1);
 
+        LoggerUtils.I(DeviceIdUtil.getDeviceId());
         /**
          * sdk加密密钥
          */

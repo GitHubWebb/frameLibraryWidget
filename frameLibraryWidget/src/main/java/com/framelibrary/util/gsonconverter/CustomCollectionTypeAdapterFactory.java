@@ -90,7 +90,7 @@ public final class CustomCollectionTypeAdapterFactory implements TypeAdapterFact
         ObjectConstructor<T> constructor = constructorConstructor.get(typeToken);
 
         @SuppressWarnings({"unchecked", "rawtypes"}) // create() doesn't define a type parameter
-                TypeAdapter<T> result = new Adapter(gson, elementType, elementTypeAdapter, constructor);
+        TypeAdapter<T> result = new Adapter(gson, elementType, elementTypeAdapter, constructor);
         return result;
     }
 

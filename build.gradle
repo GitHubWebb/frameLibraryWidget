@@ -11,14 +11,14 @@ buildscript {
 
         jcenter()
 
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }  //阿里镜像
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }  //阿里镜像
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }  //阿里镜像
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }  //阿里镜像
 
         //butterKnife
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         classpath 'cn.leo.plugin:magic-plugin:1.0.0' //java 用这个
@@ -30,7 +30,7 @@ buildscript {
         classpath 'com.alibaba:arouter-register:1.0.2'
 
         //配置aar到jitpack.io
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        // classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

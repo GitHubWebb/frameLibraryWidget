@@ -16,7 +16,6 @@ import android.text.TextUtils;
 
 import androidx.annotation.RequiresApi;
 
-import com.framelibrary.BuildConfig;
 import com.framelibrary.util.logutil.LoggerUtils;
 
 import java.lang.reflect.Field;
@@ -64,7 +63,7 @@ public class NotificationsUtils {
     }
 
 
-    //    以下代码可以跳转到应用详情，可以通过应用详情跳转到权限界面(6.0系统测试可用)
+    // 以下代码可以跳转到应用详情，可以通过应用详情跳转到权限界面(6.0系统测试可用)
     public static void getAppDetailSettingIntent(Context context) {
         String sdk = android.os.Build.VERSION.SDK; // SDK号
 
@@ -140,9 +139,12 @@ public class NotificationsUtils {
      */
     private static void gotoMeizuPermission(Context context) {
         try {
+            if (context == null)
+                return;
+
             Intent intent = new Intent("com.meizu.safe.security.SHOW_APPSEC");
             intent.addCategory(Intent.CATEGORY_DEFAULT);
-            intent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+            intent.putExtra("packageName", context.getPackageName());
             context.startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();

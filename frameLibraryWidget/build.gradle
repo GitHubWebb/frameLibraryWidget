@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
 
+/*
 apply plugin: 'maven'
 
 apply plugin: 'com.github.dcendents.android-maven'
@@ -34,7 +35,7 @@ uploadArchives {
             pom.groupId = project.PUBLISH_GROUP_ID
         }
 
-        /*mavenDeployer {
+        *//*mavenDeployer {
             //本地maven仓库地址,也可以使用远程maven仓库
             def deployPath = file(project.GITHUB_REPO_PATH)
             repository(url: "file://${deployPath.absolutePath}")
@@ -43,9 +44,11 @@ uploadArchives {
                 artifactId project.PUBLISH_ARTIFACT_ID
                 version project.PUBLISH_VERSION
             }
-        }*/
+        }*//*
     }
 }
+*/
+
 
 /*// 源代码一起打包
 task androidSourcesJar(type: Jar) {
@@ -86,7 +89,7 @@ artifacts {
 def SupportVersion = '28.0.0'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     buildToolsVersion = '26.0.2'
 
     //忽略图片警告
@@ -107,7 +110,7 @@ android {
 
     defaultConfig {
         minSdkVersion 18
-        targetSdkVersion 26
+        targetSdkVersion 30
 
 //        multiDexEnabled true
 
@@ -204,7 +207,7 @@ dependencies {
      * 高效的弹窗
      * @link "https://github.com/li-xiaojun/XPopup"
      */
-    api 'com.lxj:xpopup:1.7.11'
+    api 'com.github.li-xiaojun:XPopup:2.3.2'
 
     // Android-PickerView是一款仿iOS的PickerView控件，带有3D圆弧效果，并封装了时间选择和选项选择这两种选择器，
     // @Link "https://github.com/Bigkoo/Android-PickerView/wiki/%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%884.x%E7%89%88%EF%BC%89"
@@ -217,5 +220,14 @@ dependencies {
     }
 
     implementation 'com.orhanobut:logger:2.2.0'
+
+    /**
+     * @see link "https://hub.fastgit.org/gzu-liyujiang/Android_CN_OAID"
+     * 安卓设备唯一标识解决方案，可作为移动安全联盟统一 SDK （miit_mdid_xxx.aar）的替代方案。
+     * 本项目提供了国内各大手机厂商获取 OAID（开放匿名设备标识）及海外手机平台获取 AAID （安卓广告标识）的便携接口，
+     * 另外也提供了 IMEI/MEID、AndroidID、WidevineID、PseudoID、GUID 等常见的设备标识的获取方法。
+     */
+    implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.1.1'
+
 
 }

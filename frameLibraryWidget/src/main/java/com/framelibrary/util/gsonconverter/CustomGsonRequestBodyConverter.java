@@ -30,10 +30,10 @@ import okio.Buffer;
 import retrofit2.Converter;
 
 /**
- * @Author:         wangweixu
- * @Date:           2021/04/23 16:24:18
- * @Description:    GsonRequest转换类
- * @Version:        v1.0
+ * @Author: wangweixu
+ * @Date: 2021/04/23 16:24:18
+ * @Description: GsonRequest转换类
+ * @Version: v1.0
  */
 public class CustomGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");

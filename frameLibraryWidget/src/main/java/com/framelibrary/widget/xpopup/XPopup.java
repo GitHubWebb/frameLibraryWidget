@@ -17,9 +17,9 @@ import com.framelibrary.widget.xpopup.impl.LoadingPopupView;
 import com.framelibrary.widget.xpopup.interfaces.OnCancelListener;
 import com.framelibrary.widget.xpopup.interfaces.OnConfirmListener;
 import com.framelibrary.widget.xpopup.interfaces.XPopupCallback;
-import com.lxj.xpermission.XPermission;
 import com.lxj.xpopup.enums.PopupPosition;
 import com.lxj.xpopup.enums.PopupType;
+import com.lxj.xpopup.util.XPermission;
 
 
 public class XPopup {

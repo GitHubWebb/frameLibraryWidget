@@ -5,11 +5,11 @@ name: Github Actions AndroidX
 
 on:
   push:
-    branches: [  master-al-open-androidx  ]
+    branches: [ master-al-open-androidx ]
     tags:
       - 'v*'
   pull_request:
-    branches: [  master-al-open-androidx  ]
+    branches: [ master-al-open-androidx ]
 jobs:
   AndroidXBuild:
     runs-on: ubuntu-latest
@@ -18,7 +18,7 @@ jobs:
       #  with:
       #    token: ${{ secrets.GITHUB_TOKEN }}
       - name: current release suffix
-        run:  echo "releaseSuffix=-androidx" >> $GITHUB_ENV
+        run: echo "releaseSuffix=-androidx" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
         with:
