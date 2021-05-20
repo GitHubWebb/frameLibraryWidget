@@ -1,6 +1,5 @@
 package com.framelibrary.ui.activity.select_photo;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -27,10 +26,9 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.ListPopupWindow;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
@@ -44,6 +42,8 @@ import com.framelibrary.adapter.photoselect.FolderAdapter;
 import com.framelibrary.adapter.photoselect.ImageGridAdapter;
 import com.framelibrary.bean.select.select_photo.Folder;
 import com.framelibrary.bean.select.select_photo.Image;
+import com.framelibrary.config.Constants;
+import com.framelibrary.util.PermissionCheckUtils;
 import com.framelibrary.util.select.selectphoto.FileUtils;
 import com.framelibrary.util.select.selectphoto.TimeUtils;
 
@@ -51,12 +51,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.yokeyword.fragmentation.SupportFragment;
+
 /**
  * 图片选择Fragment
  * Created by Nereo on 2015/4/7.
  */
-public class MultiImageSelectorFragment extends Fragment {
-
+public class MultiImageSelectorFragment extends SupportFragment {
+    private Fragment fragment = null;
     /**
      * 最大图片选择次数，int类型
      */
@@ -205,6 +207,16 @@ public class MultiImageSelectorFragment extends Fragment {
         }
     };
 
+    public static MultiImageSelectorFragment newInstance(Bundle args) {
+        if (args == null) {
+            args = new Bundle();
+        }
+
+        MultiImageSelectorFragment fragment = new MultiImageSelectorFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -223,6 +235,8 @@ public class MultiImageSelectorFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        fragment = this;
 
         // 选择图片数量
         mDesireImageCount = getArguments().getInt(EXTRA_SELECT_COUNT);
@@ -347,14 +361,17 @@ public class MultiImageSelectorFragment extends Fragment {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int checkCallPhonePermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+                /*int checkCallPhonePermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
                 if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 22);
                     return;
-                }
+                }*/
+
                 if (mImageAdapter.isShowCamera()) {
                     // 如果显示照相机，则第一个Grid显示为照相机，处理特殊逻辑
                     if (i == 0) {
+                        if (!PermissionCheckUtils.openCameraPermission(fragment))
+                            return;
                         showCameraAction();
                     } else {
                         // 正常操作
@@ -434,6 +451,13 @@ public class MultiImageSelectorFragment extends Fragment {
         // 首次加载所有图片
         //new LoadImageTask().execute();
         getActivity().getSupportLoaderManager().initLoader(LOADER_ALL, null, mLoaderCallback);
+
+        // 检查存储权限
+        if (!PermissionCheckUtils.checkWritePermission(getActivity()) ||
+                !PermissionCheckUtils.checkReadPermission(getActivity()))
+            // 权限不存在则获取文件读写权限
+            PermissionCheckUtils.openReadWritePermission(fragment);
+
     }
 
     @Override
@@ -580,6 +604,29 @@ public class MultiImageSelectorFragment extends Fragment {
                     mCallback.onSingleImageSelected(image.path);
                 }
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PermissionCheckUtils.REQUEST_CODE_CAMERA_PERMISSION:
+                if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    PermissionCheckUtils.startAppDetailSettingIntent(getActivity(), getString(R.string.permission_open_write_tip_msg, Constants.MAIN_PROJECT_BUILD_APP_NAME));
+                } else {
+                    showCameraAction();
+                }
+                break;
+            case PermissionCheckUtils.REQUEST_CODE_READ_WRITE_FILE_PERMISSION:
+                if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    PermissionCheckUtils.startAppDetailSettingIntent(getActivity(), getString(R.string.permission_open_write_tip_msg, Constants.MAIN_PROJECT_BUILD_APP_NAME));
+                } else {
+                    getActivity().getSupportLoaderManager().restartLoader(LOADER_ALL, null, mLoaderCallback);
+
+                }
+                break;
         }
     }
 

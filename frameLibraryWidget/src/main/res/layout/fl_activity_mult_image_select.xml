@@ -12,7 +12,7 @@
         android:layout_height="?android:attr/actionBarSize" />
 
     <FrameLayout
-        android:id="@+id/image_grid"
+        android:id="@+id/fl_image_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#181819" />

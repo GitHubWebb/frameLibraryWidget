@@ -8,9 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.framelibrary.R;
 import com.framelibrary.bean.select.select_photo.Image;
+import com.framelibrary.util.GlideUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -248,9 +248,13 @@ public class ImageGridAdapter extends BaseAdapter {
 
             if (mItemSize > 0) {
                 // 显示图片
-                Glide.with(mContext).load(imageFile)
+                GlideUtils
+                        .loadImageViewLodingRadius(
+                                mContext, data.path,
+                                R.mipmap.fl_default_error, 2, image);
+                /*Glide.with(mContext).load(imageFile)
 //                        .apply(MyApplication.getInstance().getOptions().override(mItemSize, mItemSize))
-                        .into(image);
+                        .into(image);*/
             }
         }
     }

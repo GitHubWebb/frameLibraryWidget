@@ -24,10 +24,14 @@
 
     <!--android:icon="@mipmap/ic_launcher"-->
 
-    <application android:allowBackup="false">
+    <application
+        android:allowBackup="false"
+        android:requestLegacyExternalStorage="true"
+        >
         <activity
             android:name=".ui.activity.select_photo.MultiImageSelectorActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <provider
             android:name=".config.FrameFileProvider"
             android:authorities="${applicationId}.fileprovider"

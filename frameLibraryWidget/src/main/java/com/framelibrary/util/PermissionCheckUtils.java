@@ -8,12 +8,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
+import com.framelibrary.util.dialog.DialogUtils;
+import com.framelibrary.util.logutil.LoggerUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,18 +38,22 @@ public class PermissionCheckUtils {
      */
     public static final int REQUEST_CODE_READ_FILE_PERMISSION = 101;
     /**
+     * 请求文件读写权限code
+     */
+    public static final int REQUEST_CODE_READ_WRITE_FILE_PERMISSION = 103;
+    /**
      * 请求拍照权限code
      */
-    public static final int REQUEST_CODE_CAMERA_PERMISSION = 102;
+    public static final int REQUEST_CODE_CAMERA_PERMISSION = 104;
     /**
      * 请求扫描二维码权限code
      */
-    public static final int REQUEST_CODE_SCAE_PERMISSION = 103;
+    public static final int REQUEST_CODE_SCAE_PERMISSION = 105;
 
     /**
      * 请求视频权限code
      */
-    public static final int REQUEST_CODE_VIDEO_PERMISSION = 104;
+    public static final int REQUEST_CODE_VIDEO_PERMISSION = 106;
 
     /**
      * 打开支付宝权限code
@@ -57,6 +66,11 @@ public class PermissionCheckUtils {
 
     private static String[] PERMISSION_READ_FILE = {
             Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+
+    private static String[] PERMISSIONS_READ_WRITE_FILE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
     };
 
     private static String[] PERMISSIONS_SCAN_QCODE = {
@@ -106,28 +120,46 @@ public class PermissionCheckUtils {
      * 跳转到权限设置界面
      */
     public static void startAppDetailSettingIntent(Context context) {
-        Toast.makeText(context, "应用缺少必要的权限！请点击\"权限\"，打开所需要的权限。", Toast.LENGTH_SHORT).show();
-        // viVo 点击设置图标>加速白名单>我的app
-        //      点击软件管理>软件管理权限>软件>我的app>信任该软件
-        Intent appIntent = context.getPackageManager().getLaunchIntentForPackage("com.iqoo.secure");
-        if (appIntent != null) {
-            context.startActivity(appIntent);
-            return;
-        }
+//        Toast.makeText(context, "应用缺少必要的权限！请点击\"权限\"，打开所需要的权限。", Toast.LENGTH_LONG).show();
+        new Handler(Looper.myLooper())
+                .postDelayed(
+                        new Runnable() {
+                            @Override
+                            public void run() {
 
-        // oppo 点击设置图标>应用权限管理>按应用程序管理>我的app>我信任该应用
-        //      点击权限隐私>自启动管理>我的app
-        appIntent = context.getPackageManager().getLaunchIntentForPackage("com.oppo.safe");
-        if (appIntent != null) {
-            context.startActivity(appIntent);
-            return;
-        }
+                                // viVo 点击设置图标>加速白名单>我的app
+                                //      点击软件管理>软件管理权限>软件>我的app>信任该软件
+                                Intent appIntent = context.getPackageManager().getLaunchIntentForPackage("com.iqoo.secure");
+                                if (appIntent != null) {
+                                    context.startActivity(appIntent);
+                                    return;
+                                }
 
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
-        intent.setData(Uri.fromParts("package", context.getPackageName(), null));
-        context.startActivity(intent);
+                                // oppo 点击设置图标>应用权限管理>按应用程序管理>我的app>我信任该应用
+                                //      点击权限隐私>自启动管理>我的app
+                                appIntent = context.getPackageManager().getLaunchIntentForPackage("com.oppo.safe");
+                                if (appIntent != null) {
+                                    context.startActivity(appIntent);
+                                    return;
+                                }
+
+                                Intent intent = new Intent();
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                                intent.setData(Uri.fromParts("package", context.getPackageName(), null));
+                                context.startActivity(intent);
+                            }
+                        }, 300
+                );
+    }
+
+    /**
+     * 跳转到权限设置界面
+     */
+    public static void startAppDetailSettingIntent(Context context, String tipMsg) {
+        LoggerUtils.I(tipMsg);
+        DialogUtils.showPermissionDialog(context, tipMsg);
+
     }
 
     //检测是否有支付宝
@@ -169,6 +201,14 @@ public class PermissionCheckUtils {
         return activity != null && !activity.isFinishing() && (!isNeedCheckPermission() || checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE, PermissionCheckUtils.PERMISSION_READ_FILE, REQUEST_CODE_READ_FILE_PERMISSION));
     }
 
+    public static boolean openReadWritePermission(Activity activity) {
+        return activity != null && !activity.isFinishing() && (!isNeedCheckPermission() || checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, PermissionCheckUtils.PERMISSIONS_READ_WRITE_FILE, REQUEST_CODE_READ_WRITE_FILE_PERMISSION));
+    }
+
+    public static boolean openReadWritePermission(Fragment fragment) {
+        return fragment != null && !fragment.isDetached() && (!isNeedCheckPermission() || checkSelfPermission(fragment, Manifest.permission.WRITE_EXTERNAL_STORAGE, PermissionCheckUtils.PERMISSIONS_READ_WRITE_FILE, REQUEST_CODE_READ_WRITE_FILE_PERMISSION));
+    }
+
     /**
      * 设置屏幕亮度权限
      *
@@ -193,6 +233,10 @@ public class PermissionCheckUtils {
 
     public static boolean openCameraPermission(Activity activity) {
         return activity != null && !activity.isFinishing() && (!isNeedCheckPermission() || checkSelfPermission(activity, Manifest.permission.CAMERA, PermissionCheckUtils.PERMISSIONS_CAMERA, REQUEST_CODE_CAMERA_PERMISSION));
+    }
+
+    public static boolean openCameraPermission(Fragment fragment) {
+        return fragment != null && !fragment.isDetached() && (!isNeedCheckPermission() || checkSelfPermission(fragment, Manifest.permission.CAMERA, PermissionCheckUtils.PERMISSIONS_CAMERA, REQUEST_CODE_CAMERA_PERMISSION));
     }
 
     public static boolean checkScanPermission(Activity activity) {
@@ -240,6 +284,15 @@ public class PermissionCheckUtils {
         int checkCallPhonePermission = ContextCompat.checkSelfPermission(activity, permission);
         if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, permissionGroup, requestCode);
+            return false;
+        } else
+            return true;
+    }
+
+    private static boolean checkSelfPermission(Fragment fragment, String permission, String[] permissionGroup, int requestCode) {
+        int checkCallPhonePermission = ContextCompat.checkSelfPermission(fragment.getContext(), permission);
+        if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+            fragment.requestPermissions(permissionGroup, requestCode);
             return false;
         } else
             return true;

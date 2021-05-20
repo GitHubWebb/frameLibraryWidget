@@ -5,21 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-
 import com.framelibrary.R;
-import com.framelibrary.util.PermissionCheckUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * 多图选择
  * Created by Nereo on 2015/4/7.
  */
-public class MultiImageSelectorActivity extends FragmentActivity implements MultiImageSelectorFragment.Callback {
+public class MultiImageSelectorActivity extends SupportActivity implements MultiImageSelectorFragment.Callback {
 
     /**
      * 最大图片选择次数，int类型，默认9
@@ -60,7 +57,7 @@ public class MultiImageSelectorActivity extends FragmentActivity implements Mult
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fl_activity_mult_image_select);
-        PermissionCheckUtils.openCameraPermission(this);
+
         Intent intent = getIntent();
         mDefaultCount = intent.getIntExtra(EXTRA_SELECT_COUNT, 9);
         int mode = intent.getIntExtra(EXTRA_SELECT_MODE, MODE_MULTI);
@@ -75,9 +72,14 @@ public class MultiImageSelectorActivity extends FragmentActivity implements Mult
         bundle.putBoolean(MultiImageSelectorFragment.EXTRA_SHOW_CAMERA, isShow);
         bundle.putStringArrayList(MultiImageSelectorFragment.EXTRA_DEFAULT_SELECTED_LIST, resultList);
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.image_grid, Fragment.instantiate(this, MultiImageSelectorFragment.class.getName(), bundle))
-                .commit();
+        /*FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fl_image_grid, Fragment.instantiate(this, MultiImageSelectorFragment.class.getName(), bundle));
+        fragmentTransaction.commit();*/
+
+        if (findFragment(MultiImageSelectorFragment.class) == null) {
+            loadRootFragment(R.id.fl_image_grid, MultiImageSelectorFragment.newInstance(bundle));  // 加载根Fragment
+        }
 
         // 返回按钮
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
@@ -158,11 +160,6 @@ public class MultiImageSelectorActivity extends FragmentActivity implements Mult
             setResult(RESULT_OK, data);
             finish();
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

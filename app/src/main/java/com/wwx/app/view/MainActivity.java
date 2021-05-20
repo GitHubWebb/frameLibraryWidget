@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        TextChangedListener.specialStringExcludePointsWatcher(20, (EditText) tvTest1);
 
         findViewById(R.id.btn_get_img_mime_type).setOnClickListener(this);
+        findViewById(R.id.btn_start_select_image).setOnClickListener(this);
         findViewById(R.id.btn_open_spliteditactivity).setOnClickListener(this);
         findViewById(R.id.btn_open_dialog_message).setOnClickListener(this);
         findViewById(R.id.btn_put_sp_test).setOnClickListener(this);
@@ -241,12 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //打开选择图片
     public void startSelectImage() {
-        if (!PermissionCheckUtils.checkCameraPermission(this)) {
-            return;
-        }
-        if (!PermissionCheckUtils.checkReadPermission(this)) {
-            return;
-        }
+
         Intent intent = goToMultiImageSelectedIntent();
         startActivityForResult(intent, SELECT_PHOTO_FROM_SDCARD);
     }
@@ -269,6 +265,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_get_img_mime_type:
                 FileUtils.getMimeType(new File("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511198824138&di=cec97b6363a1bce28b8499a31b78df83&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F3e282f8762696b0bbb3ed16a5dc193c718e5aff9.jpg"));
 
+                break;
+            case R.id.btn_start_select_image:
+                startSelectImage();
                 break;
             case R.id.btn_open_spliteditactivity:
                 DialogDoNet.startLoadAndCancelable(mActivity, "正在加载中", false);

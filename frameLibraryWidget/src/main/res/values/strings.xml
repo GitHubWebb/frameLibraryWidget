@@ -1,7 +1,7 @@
 <resources>
 
     <string name="permission_open_tip_title">权限开启提示</string>
-    <string name="permission_open_write_tip_msg">请进入系统设置开启追追的存储权限</string>
+    <string name="permission_open_write_tip_msg">请进入应用设置开启%s的相机和存储权限</string>
     <string name="text_know">知道了</string>
     <string name="text_submit">提交</string>
     <string name="folder_all">所有照片</string>

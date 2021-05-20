@@ -27,6 +27,14 @@
         android:text="获取文件mimeType" />
 
     <Button
+        android:id="@+id/btn_start_select_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="点击开始选择图片" />
+
+    <Button
         android:id="@+id/btn_show_imgs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -221,6 +221,17 @@ dependencies {
 
     implementation 'com.orhanobut:logger:2.2.0'
 
+    // JantHsueh 维护自 YoKeyword 项目地址
+    // @link https://github.com/JantHsueh/Fragmentation/blob/androidx/README_CN.md
+    // @link https://github.com/YoKeyword/Fragmentation/blob/master/README_CN.md
+    // 以下为androidx的使用方式，如果使用的是android.support包，fragmentationx -> fragmentation 即可
+    api 'me.xuexuan:fragmentationx:1.0.6'
+    // swipeback基于fragmentation, 如果是自定制SupportActivity/Fragment，则参照SwipeBackActivity/Fragment实现即可
+    api 'me.xuexuan:fragmentationx-swipeback:1.0.6'
+    // Activity作用域的EventBus，通信更安全
+    api 'me.yokeyword:eventbus-activity-scope:1.1.0'
+    api 'org.greenrobot:eventbus:3.1.1'
+
     /**
      * @see link "https://hub.fastgit.org/gzu-liyujiang/Android_CN_OAID"
      * 安卓设备唯一标识解决方案，可作为移动安全联盟统一 SDK （miit_mdid_xxx.aar）的替代方案。
