@@ -1,5 +1,6 @@
 package com.framelibrary.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -179,6 +180,31 @@ public class DeviceUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * <pre>
+     *      author:         wangweixu
+     *      date:           2021/05/25 15:42:33
+     *      description:    利用反射获取Application
+     *      version:        v1.0
+     * </pre>
+     */
+    public static Application getApplicationByReflect() {
+        try {
+            @SuppressLint("PrivateApi")
+            Class<?> activityThread = Class.forName("android.app.ActivityThread");
+            Object thread = activityThread.getMethod("currentActivityThread").invoke(null);
+            Object app = activityThread.getMethod("getApplication").invoke(thread);
+            if (app == null) {
+                throw new NullPointerException("you should init first");
+            }
+            return (Application) app;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new NullPointerException("you should init first");
     }
 
     /**

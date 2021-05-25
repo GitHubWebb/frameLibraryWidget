@@ -26,15 +26,14 @@
 
     <application
         android:allowBackup="false"
-        android:requestLegacyExternalStorage="true"
-        >
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".ui.activity.select_photo.MultiImageSelectorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <provider
-            android:name=".config.FrameFileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:name=".config.FrameLibFileProvider"
+            android:authorities="${applicationId}.framelib.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

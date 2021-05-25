@@ -1,8 +1,8 @@
 package com.framelibrary.util.share;
 
+import android.app.Application;
 import android.content.SharedPreferences;
 
-import com.framelibrary.config.FrameLibBaseApplication;
 import com.framelibrary.util.StringUtils;
 import com.framelibrary.util.logutil.LoggerUtils;
 
@@ -25,24 +25,38 @@ import java.util.Set;
  * @Date 😪2017年12月16日14:58:41
  */
 public class DeviceDataShare {
-    private static final String TAG = "DeviceDataShare";
-    private static DeviceDataShare instance;
-    private SharedPreferences sharedPreferences;
-    private String allUserAvatarUrl;
+    private Application instance;
+    // 使用volatile修饰 目的是为了在JVM层编译顺序一致
+    private static volatile DeviceDataShare deviceDataShare;
 
-    private static void init() {
-        instance = new DeviceDataShare();
+    private SharedPreferences sharedPreferences;
+
+    //私有化构造器
+    private DeviceDataShare() {
     }
 
-    public synchronized static DeviceDataShare getInstance() {
-        if (instance == null)
-            init();
-        return instance;
+    public static DeviceDataShare getInstance() {
+        //第一次校验
+        if (deviceDataShare == null) {
+            synchronized (DeviceDataShare.class) {
+
+                //第二次校验
+                if (deviceDataShare == null) {
+                    deviceDataShare = new DeviceDataShare();
+                }
+            }
+        }
+        return deviceDataShare;
+    }
+
+    public void init(Application appContext) {
+        this.instance = appContext;
     }
 
     private SharedPreferences getSharedPreferences() {
-        if (sharedPreferences == null)
-            sharedPreferences = FrameLibBaseApplication.getInstance().getSharedPreferences();
+        if (sharedPreferences == null) {
+            sharedPreferences = instance.getSharedPreferences(instance.getPackageName() + "unlock_date", instance.MODE_MULTI_PROCESS);
+        }
         return sharedPreferences;
     }
 

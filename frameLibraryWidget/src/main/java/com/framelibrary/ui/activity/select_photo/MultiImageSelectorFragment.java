@@ -539,7 +539,7 @@ public class MultiImageSelectorFragment extends SupportFragment {
             if (Build.VERSION.SDK_INT >= 24) {
                 photoUri = FileProvider.getUriForFile(
                         getActivity(),
-                        (getActivity().getPackageName()) + ".fileprovider",
+                        (getActivity().getPackageName()) + ".framelib.fileprovider",
                         mTmpFile);
                 //对这个uri进行授权
                 cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);

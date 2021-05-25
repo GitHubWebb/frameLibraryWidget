@@ -3,6 +3,8 @@ package com.framelibrary.util;
 import android.app.Application;
 import android.widget.Toast;
 
+import com.hjq.toast.config.IToastStrategy;
+
 /**
  * Toast弹出类
  *
@@ -77,7 +79,7 @@ public class ToastUtils {
     public static void reset() {
         toast = null;
 
-        Toast toast = com.hjq.toast.ToastUtils.getToast();
+        IToastStrategy toast = com.hjq.toast.ToastUtils.getStrategy();
         if (toast != null)
             com.hjq.toast.ToastUtils.cancel();
     }

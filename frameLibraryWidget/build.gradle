@@ -201,7 +201,8 @@ dependencies {
 
     api 'com.facebook.fresco:fresco:1.13.0'
 
-    implementation 'com.hjq:toast:8.0'
+    // 吐司框架：https://github.com/getActivity/ToastUtils
+    implementation 'com.github.getActivity:ToastUtils:9.2'
 
     /**
      * 高效的弹窗

@@ -149,7 +149,7 @@ public abstract class BasePopupView extends FrameLayout implements OnNavigationB
                 dismissWithRunnable = null;//no cache, avoid some bad edge effect.
             }
             popupStatus = PopupStatus.Dismiss;
-//            NavigationBarObserver.getInstance().removeOnNavigationBarListener(BasePopupView.this);
+//            NavigationBarObserver.getApplication().removeOnNavigationBarListener(BasePopupView.this);
 
             if (!stack.isEmpty()) stack.pop();
             if (popupInfo.isRequestFocus) {
@@ -188,8 +188,8 @@ public abstract class BasePopupView extends FrameLayout implements OnNavigationB
      * 执行初始化
      */
     protected void init() {
-//        NavigationBarObserver.getInstance().register(getContext());
-//        NavigationBarObserver.getInstance().addOnNavigationBarListener(this);
+//        NavigationBarObserver.getApplication().register(getContext());
+//        NavigationBarObserver.getApplication().addOnNavigationBarListener(this);
 
         //1. 初始化Popup
         if (BasePopupView.this instanceof AttachPopupView) {
@@ -638,7 +638,7 @@ public abstract class BasePopupView extends FrameLayout implements OnNavigationB
         super.onDetachedFromWindow();
         stack.clear();
         handler.removeCallbacksAndMessages(null);
-//        NavigationBarObserver.getInstance().removeOnNavigationBarListener(BasePopupView.this);
+//        NavigationBarObserver.getApplication().removeOnNavigationBarListener(BasePopupView.this);
         if (popupInfo != null) {
             if (popupInfo.decorView != null)
                 KeyboardUtils.removeLayoutChangeListener(popupInfo.decorView, BasePopupView.this);
