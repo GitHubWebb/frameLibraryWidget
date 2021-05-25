@@ -71,8 +71,8 @@ public class FrameLibFileProvider extends FileProvider {
         DateUtils.setClickLimit(true);
 
         // 每次重新启动都删除SP中已缓存的SelectPopData选中数据
-        DeviceDataShare.getDeviceDataShare().init(application);
-        DeviceDataShare.getDeviceDataShare().removeBySelectPopDataAll();
+        DeviceDataShare.getInstance().init(application);
+        DeviceDataShare.getInstance().removeBySelectPopDataAll();
 
     }
 
