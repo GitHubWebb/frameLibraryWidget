@@ -48,7 +48,8 @@ public class FrameLibFileProvider extends FileProvider {
 
         initData((Application) application);
         initLogger(application);
-
+        initSDK((Application) application);
+        
         return true;
     }
 

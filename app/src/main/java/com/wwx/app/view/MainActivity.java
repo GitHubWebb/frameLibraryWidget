@@ -20,6 +20,7 @@ import com.framelibrary.util.DeviceIdUtil;
 import com.framelibrary.util.EncryptUtils;
 import com.framelibrary.util.PermissionCheckUtils;
 import com.framelibrary.util.StringUtils;
+import com.framelibrary.util.ToastUtils;
 import com.framelibrary.util.UIUtils;
 import com.framelibrary.util.dialog.DialogDoNet;
 import com.framelibrary.util.filter.text.EmojiFilter;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mActivity = this;
         tvTest = findViewById(R.id.et_test);
         TextView tvTest1 = findViewById(R.id.et_test1);
+
+        ToastUtils.showToastPass(DeviceIdUtil.getDeviceId());
 
         LoggerUtils.I(DeviceIdUtil.getDeviceId());
         /**
