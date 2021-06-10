@@ -203,6 +203,8 @@ dependencies {
 
     // 吐司框架：https://github.com/getActivity/ToastUtils
     implementation 'com.github.getActivity:ToastUtils:9.2'
+    // 权限请求框架：https://github.com/getActivity/XXPermissions
+    implementation 'com.github.getActivity:XXPermissions:11.2'
 
     /**
      * 高效的弹窗

@@ -522,6 +522,13 @@
 -dontwarn com.github.anzewei.**
 -keep class com.github.anzewei.**{*;}
 
+# 吐司框架：https://github.com/getActivity/ToastUtils start
+-keep class com.hjq.toast.** {*;}
+# 吐司框架：https://github.com/getActivity/ToastUtils end
+
+# 权限请求框架：https://github.com/getActivity/XXPermissions start
+-keep class com.hjq.permissions.** {*;}
+# 权限请求框架：https://github.com/getActivity/XXPermissions end
 
 #根依赖库
 -dontwarn com.framelibrary.**
