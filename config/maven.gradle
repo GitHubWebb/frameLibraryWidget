@@ -1,0 +1,20 @@
+static def addCommonMaven(RepositoryHandler handler) {
+    // 阿里云云效仓库：https://maven.aliyun.com/mvn/guide
+    handler.maven { url 'https://maven.aliyun.com/repository/public' }
+    handler.maven { url 'https://maven.aliyun.com/repository/google' }
+    // 华为开源镜像：https://mirrors.huaweicloud.com
+    handler.maven { url 'https://repo.huaweicloud.com/repository/maven' }
+    // JitPack 远程仓库：https://jitpack.io
+    handler.maven { url 'https://jitpack.io' }
+    // 火山引擎 远程仓库：https://www.volcengine.com/docs/4/65774
+    handler.maven { url 'https://artifact.bytedance.com/repository/Volcengine/' }
+    // MavenCentral 远程仓库：https://mvnrepository.com
+    handler.mavenCentral()
+    handler.google()
+    // noinspection JcenterRepositoryObsolete
+    handler.jcenter()
+    // 配置HMS Core SDK的Maven仓地址
+    handler.maven {url 'https://developer.huawei.com/repo/'}
+}
+
+ext.addCommonMaven = this.&addCommonMaven

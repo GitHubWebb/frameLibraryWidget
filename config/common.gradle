@@ -1,0 +1,120 @@
+apply plugin: 'kotlin-android'
+
+static def releaseTime() {
+    return new Date().format("yy.MMddHH", TimeZone.getTimeZone("GMT+8"))
+}
+
+def gitGitVersionCode() {
+    try {
+        def out = new ByteArrayOutputStream()
+        def cmd = 'git rev-list HEAD --count'
+        exec {
+            ExecSpec execSpec ->
+                executable 'bash'
+                args '-c', cmd
+                standardOutput = out
+        }
+
+        return (out.toString() as Integer)
+    } catch (ignored) {
+        println("123" + ignored)
+
+        return 1
+    }
+}
+
+// def gitVersion = gitGitVersionCode()
+// def versionName = "0." + releaseTime()
+// println("gitCommits: " +  gitVersion)
+
+// 通用配置
+android {
+
+    // 编译源码版本
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+
+        /*versionName '0.0.1'
+        versionCode 1*/
+        versionCode gitGitVersionCode()
+        versionName "0." + releaseTime()
+
+        multiDexEnabled true
+
+        // 解决使用Vector报错
+        // RuntimeException : Width (0) and height (0) cannot be <= 0
+        // vectorDrawables.useSupportLibrary = true
+
+    }
+
+    // 支持 Java JDK 8
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    kotlinOptions {
+        // jvmTarget = '1.8'
+        freeCompilerArgs = ["-Xcontext-receivers"]
+        // useIR = true
+    }
+
+    // 设置存放 so 文件的目录
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    // 可在 Studio 最左侧中的 Build Variants 选项中切换默认的构建类型
+    buildTypes {
+        // 调试版本
+        debug {}
+        // 预览版本
+        preview {}
+        // 正式版本
+        release {}
+    }
+
+    // 代码警告配置
+    lintOptions {
+        // 禁用文本硬编码警告
+        disable 'HardcodedText'
+        // 禁用图片描述警告
+        disable 'ContentDescription'
+
+        checkReleaseBuilds false
+
+    }
+}
+
+afterEvaluate {
+    // 前提条件是这个 Module 工程必须是 Library 类型，并且排除名为 umeng 的 Module 工程
+    if (android.defaultConfig.applicationId == null && "umeng" != getName() && "ttsdkplayer" != getName()) {
+        // 排除 BuildConfig.class
+        generateReleaseBuildConfig.enabled = false
+        generatePreviewBuildConfig.enabled = false
+        generateDebugBuildConfig.enabled = false
+    }
+}
+
+dependencies {
+    // 依赖 libs 目录下所有的 jar 和 aar 包
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+
+    implementation rootProject.ext.dependencies.Appcompat
+    implementation rootProject.ext.dependencies.AppcompatAnnotation
+    implementation rootProject.ext.dependencies.Material
+
+    implementation rootProject.ext.dependencies.KtxCoroutinesCore
+    implementation rootProject.ext.dependencies.KtxCoroutinesAndroid
+    implementation rootProject.ext.dependencies.KtxRuntime
+    implementation rootProject.ext.dependencies.KtxViewmodel
+
+}

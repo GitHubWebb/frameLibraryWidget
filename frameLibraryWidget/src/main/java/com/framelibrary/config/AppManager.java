@@ -125,7 +125,7 @@ public class AppManager {
         while (!activityStack.isEmpty()) {
             Activity a = activityStack.pop();
             if (a != null && !a.isFinishing()) {
-                a.finish();
+                finishActivity(a);
             }
         }
     }

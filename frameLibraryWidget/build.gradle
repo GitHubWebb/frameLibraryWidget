@@ -4,6 +4,7 @@ apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
 /*
 apply plugin: 'maven'
 
+
 apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.GitHubWebb'
 
@@ -35,7 +36,7 @@ uploadArchives {
             pom.groupId = project.PUBLISH_GROUP_ID
         }
 
-        *//*mavenDeployer {
+        mavenDeployer {
             //本地maven仓库地址,也可以使用远程maven仓库
             def deployPath = file(project.GITHUB_REPO_PATH)
             repository(url: "file://${deployPath.absolutePath}")
@@ -44,13 +45,12 @@ uploadArchives {
                 artifactId project.PUBLISH_ARTIFACT_ID
                 version project.PUBLISH_VERSION
             }
-        }*//*
+        }
     }
 }
-*/
 
 
-/*// 源代码一起打包
+// 源代码一起打包
 task androidSourcesJar(type: Jar) {
     classifier = 'sources'
     from android.sourceSets.main.java.sourceFiles
@@ -58,7 +58,7 @@ task androidSourcesJar(type: Jar) {
 
 artifacts {
     archives androidSourcesJar
-}*/
+}
 
 
 //生成文档注释
@@ -85,6 +85,7 @@ artifacts {
 //    archives androidSourcesJar
     archives androidJavadocsJar
 }
+*/
 
 def SupportVersion = '28.0.0'
 
@@ -217,6 +218,7 @@ dependencies {
     api 'com.contrarywind:Android-PickerView:4.1.9'
 
     // http://p.codekk.com/detail/Android/simplepeng/SpiderMan debug 模式崩溃日志抓取
+    // https://github.com/simplepeng/SpiderMan
     api 'com.simple:spiderman:1.1.7'
     debugImplementation('com.simple:spiderman:1.1.7') {
         exclude group: "com.android.support"

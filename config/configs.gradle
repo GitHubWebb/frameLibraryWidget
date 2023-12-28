@@ -1,0 +1,225 @@
+ext {
+    application_Id = "com.wwx.app"
+
+    //创建了一个名为android的，类型为map的变量，groovy中可以用[]来创建map类型。那么就是一个map下面又创
+    //建了一个map，且名字叫做android。
+    android = [
+            // 最低安装版本
+            minSdkVersion    : 21,
+            // 目标适配版本
+            targetSdkVersion : 31,
+            compileSdkVersion: 31,
+            // buildToolsVersion: "30.0.3",
+    ]
+
+    version_ = [
+            Appcompat           : "1.4.2",
+            KtxActivity         : "1.4.0",
+            KtxFragment         : "1.3.6",
+            KtxLiveData         : "2.4.0",
+            Material            : "1.5.0",
+            Multidex            : "2.0.1",
+            Constraintlayout    : "2.1.3",
+            Cardview            : "1.0.0",
+
+            KtxCore             : "1.8.0",
+            KtxCoroutinesCore   : "1.6.1",
+            KtxCoroutinesAndroid: "1.6.1",
+            KtxRuntime          : "2.4.1",
+            KtxViewmodel        : "2.4.1",
+
+            GreenDao            : "2.1.0",
+            Eventbus            : "3.0.0",
+            BRVAH               : "2.9.50",
+            OkHttp              : "4.10.0-RC1",
+            Okio                : "1.14.0",
+            OkHttpLog           : "4.10.0-RC1",
+            Retrofit            : "2.9.0",
+            RetrofitGson        : "2.9.0",
+            Gson                : "2.8.8",
+            GsonFactory         : "5.2",
+
+            XXPermissions       : "18.2",
+            TitleBar            : "9.6",
+            Toaster             : "12.3",
+            EasyHttp            : "12.6",
+
+            ButterKnife         : "10.2.3",
+            Lombok              : "1.18.26",
+            WechatSDK           : "6.8.0",
+            JPush               : "3.3.1",
+            JCore               : "2.0.1",
+            ZXing               : "1.3.4",
+            AndroidPickerView   : "4.1.9",
+            ImmersionBar        : "3.0.0",
+            SpiderMan           : "v1.1.9",
+            ScrollTextView      : "2.0.0",
+            LuBan               : "1.1.8",
+            NewbieGuide         : "v2.4.0",
+            Broccoli            : "1.0.0",
+            Flexbox             : "1.0.0",
+
+            KtxNavigation       : "2.3.5",
+            Emoji2              : "1.0.0-beta01",
+            Room                : "2.4.2",
+            Paging              : "3.1.0-rc01",
+            Work                : "2.7.1",
+            Markwon             : "4.6.2",
+            Prism               : "2.0.0",
+            QmuiArch            : '2.0.1',
+
+    ]
+
+    dependencies = [
+            // AndroidX 库：https://github.com/androidx/androidx
+            Appcompat             : "androidx.appcompat:appcompat:$version_.Appcompat",
+            AppcompatAnnotation   : "androidx.annotation:annotation:1.5.0",
+
+            KtxActivity           : "androidx.activity:activity-ktx:$version_.KtxActivity",
+            KtxFragment           : "androidx.fragment:fragment-ktx:$version_.KtxFragment",
+            KtxLiveData           : "androidx.lifecycle:lifecycle-livedata-ktx:$version_.KtxLiveData",
+
+            // Material 库：https://github.com/material-components/material-components-android
+            Material              : "com.google.android.material:material:$version_.Material",
+
+            // Kotlin 协程：https://github.com/Kotlin/kotlinx.coroutines
+            KtxCore               : "androidx.core:core-ktx:$version_.KtxCore",
+            KtxCoroutinesCore     : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_.KtxCoroutinesCore",
+            KtxCoroutinesAndroid  : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_.KtxCoroutinesAndroid",
+            KtxRuntime            : "androidx.lifecycle:lifecycle-runtime-ktx:$version_.KtxRuntime",
+            KtxViewmodel          : "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_.KtxViewmodel",
+
+            Multidex              : "androidx.multidex:multidex:$version_.Multidex",
+            ConstraintLayout      : "androidx.constraintlayout:constraintlayout:$version_.Constraintlayout",
+            Cardview              : "androidx.cardview:cardview:$version_.Cardview",
+
+            // Room 数据库：https://developer.android.com/jetpack/androidx/releases/room
+            // CodeLab：https://developer.android.com/codelabs/android-room-with-a-view-kotlin#0
+            RoomRuntime           : "androidx.room:room-runtime:$version_.Room",
+            // 使用 Kotlin 注解处理工具 (kapt)
+            RoomCompiler          : "androidx.room:room-compiler:$version_.Room",
+            // 对 Room 的 Kotlin 扩展和协程支持
+            KtxRoom               : "androidx.room:room-ktx:$version_.Room",
+            RoomPaging            : "androidx.room:room-paging:$version_.Room",
+            KtxPaging             : "androidx.paging:paging-runtime-ktx:$version_.Paging",
+
+            GreenDao              : "de.greenrobot:greendao:$version_.GreenDao",
+            GreenDaoGenerator     : "de.greenrobot:greendao-generator:$version_.GreenDao",
+
+            EventBus              : "org.greenrobot:eventbus:$version_.EventBus",
+            BRVAH                 : "com.github.CymChad:BaseRecyclerViewAdapterHelper:$version_.BRVAH",
+            OkHttp                : "com.squareup.okhttp3:okhttp:$version_.OkHttp",
+            Okio                  : "com.squareup.okio:okio:$version_.Okio",
+            OkHttpLog             : "com.squareup.okhttp3:logging-interceptor:$version_.OkHttpLog",
+            Retrofit              : "com.squareup.retrofit2:retrofit:$version_.Retrofit",
+            RetrofitGson          : "com.squareup.retrofit2:converter-gson:$version_.RetrofitGson",
+            Gson                  : "com.google.code.gson:gson:$version_.Gson",
+            GsonFactory           : "com.github.getActivity:GsonFactory:$version_.GsonFactory",
+
+            XXPermissions         : "com.github.getActivity:XXPermissions:$version_.XXPermissions",
+            TitleBar              : "com.github.getActivity:TitleBar:$version_.TitleBar",
+            Toaster               : "com.github.getActivity:Toaster:$version_.Toaster",
+            EasyHttp              : "com.github.getActivity:EasyHttp:$version_.EasyHttp",
+
+            KtxNavigation         : "androidx.navigation:navigation-fragment-ktx:$version_.KtxNavigation",
+            KtxNavigationUI       : "androidx.navigation:navigation-ui-ktx:$version_.KtxNavigation",
+            NavigationFrgmt       : "androidx.navigation:navigation-dynamic-features-fragment:$version_.KtxNavigation",
+
+            KtxWork               : "androidx.work:work-runtime-ktx:$version_.Work",
+
+            /** 加入黄油刀 替代findViewById AndroidX 不能使用 8.8.1 升级到 10.0.0 */
+            ButterKnife           : "com.jakewharton:butterknife:$version_.ButterKnife",
+            ButterKnifeCompiler   : "com.jakewharton:butterknife-compiler:$version_.ButterKnife",
+
+            // 实体代码构建器
+            Lombok                : "org.projectlombok:lombok:$version_.Lombok",
+            LombokAnnotation      : "org.projectlombok:lombok:$version_.Lombok",
+
+            WechatSDK             : "com.tencent.mm.opensdk:wechat-sdk-android:$version_.WechatSDK",
+            JPush                 : "cn.jiguang.sdk:jpush:$version_.JPush",
+            JCore                 : "cn.jiguang.sdk:jcore:$version_.JCore",
+            ZXing                 : "cn.bingoogolapple:bga-qrcode-zxing:$version_.ZXing",
+
+            // https://github.com/Bigkoo/Android-PickerView
+            AndroidPickerView     : "com.contrarywind:Android-PickerView:$version_.AndroidPickerView",
+
+            // 浸入式状态栏 基础依赖包，必须要依赖
+            ImmersionBar          : "com.gyf.immersionbar:immersionbar:$version_.ImmersionBar",
+            // 浸入式状态栏 fragment快速实现（可选）
+            ImmersionBarComponents: "com.gyf.immersionbar:immersionbar-components:$version_.ImmersionBar",
+
+            // http://p.codekk.com/detail/Android/simplepeng/SpiderMan debug 模式崩溃日志抓取
+            // https://github.com/simplepeng/SpiderMan
+            SpiderManDebug        : "com.github.simplepeng.SpiderMan:spiderman:$version_.SpiderMan",
+            SpiderManRelease      : "com.github.simplepeng.SpiderMan:spiderman-no-op:$version_.SpiderMan",
+            ScrollTextView        : "io.github.anylifezlb:ScrollTextView:$version_.ScrollTextView",  // 滚动文字
+            LuBan                 : "top.zibin:Luban:$version_.LuBan",  // 图片压缩
+            NewbieGuide           : "com.github.huburt-Hu:NewbieGuide:$version_.NewbieGuide",  // App引导页
+            Broccoli              : "me.samlss:broccoli:$version_.Broccoli",  // 骨架屏
+
+            // Google开源 排版库
+            // link "https://hub.fastgit.xyz/google/flexbox-layout"
+            Flexbox               : "com.google.android:flexbox:$version_.Flexbox",
+
+    ]
+
+
+    // 测试服
+    def SERVER_TYPE_TEST = "test"
+    // 预发布服
+    def SERVER_TYPE_PREVIEW = "pre"
+    // 正式服
+    def SERVER_TYPE_PRODUCT = "product"
+
+    def taskName = project.gradle.startParameter.taskNames[0]
+    if (taskName == null) {
+        taskName = ""
+    }
+    // 打印当前执行的任务名称
+    println "GradleLog TaskNameOutput " + taskName
+
+    def serverType = SERVER_TYPE_PRODUCT
+
+    if (taskName.endsWith("Debug")) {
+        serverType = SERVER_TYPE_TEST
+    } else if (taskName.endsWith("Preview")) {
+        serverType = SERVER_TYPE_PREVIEW
+    }
+
+    // 从 Gradle 命令中读取参数配置，例如：./gradlew assembleRelease -P ServerType="test"
+    if (project.hasProperty("ServerType")) {
+        serverType = project.properties["ServerType"]
+    }
+
+    // 打印当前服务器配置
+    println "GradleLog ServerTypeOutput " + serverType
+
+    // 友盟 AppKey
+    UMENG_APP_KEY = "5cb16d93570df399fd0014e2"
+    // QQ AppId
+    QQ_APP_ID = "101828096"
+    // QQ Secret
+    QQ_APP_SECRET = "9dfd3300c3aa3c4596a07796c64914b2"
+    // 微信 AppId
+    WX_APP_ID = "wxd35706cc9f46114c"
+    // 微信 Secret
+    WX_APP_SECRET = "0c8c7cf831dd135a32b3e395ea459b5a"
+
+    switch (serverType) {
+        case SERVER_TYPE_TEST:
+        case SERVER_TYPE_PREVIEW:
+            LOG_ENABLE = true
+            BUGLY_ID = "6ce2807170"
+            if (serverType == SERVER_TYPE_PREVIEW) {
+                HOST_URL = "https://www.pre.baidu.com/"
+            } else {
+                HOST_URL = "https://test-api.sylangyue.xyz/"
+            }
+            break
+        case SERVER_TYPE_PRODUCT:
+            LOG_ENABLE = false
+            BUGLY_ID = "6ce2807170"
+            HOST_URL = "https://www.baidu.com/"
+            break
+    }
+}
