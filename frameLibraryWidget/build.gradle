@@ -207,6 +207,9 @@ dependencies {
     // 权限请求框架：https://github.com/getActivity/XXPermissions
     implementation 'com.github.getActivity:XXPermissions:11.2'
 
+    // AOP 插件库：https://mvnrepository.com/artifact/org.aspectj/aspectjrt
+    api "org.aspectj:aspectjrt:1.9.6"
+
     /**
      * 高效的弹窗
      * @link "https://github.com/li-xiaojun/XPopup"

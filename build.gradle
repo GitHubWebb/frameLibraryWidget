@@ -24,6 +24,9 @@ buildscript {
 
         classpath 'com.alibaba:arouter-register:1.0.2'
 
+        classpath 'org.aspectj:aspectjtools:1.9.6'
+        classpath 'org.aspectj:aspectjweaver:1.9.6'
+
         //配置aar到jitpack.io
         // classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
 
