@@ -238,12 +238,14 @@ dependencies {
     api 'org.greenrobot:eventbus:3.1.1'
 
     /**
-     * @see link "https://hub.fastgit.org/gzu-liyujiang/Android_CN_OAID"
+     * @see "https://hub.fastgit.org/gzu-liyujiang/Android_CN_OAID"
      * 安卓设备唯一标识解决方案，可作为移动安全联盟统一 SDK （miit_mdid_xxx.aar）的替代方案。
      * 本项目提供了国内各大手机厂商获取 OAID（开放匿名设备标识）及海外手机平台获取 AAID （安卓广告标识）的便携接口，
      * 另外也提供了 IMEI/MEID、AndroidID、WidevineID、PseudoID、GUID 等常见的设备标识的获取方法。
      */
-    implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.1.1'
+    implementation ('com.github.gzu-liyujiang:Android_CN_OAID:4.2.8') {
+        exclude group: 'com.hihonor.mcs', module: 'ads-identifier'
+    }
 
 
 }
