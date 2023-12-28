@@ -246,7 +246,7 @@ dependencies {
      * 本项目提供了国内各大手机厂商获取 OAID（开放匿名设备标识）及海外手机平台获取 AAID （安卓广告标识）的便携接口，
      * 另外也提供了 IMEI/MEID、AndroidID、WidevineID、PseudoID、GUID 等常见的设备标识的获取方法。
      */
-    implementation ('com.github.gzu-liyujiang:Android_CN_OAID:4.2.8') {
+    implementation ('com.github.gzu-liyujiang:Android_CN_OAID:4.2.7') {
         exclude group: 'com.hihonor.mcs', module: 'ads-identifier'
     }
 
