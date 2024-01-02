@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'cn.leo.plugin.magic' //java singleClick用这个
 
+apply from: rootProject.file("config/maven-publish.gradle")
 /*
 apply plugin: 'maven'
 
@@ -110,10 +111,10 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 30
 
-//        multiDexEnabled true
+        multiDexEnabled true
 
         javaCompileOptions {
 
