@@ -169,7 +169,7 @@ dependencies {
     api 'com.squareup.okhttp3:okhttp:3.9.1'
 
     /*Network*/
-    compileOnly 'com.google.code.gson:gson:2.10.1'
+    api 'com.google.code.gson:gson:2.10.1'
 
     api('com.squareup.retrofit2:retrofit:2.3.0') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'

@@ -33,6 +33,7 @@ import java.util.Collection;
 
 /**
  * Adapt a homogeneous collection of objects.
+ * link: [https://www.jianshu.com/p/39d52bc2e49c]
  * <p>
  * {
  * "code":200,

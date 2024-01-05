@@ -58,10 +58,10 @@ public class GsonUtil {
                 Field f = builder.getDeclaredField("instanceCreators");
                 f.setAccessible(true);
                 Map<Type, InstanceCreator<?>> val = (Map<Type, InstanceCreator<?>>) f.get(gsonBuilder);
-                gsonBuilder.registerTypeAdapterFactory(new CustomCollectionTypeAdapterFactory(new ConstructorConstructor(val)));
+                gsonBuilder.registerTypeAdapterFactory(new CustomCollectionTypeAdapterFactory(new ConstructorConstructor(val, true, new ArrayList())));
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
-                gsonBuilder.registerTypeAdapterFactory(new CustomCollectionTypeAdapterFactory(new ConstructorConstructor(new HashMap<Type, InstanceCreator<?>>())));
+                gsonBuilder.registerTypeAdapterFactory(new CustomCollectionTypeAdapterFactory(new ConstructorConstructor(new HashMap<Type, InstanceCreator<?>>(), true, new ArrayList())));
             }
 
             gson = gsonBuilder.create();
